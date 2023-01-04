@@ -19,10 +19,10 @@ There are 3 common golang kafka clients, they are all tested by production:
 
 # Analysis
 
-sarama or kafka-go:
+We can choose between sarama or kafka-go:
 
-1. sarama: more popular
-2. kafka-go: developer friendly
+1. sarama: It's more popular.
+2. kafka-go: It has developer friendly interface, and more docs.
 
 |                           | sarama        | kafka-go            | confluent             |
 |---------------------------|---------------|---------------------|-----------------------|
@@ -31,4 +31,5 @@ sarama or kafka-go:
 | stars                     | 9k            | 5k                  | 3k                    |
 | testing                   | mock          | docker              | ?                     |
 | potential problem         |               | slow sync operation | requires CGO_ENABLED  |
+
 
