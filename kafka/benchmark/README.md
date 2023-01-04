@@ -6,7 +6,7 @@ Run benchmark:
 ./bench.sh
 ```
 
-Log saved in `bench.log`.
+Log saved in [bench.log](./bench.log).
 
 # Reference
 
