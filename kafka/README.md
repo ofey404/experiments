@@ -2,6 +2,8 @@
 
 Refer to [Go社区主流Kafka客户端简要对比](https://tonybai.com/2022/03/28/the-comparison-of-the-go-community-leading-kakfa-clients/)
 
+This blogpost aims "write log to Kafka" as its scenario.
+
 ## Manual commands
 
 From [Kafka quick start](https://developer.confluent.io/quickstart/kafka-docker/)
