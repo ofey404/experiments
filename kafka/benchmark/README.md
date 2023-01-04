@@ -1,5 +1,15 @@
 # benchmark
 
+Run benchmark:
+
+```bash
+./bench.sh
+```
+
+Log saved in `bench.log`.
+
+# Reference
+
 I start from [Go社区主流Kafka客户端简要对比](https://tonybai.com/2022/03/28/the-comparison-of-the-go-community-leading-kakfa-clients/)
 
 This blogpost aims "write log to Kafka" as its scenario.
