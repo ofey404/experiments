@@ -1,0 +1,12 @@
+goos: linux
+goarch: amd64
+pkg: github.com/ofey404/experiments/marshal_performance
+cpu: AMD Ryzen 7 PRO 4750U with Radeon Graphics
+BenchmarkMarshal-2            	 1611498	       782.1 ns/op	     312 B/op	       7 allocs/op
+BenchmarkMarshal-4            	 1646401	       739.6 ns/op	     312 B/op	       7 allocs/op
+BenchmarkPrintfReflection-2   	 1208834	       989.8 ns/op	     264 B/op	      10 allocs/op
+BenchmarkPrintfReflection-4   	 1200966	      1011 ns/op	     264 B/op	      10 allocs/op
+BenchmarkPrintfSimple-2       	 4297303	       280.9 ns/op	     112 B/op	       3 allocs/op
+BenchmarkPrintfSimple-4       	 3659252	       297.2 ns/op	     112 B/op	       3 allocs/op
+PASS
+ok  	github.com/ofey404/experiments/marshal_performance	11.328s
