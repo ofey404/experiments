@@ -3,8 +3,12 @@ module github.com/ofey404/experiments
 go 1.19
 
 require (
-	github.com/Shopify/sarama v1.37.2 // indirect
-	github.com/confluentinc/confluent-kafka-go v1.9.2 // indirect
+	github.com/Shopify/sarama v1.37.2
+	github.com/confluentinc/confluent-kafka-go v1.9.2
+	github.com/segmentio/kafka-go v0.4.38
+)
+
+require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/eapache/go-resiliency v1.3.0 // indirect
 	github.com/eapache/go-xerial-snappy v0.0.0-20180814174437-776d5712da21 // indirect
@@ -21,7 +25,6 @@ require (
 	github.com/klauspost/compress v1.15.11 // indirect
 	github.com/pierrec/lz4/v4 v4.1.17 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
-	github.com/segmentio/kafka-go v0.4.38 // indirect
 	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa // indirect
 	golang.org/x/net v0.0.0-20220927171203-f486391704dc // indirect
 )

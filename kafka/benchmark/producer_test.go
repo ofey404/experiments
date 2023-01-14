@@ -4,11 +4,12 @@ import (
 	"bufio"
 	"context"
 	"fmt"
-	"github.com/Shopify/sarama"
 	"os"
 	"strings"
 	"sync"
 	"testing"
+
+	"github.com/Shopify/sarama"
 
 	ckafkago "github.com/confluentinc/confluent-kafka-go/kafka"
 	kafkago "github.com/segmentio/kafka-go"
@@ -133,14 +134,14 @@ func BenchmarkConfluentKafkaGoAsync(b *testing.B) {
 	}
 
 	go func() {
-		for _ = range p.Events() {
+		for range p.Events() {
 		}
 	}()
 
 	key := []byte("")
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		p.Produce(&ckafkago.Message{
+		_ = p.Produce(&ckafkago.Message{
 			TopicPartition: ckafkago.TopicPartition{Topic: &topic, Partition: ckafkago.PartitionAny},
 			Key:            key,
 			Value:          m,
@@ -169,7 +170,7 @@ func BenchmarkConfluentKafkaGoAsyncInParallel(b *testing.B) {
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
 			mu.Lock()
-			p.Produce(&ckafkago.Message{
+			_ = p.Produce(&ckafkago.Message{
 				TopicPartition: ckafkago.TopicPartition{Topic: &topic, Partition: ckafkago.PartitionAny},
 				Key:            key,
 				Value:          m,

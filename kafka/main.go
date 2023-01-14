@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+
 	kafkago "github.com/segmentio/kafka-go"
 )
 
@@ -11,7 +12,7 @@ func main() {
 	//write()
 }
 
-func write() {
+func write() { // nolint
 	w := &kafkago.Writer{
 		Addr:     kafkago.TCP("localhost:9092"),
 		Topic:    "test",
