@@ -1,0 +1,28 @@
+2023/01/15 16:14:24 profile: cpu profiling enabled, out/cpu.pprof
+2023/01/15 16:14:25 profile: cpu profiling disabled, out/cpu.pprof
+goos: linux
+goarch: amd64
+pkg: github.com/ofey404/experiments/basic_bench
+cpu: AMD Ryzen 7 PRO 4750U with Radeon Graphics
+BenchmarkFib-2   	2023/01/15 16:14:25 profile: cpu profiling enabled, out/cpu.pprof
+2023/01/15 16:14:25 profile: cpu profiling disabled, out/cpu.pprof
+2023/01/15 16:14:25 profile: cpu profiling enabled, out/cpu.pprof
+2023/01/15 16:14:25 profile: cpu profiling disabled, out/cpu.pprof
+2023/01/15 16:14:25 profile: cpu profiling enabled, out/cpu.pprof
+2023/01/15 16:14:26 profile: cpu profiling disabled, out/cpu.pprof
+2023/01/15 16:14:26 profile: cpu profiling enabled, out/cpu.pprof
+2023/01/15 16:14:27 profile: cpu profiling disabled, out/cpu.pprof
+     217	   5093332 ns/op	    6103 B/op	       2 allocs/op
+BenchmarkFib-4   	2023/01/15 16:14:27 profile: cpu profiling enabled, out/cpu.pprof
+2023/01/15 16:14:27 profile: cpu profiling disabled, out/cpu.pprof
+2023/01/15 16:14:27 profile: cpu profiling enabled, out/cpu.pprof
+2023/01/15 16:14:27 profile: cpu profiling disabled, out/cpu.pprof
+2023/01/15 16:14:27 profile: cpu profiling enabled, out/cpu.pprof
+2023/01/15 16:14:27 profile: cpu profiling disabled, out/cpu.pprof
+2023/01/15 16:14:27 profile: cpu profiling enabled, out/cpu.pprof
+2023/01/15 16:14:28 profile: cpu profiling disabled, out/cpu.pprof
+2023/01/15 16:14:28 profile: cpu profiling enabled, out/cpu.pprof
+2023/01/15 16:14:29 profile: cpu profiling disabled, out/cpu.pprof
+     193	   5208735 ns/op	    6858 B/op	       2 allocs/op
+PASS
+ok  	github.com/ofey404/experiments/basic_bench	4.863s

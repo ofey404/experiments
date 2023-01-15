@@ -2,9 +2,17 @@ goos: linux
 goarch: amd64
 pkg: github.com/ofey404/experiments/concurrency
 cpu: AMD Ryzen 7 PRO 4750U with Radeon Graphics
-BenchmarkPipelineOverhead-2     	 1838978	       568.0 ns/op	       8 B/op	       1 allocs/op
-BenchmarkPipelineOverhead-16    	 1668693	       719.0 ns/op	       8 B/op	       1 allocs/op
-BenchmarkControlGroup-2         	126780902	         9.471 ns/op	       0 B/op	       0 allocs/op
-BenchmarkControlGroup-16        	125790241	         9.539 ns/op	       0 B/op	       0 allocs/op
+BenchmarkControlGroup-2     	120794277	         9.475 ns/op	       0 B/op	       0 allocs/op
+BenchmarkControlGroup-16    	125304093	         9.420 ns/op	       0 B/op	       0 allocs/op
+BenchmarkPipeline1-2        	 2100022	       556.1 ns/op	       8 B/op	       1 allocs/op
+BenchmarkPipeline1-16       	 1736613	       716.9 ns/op	       8 B/op	       1 allocs/op
+BenchmarkPipeline2-2        	 1443777	       929.7 ns/op	       8 B/op	       1 allocs/op
+BenchmarkPipeline2-16       	  889149	      1597 ns/op	       8 B/op	       1 allocs/op
+BenchmarkPipeline10-2       	  324122	      3411 ns/op	       8 B/op	       1 allocs/op
+BenchmarkPipeline10-16      	  196788	      6779 ns/op	       8 B/op	       1 allocs/op
+BenchmarkPipeline100-2      	   48057	     31111 ns/op	       8 B/op	       1 allocs/op
+BenchmarkPipeline100-16     	   17646	     75610 ns/op	       9 B/op	       1 allocs/op
+BenchmarkPipeline1000-2     	    4983	    218220 ns/op	      43 B/op	       1 allocs/op
+BenchmarkPipeline1000-16    	    1692	    680381 ns/op	      40 B/op	       1 allocs/op
 PASS
-ok  	github.com/ofey404/experiments/concurrency	7.977s
+ok  	github.com/ofey404/experiments/concurrency	22.201s

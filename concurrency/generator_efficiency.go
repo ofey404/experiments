@@ -1,5 +1,7 @@
 package concurrency
 
+import "math/rand"
+
 func repeatFn(done <-chan any, fn func() any) <-chan any {
 	valueStream := make(chan any)
 	go func() {
@@ -45,4 +47,12 @@ func take(done <-chan any, valueStream <-chan any, n int) <-chan any {
 		}
 	}()
 	return takeStream
+}
+
+func MultiLevelPipeline(done <-chan any, level int, takeCount int) <-chan any {
+	stream := repeatFn(done, func() any { return rand.Int() }) // #nosec
+	for n := 0; n < level; n++ {
+		stream = take(done, stream, takeCount)
+	}
+	return stream
 }

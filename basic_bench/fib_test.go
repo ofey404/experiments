@@ -1,6 +1,8 @@
 package basic_bench
 
-import "testing"
+import (
+	"testing"
+)
 
 func BenchmarkFib(b *testing.B) {
 	b.ReportAllocs()
@@ -9,6 +11,6 @@ func BenchmarkFib(b *testing.B) {
 
 	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
-		fib(30) // run fib(30) b.N times
+		Fib(30) // run fib(30) b.N times
 	}
 }
