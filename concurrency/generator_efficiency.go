@@ -1,6 +1,8 @@
 package concurrency
 
-import "math/rand"
+import (
+	"math/rand"
+)
 
 func repeatFn(done <-chan any, fn func() any) <-chan any {
 	valueStream := make(chan any)
