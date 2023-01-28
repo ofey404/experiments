@@ -1,0 +1,27 @@
+# github.com/ofey404/experiments/escape_analysis [github.com/ofey404/experiments/escape_analysis.test]
+./main.go:9:20: leaking param: name
+./main.go:10:10: new(Demo) escapes to heap
+./main.go:15:22: leaking param content: demo
+./main.go:16:13: ... argument does not escape
+./main.go:16:18: demo.name escapes to heap
+./main.go:21:14: new(Demo) does not escape
+./bench_test.go:7:33: b does not escape
+./bench_test.go:11:34: b does not escape
+./bench_test.go:15:31: b does not escape
+./bench_test.go:19:32: b does not escape
+# github.com/ofey404/experiments/escape_analysis.test
+/tmp/go-build57214706/b001/_testmain.go:51:42: testdeps.TestDeps{} escapes to heap
+goos: linux
+goarch: amd64
+pkg: github.com/ofey404/experiments/escape_analysis
+cpu: AMD Ryzen 7 PRO 4750U with Radeon Graphics
+BenchmarkSmallObjectOnHeap-2      	1000000000	         0.0000006 ns/op
+BenchmarkSmallObjectOnHeap-16     	1000000000	         0.0000007 ns/op
+BenchmarkSmallObjectOnStack-2     	1000000000	         0.0000005 ns/op
+BenchmarkSmallObjectOnStack-16    	1000000000	         0.0000004 ns/op
+BenchmarkBigObjectOnHeap-2        	1000000000	         0.0000005 ns/op
+BenchmarkBigObjectOnHeap-16       	1000000000	         0.0000010 ns/op
+BenchmarkBigObjectOnStack-2       	1000000000	         0.0000004 ns/op
+BenchmarkBigObjectOnStack-16      	1000000000	         0.0000005 ns/op
+PASS
+ok  	github.com/ofey404/experiments/escape_analysis	0.035s
