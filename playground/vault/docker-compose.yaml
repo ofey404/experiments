@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  vault-server:
+    build: ./vault-server/
+    cap_add:
+      - IPC_LOCK
+    environment:
+      - VAULT_DEV_ROOT_TOKEN_ID=dev-only-token
+    ports:
+      - "8200:8200"
