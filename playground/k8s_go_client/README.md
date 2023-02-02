@@ -1,8 +1,24 @@
+# k8s go client
 
+Start a local k8s deployment with a registry.
 
-> If your application runs in a Pod in the cluster, please refer to the
-> in-cluster [example](examples/in-cluster-client-configuration), otherwise please
-> refer to the out-of-cluster [example](examples/out-of-cluster-client-configuration).
+```bash
+./kind_with_registry.sh
+```
 
+Then run `main.go` in the cluster.
 
+```bash
+./run.sh
+```
 
+## environment
+
+We use `kind`.
+
+Kind don't have a feature like `$(minikube docker-env)`, so we can use this script:
+[Create A Cluster And Registry](https://kind.sigs.k8s.io/docs/user/local-registry/)
+
+## RBAC Permission
+
+https://stackoverflow.com/questions/47973570/kubernetes-log-user-systemserviceaccountdefaultdefault-cannot-get-services
