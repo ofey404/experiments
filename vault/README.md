@@ -1,4 +1,8 @@
-# Vault playground
+# Vault
+
+This directory contains a minimum vault example.
+
+## Details
 
 `main.go` would read a pre-set KV pair: "password=Hashi123".
 
