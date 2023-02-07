@@ -5,8 +5,8 @@ import (
 	"flag"
 	"fmt"
 
-	v1 "github.com/kubeflow/training-operator/pkg/apis/kubeflow.org/v1"
-	v12 "k8s.io/api/core/v1"
+	kfv1 "github.com/kubeflow/training-operator/pkg/apis/kubeflow.org/v1"
+	corev1 "k8s.io/api/core/v1"
 
 	"os"
 	"path/filepath"
@@ -70,7 +70,7 @@ func createClient() *clientv1.Clientset {
 func createJob(kfcli *clientv1.Clientset, name string) {
 	job, err := kfcli.KubeflowV1().PyTorchJobs("kubeflow").Create(
 		context.TODO(),
-		&v1.PyTorchJob{
+		&kfv1.PyTorchJob{
 			TypeMeta: metav1.TypeMeta{
 				Kind:       "PyTorchJob",
 				APIVersion: "kubeflow.org/v1",
@@ -79,17 +79,17 @@ func createJob(kfcli *clientv1.Clientset, name string) {
 				Name:      name,
 				Namespace: "kubeflow",
 			},
-			Spec: v1.PyTorchJobSpec{
+			Spec: kfv1.PyTorchJobSpec{
 				PyTorchReplicaSpecs: map[commonv1.ReplicaType]*commonv1.ReplicaSpec{
 					"Master": &commonv1.ReplicaSpec{
 						Replicas: _int32Pointer(1),
-						Template: v12.PodTemplateSpec{
-							Spec: v12.PodSpec{
-								Containers: []v12.Container{
+						Template: corev1.PodTemplateSpec{
+							Spec: corev1.PodSpec{
+								Containers: []corev1.Container{
 									{
 										Name:            "pytorch",
 										Image:           "docker.io/kubeflowkatib/pytorch-mnist:v1beta1-45c5727",
-										ImagePullPolicy: v12.PullAlways,
+										ImagePullPolicy: corev1.PullAlways,
 										Command: []string{
 											"python3",
 											"/opt/pytorch-mnist/mnist.py",
@@ -103,13 +103,13 @@ func createJob(kfcli *clientv1.Clientset, name string) {
 					},
 					"Worker": &commonv1.ReplicaSpec{
 						Replicas: _int32Pointer(2),
-						Template: v12.PodTemplateSpec{
-							Spec: v12.PodSpec{
-								Containers: []v12.Container{
+						Template: corev1.PodTemplateSpec{
+							Spec: corev1.PodSpec{
+								Containers: []corev1.Container{
 									{
 										Name:            "pytorch",
 										Image:           "docker.io/kubeflowkatib/pytorch-mnist:v1beta1-45c5727",
-										ImagePullPolicy: v12.PullAlways,
+										ImagePullPolicy: corev1.PullAlways,
 										Command: []string{
 											"python3",
 											"/opt/pytorch-mnist/mnist.py",
