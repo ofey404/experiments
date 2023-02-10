@@ -9,3 +9,5 @@ It has a [VSCode Plugin](https://aws.amazon.com/cn/visualstudiocode/)
 [Getting Start Guide](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html)
 
 [Working with the AWS CDK in Go](https://docs.aws.amazon.com/cdk/v2/guide/work-with-cdk-go.html)
+
+To learn more, check [The Go Workshop | AWS CDK Workshop](https://cdkworkshop.com/60-go.html)

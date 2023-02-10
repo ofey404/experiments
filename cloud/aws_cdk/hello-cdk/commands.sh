@@ -10,3 +10,15 @@ cd "$SCRIPT_DIR"
 ##############################################
 
 cdk ls
+
+# construct CloudFormation Template
+cdk synth
+
+cdk deploy
+
+cdk diff
+
+# construct CloudFormation Template
+cdk synth
+
+cdk destroy
