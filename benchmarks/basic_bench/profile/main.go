@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/ofey404/experiments/basic_bench"
+	"github.com/ofey404/experiments/benchmarks/basic_bench"
 	"github.com/pkg/profile"
 )
 

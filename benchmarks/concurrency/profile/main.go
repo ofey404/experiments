@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/ofey404/experiments/concurrency"
+	"github.com/ofey404/experiments/benchmarks/concurrency"
 	"github.com/pkg/profile"
 )
 

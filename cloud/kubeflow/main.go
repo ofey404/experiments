@@ -5,10 +5,11 @@ import (
 	"flag"
 	"fmt"
 
+	"github.com/ofey404/experiments/utils"
+
 	kfv1 "github.com/kubeflow/training-operator/pkg/apis/kubeflow.org/v1"
 	corev1 "k8s.io/api/core/v1"
 
-	"os"
 	"path/filepath"
 
 	commonv1 "github.com/kubeflow/common/pkg/apis/common/v1"
@@ -18,13 +19,6 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/util/homedir"
 )
-
-func _must(err error) {
-	if err != nil {
-		fmt.Println(err.Error())
-		os.Exit(1)
-	}
-}
 
 func _int32Pointer(i int) *int32 {
 	i32Value := int32(i)
@@ -60,10 +54,10 @@ func createClient() *clientv1.Clientset {
 
 	// use the current context in kubeconfig
 	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
-	_must(err)
+	utils.Must(err)
 
 	kfcli, err := clientv1.NewForConfig(config)
-	_must(err)
+	utils.Must(err)
 	return kfcli
 }
 
@@ -126,12 +120,12 @@ func createJob(kfcli *clientv1.Clientset, name string) {
 		},
 		metav1.CreateOptions{},
 	)
-	_must(err)
+	utils.Must(err)
 	fmt.Println(job)
 }
 
 func listJobs(kfcli *clientv1.Clientset) {
 	jobList, err := kfcli.KubeflowV1().PyTorchJobs("kubeflow").List(context.TODO(), metav1.ListOptions{})
-	_must(err)
+	utils.Must(err)
 	fmt.Println(jobList)
 }
