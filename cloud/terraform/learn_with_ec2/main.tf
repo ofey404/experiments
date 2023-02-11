@@ -14,6 +14,11 @@ provider "aws" {
 }
 
 resource "aws_instance" "app_server" {
+  # If you use a region other than us-west-2, you will also need to change your ami
+  # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#ami
+  # 
+  # Details of public image ami-830c94e3, from EC2 Management console:
+  # https://us-west-2.console.aws.amazon.com/ec2/home?region=us-west-2#ImageDetails:imageId=ami-830c94e3
   ami           = "ami-830c94e3"
   instance_type = "t2.micro"
 

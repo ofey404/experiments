@@ -30,5 +30,10 @@ export AWS_SECRET_ACCESS_KEY="asecretkey"
 
 terraform fmt
 terraform validate
+terraform show
+terraform state list
 
-aws ec2 create-default-subnet --availability-zone us-west-2
+# aws ec2 create-default-subnet --availability-zone us-west-2
+# 
+# or: specify a subnet id:
+# subnet_id = "subnet-00bca75f854832825"
