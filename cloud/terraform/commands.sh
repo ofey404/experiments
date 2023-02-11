@@ -37,3 +37,5 @@ terraform state list
 # 
 # or: specify a subnet id:
 # subnet_id = "subnet-00bca75f854832825"
+
+terraform output

@@ -13,6 +13,12 @@ provider "aws" {
   region = "us-west-2"
 }
 
+variable "instance_name" {
+  description = "Value of the Name tag for the EC2 instance"
+  type        = string
+  default     = "ExampleAppServerInstance"
+}
+
 resource "aws_instance" "app_server" {
   # If you use a region other than us-west-2, you will also need to change your ami
   # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#ami
@@ -26,6 +32,16 @@ resource "aws_instance" "app_server" {
 
   subnet_id = "subnet-00bca75f854832825"
   tags = {
-    Name = "ExampleAppServerInstance"
+    Name = var.instance_name
   }
+}
+
+output "instance_id" {
+  description = "ID of the EC2 instance"
+  value       = aws_instance.app_server.id
+}
+
+output "instance_public_ip" {
+  description = "Public IP address of the EC2 instance"
+  value       = aws_instance.app_server.public_ip
 }
