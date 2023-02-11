@@ -19,3 +19,16 @@ terraform plan
 terraform apply
 terraform destroy
 terraform init -upgrade
+
+# this works
+export AWS_ACCESS_KEY_ID="anaccesskey"
+export AWS_SECRET_ACCESS_KEY="asecretkey"
+
+# this doesn't work
+# export AWS_CONFIG_FILE="~/.aws/config"
+# export AWS_SHARED_CREDENTIALS_FILE="~.aws/credentials"
+
+terraform fmt
+terraform validate
+
+aws ec2 create-default-subnet --availability-zone us-west-2
