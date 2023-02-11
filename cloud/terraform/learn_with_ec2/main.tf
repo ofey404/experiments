@@ -19,7 +19,9 @@ resource "aws_instance" "app_server" {
   # 
   # Details of public image ami-830c94e3, from EC2 Management console:
   # https://us-west-2.console.aws.amazon.com/ec2/home?region=us-west-2#ImageDetails:imageId=ami-830c94e3
-  ami           = "ami-830c94e3"
+
+  # Chaged to ami-08d70e59c07c61a3a
+  ami           = "ami-08d70e59c07c61a3a"
   instance_type = "t2.micro"
 
   subnet_id = "subnet-00bca75f854832825"
