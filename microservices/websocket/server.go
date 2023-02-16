@@ -26,7 +26,7 @@ type EchoServer struct {
 const hardCodeToken = "hardcoded token"
 
 func (s EchoServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if checkHardCodeToken(w, r) {
+	if tokenInvalid(w, r) {
 		return
 	}
 
@@ -57,11 +57,11 @@ func (s EchoServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func checkHardCodeToken(w http.ResponseWriter, r *http.Request) bool {
+func tokenInvalid(w http.ResponseWriter, r *http.Request) bool {
 	var header struct {
 		Token string `header:"token"`
 	}
-	if err := httpx.ParseHeaders(r, &header); err != nil {
+	if err := httpx.Parse(r, &header); err != nil {
 		fmt.Printf("httpx.ParseHeaders: %v", err)
 		httpx.Error(w, err)
 		return true
