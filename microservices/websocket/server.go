@@ -7,6 +7,9 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/pkg/errors"
+	"github.com/zeromicro/go-zero/rest/httpx"
+
 	"golang.org/x/time/rate"
 
 	"nhooyr.io/websocket"
@@ -20,7 +23,13 @@ type EchoServer struct {
 	logf func(f string, v ...interface{})
 }
 
+const hardCodeToken = "hardcoded token"
+
 func (s EchoServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if checkHardCodeToken(w, r) {
+		return
+	}
+
 	c, err := websocket.Accept(w, r, &websocket.AcceptOptions{
 		Subprotocols: []string{"echo"},
 	})
@@ -46,6 +55,23 @@ func (s EchoServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+}
+
+func checkHardCodeToken(w http.ResponseWriter, r *http.Request) bool {
+	var header struct {
+		Token string `header:"token"`
+	}
+	if err := httpx.ParseHeaders(r, &header); err != nil {
+		fmt.Printf("httpx.ParseHeaders: %v", err)
+		httpx.Error(w, err)
+		return true
+	}
+	if header.Token != hardCodeToken {
+		fmt.Printf("invalid header.token value: %s", header.Token)
+		httpx.Error(w, errors.Errorf("invalid header.token value: %s", header.Token))
+		return true
+	}
+	return false
 }
 
 // echo reads from the WebSocket connection and then writes

@@ -1,11 +1,18 @@
 # websocket
 
-Run: 
+This directory contains an echo websocket server.
+
+It authenticates with a token in header.
+
+The example go code based on: https://github.com/nhooyr/websocket/tree/master/examples/echo
+
+## Run
 
 ```bash
 ./run.sh 
 # ## wait for server to start
 # listening on http://127.0.0.1:5000
+# ## authenticated with a hardcoded token in header
 # ## now you can type like echo command
 # Connected (press CTRL+C to quit)
 # > echo 
@@ -20,9 +27,8 @@ Run:
 
 ## Reference
 
-We use https://pkg.go.dev/nhooyr.io/websocket
+We use package https://pkg.go.dev/nhooyr.io/websocket
 
-The example go code comes from: https://github.com/nhooyr/websocket/tree/master/examples/echo
 
 ## How to play with websocket
 

@@ -25,6 +25,11 @@ func Test_echoServer(t *testing.T) {
 
 	c, _, err := websocket.Dial(ctx, s.URL, &websocket.DialOptions{
 		Subprotocols: []string{"echo"},
+		HTTPHeader: map[string][]string{
+			"token": {
+				"hardcoded token",
+			},
+		},
 	})
 	if err != nil {
 		t.Fatal(err)
