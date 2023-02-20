@@ -1,0 +1,37 @@
+version: '3.5'
+
+networks:
+  backend:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
+
+services:
+  pingpong:
+    image: briceburg/ping-pong
+    ports:
+    - "7777:80"
+    networks:
+      - backend
+
+  curl:
+    build: ./curl
+    command:
+      - /bin/sh
+      - -c
+      - while true; do curl -I http://pingpong:/ping; sleep 5; done
+    networks:
+      - backend
+    depends_on:
+      - pingpong
+
+  useless_dependency:
+    image: busybox
+    command:
+      - /bin/sh
+      - -c
+      - echo "I should not start!"
+    networks:
+      - backend
