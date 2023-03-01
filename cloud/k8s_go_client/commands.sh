@@ -5,6 +5,10 @@ SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 cd "$SCRIPT_DIR"
 
+##############################################
+# Don't run. This file is a note for commands.
+##############################################
+
 kind create cluster
 
 kubectl cluster-info --context kind-kind
