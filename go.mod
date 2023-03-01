@@ -8,6 +8,7 @@ require (
 	github.com/aws/constructs-go/constructs/v10 v10.1.246
 	github.com/aws/jsii-runtime-go v1.74.0
 	github.com/confluentinc/confluent-kafka-go v1.9.2
+	github.com/go-playground/validator/v10 v10.2.0
 	github.com/hashicorp/vault/api v1.8.3
 	github.com/kubeflow/common v0.4.3
 	github.com/kubeflow/training-operator v1.5.0
@@ -41,6 +42,8 @@ require (
 	github.com/go-openapi/jsonpointer v0.19.5 // indirect
 	github.com/go-openapi/jsonreference v0.20.0 // indirect
 	github.com/go-openapi/swag v0.19.14 // indirect
+	github.com/go-playground/locales v0.13.0 // indirect
+	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
@@ -76,6 +79,7 @@ require (
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.15.11 // indirect
+	github.com/leodido/go-urn v1.2.0 // indirect
 	github.com/mailru/easyjson v0.7.6 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.17 // indirect
