@@ -1,0 +1,5 @@
+{
+    "yaml.schemas": {
+        "kubernetes://schema/v1@pod": "file:///home/ofey/cloud-workspace/experiments/cloud/snippets/spinner.yaml"
+    }
+}
