@@ -30,3 +30,10 @@ helm search hub wordpress
 helm create my-first-chart
 helm install my-first-chart ./my-first-chart/
 helm uninstall my-first-chart
+
+# push image to AWS
+./push_to_aws.sh
+
+helm get manifest my-first-chart 
+
+helm install --debug --dry-run my-first-chart ./my-first-chart/

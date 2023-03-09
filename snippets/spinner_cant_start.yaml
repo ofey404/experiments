@@ -1,0 +1,17 @@
+# This yaml demonstrates how to wait for a daemonset until it starts,
+# by setting `initContainers` field.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: simple-log-generator-sleep-oninit
+  namespace: kubeflow
+spec:
+  initContainers:
+    - name: hold
+      image: bskim45/helm-kubectl-jq:3.3.4
+      imagePullPolicy: IfNotPresent
+      command: ['sh', '-c', 'while true; do echo $(date); sleep 1; done']
+  containers:
+    - name: myapp-container
+      image: busybox:1.28
+      command: ['sh', '-c', 'while true; do echo $(date); sleep 1; done']

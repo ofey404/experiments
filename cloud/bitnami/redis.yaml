@@ -1,0 +1,4 @@
+replica:
+  replicaCount: 1
+persistence:
+  enabled: false

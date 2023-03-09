@@ -13,7 +13,7 @@ Use helm 3.11.x, since I should support k8s 1.24 - 1.26.
 
 ## Building a helm chart
 
-[The Chart Template Developer's Guide](https://helm.sh/docs/chart_template_guide/)
+We can follow [The Chart Template Developer's Guide](https://helm.sh/docs/chart_template_guide/)
 
 ## Testing
 

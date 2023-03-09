@@ -16,6 +16,7 @@ require (
 	github.com/pkg/profile v1.7.0
 	github.com/segmentio/kafka-go v0.4.38
 	github.com/zeromicro/go-zero v1.4.3
+	go.uber.org/goleak v1.2.0
 	golang.org/x/time v0.3.0
 	k8s.io/api v0.26.1
 	k8s.io/apimachinery v0.26.1
