@@ -37,3 +37,4 @@ helm uninstall my-first-chart
 helm get manifest my-first-chart 
 
 helm install --debug --dry-run my-first-chart ./my-first-chart/
+helm upgrade my-first-chart ./my-first-chart/
