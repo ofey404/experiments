@@ -38,3 +38,6 @@ helm get manifest my-first-chart
 
 helm install --debug --dry-run my-first-chart ./my-first-chart/
 helm upgrade my-first-chart ./my-first-chart/
+
+# download chart from hub
+helm pull kubeflow/kubeflow --version 1.5.1 --untar # optionally untar

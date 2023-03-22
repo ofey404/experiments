@@ -13,12 +13,6 @@ provider "aws" {
   region = "us-west-2"
 }
 
-variable "instance_name" {
-  description = "Value of the Name tag for the EC2 instance"
-  type        = string
-  default     = "ExampleAppServerInstance"
-}
-
 resource "aws_instance" "app_server" {
   # If you use a region other than us-west-2, you will also need to change your ami
   # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#ami
@@ -34,6 +28,12 @@ resource "aws_instance" "app_server" {
   tags = {
     Name = var.instance_name
   }
+}
+
+variable "instance_name" {
+  description = "Value of the Name tag for the EC2 instance"
+  type        = string
+  default     = "ExampleAppServerInstance"
 }
 
 output "instance_id" {
