@@ -31,7 +31,7 @@ resource "aws_lambda_function" "cluster_down" {
 
   environment {
       variables = {
-        "MODE" = "DOWN"
+        "MODE" = "down"
         "FEISHU_APP_ID" = "cli_a4915737377d500c"
         "FEISHU_APP_SECRET" = "sqOOqtWk6A4pJx8ugJE9gdMsisQC5Sn0"
       }

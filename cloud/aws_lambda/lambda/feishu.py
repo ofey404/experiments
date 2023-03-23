@@ -1,6 +1,20 @@
 import requests
 
 
+class Report:
+
+    def __init__(self, mode):
+        self.mode = mode
+        self.succeeded = []
+        self.errors = {}
+
+    def success(self, name):
+        self.succeeded.append(name)
+
+    def error(self, name, error):
+        self.errors[name] = error
+
+
 class MessagePusher:
 
     def __init__(self, app_id, app_secret):
@@ -44,13 +58,13 @@ class MessagePusher:
             "Content-Type": "application/json; charset=utf-8",
         }
 
-    def push_error(self, e):
+    def push_string(self, str):
         for chat_id in self._get_all_chatid():
             data = {
                 "chat_id": chat_id,
                 "msg_type": "text",
                 "content": {
-                    "text": "error: {}".format(e)
+                    "text": "error: {}".format(str)
                 },
             }
             resp = requests.post(
@@ -60,3 +74,16 @@ class MessagePusher:
             )
             if resp.status_code != 200:
                 raise Exception("failed to send message, response: {}".format(resp.content))
+
+    def push(self, state):
+        title = "Scaling {} clusters:".format(state.mode)
+        succeeded = "\n".join(["- {}".format(name) for name in state.succeeded])
+        failed = "\n".join(["- {}: {}".format(name, error) for name, error in state.errors.items()])
+
+        if len(state.errors) == 0:
+            report_string = f"{title}\n{succeeded}\n"
+        else:
+            title = f"[ERROR] {title}"
+            report_string = f"{title}\nsucceeded:\n{succeeded}\nerror:\n{failed}"
+
+        self.push_string(report_string)

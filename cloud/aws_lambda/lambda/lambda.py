@@ -1,7 +1,7 @@
 import boto3
 import os
 from eks_util import ClusterScaler, list_clusters
-from feishu import MessagePusher
+from feishu import MessagePusher, Report
 
 # constants
 ENV_FLAG_MODE = "MODE"
@@ -9,14 +9,18 @@ ENV_FEISHU_APP_ID = "FEISHU_APP_ID"
 ENV_FEISHU_APP_SECRET = "FEISHU_APP_SECRET"
 
 MODE_UP = "up"
-MODE_DOWN = "DOWN"
+MODE_DOWN = "down"
 MODES = [
     MODE_UP,
     MODE_DOWN,
 ]
 
+RETRY_SEND_REPORT = 5
+
 # filter clusters by prefix
 CLUSTER_NAME_PREFIX = "cloud-platform-dev-cluster-ofey404"
+
+# prefix = "cloud-platform-dev-cluster-"
 
 
 # lambda_handler is the entry point
@@ -24,21 +28,29 @@ def lambda_handler(event, context):
     try:
         eks = boto3.client("eks")
         # Create an EKS client
-        # prefix = "cloud-platform-dev-cluster-"
         clusters = list_clusters(eks, CLUSTER_NAME_PREFIX)
         print("Clusters: {}".format(clusters))
 
         mode = get_mode()
         print("Mode: {}".format(mode))
 
-        pusher = MessagePusher(
-            os.environ[ENV_FEISHU_APP_ID],
-            os.environ[ENV_FEISHU_APP_SECRET],
-        )
+        report = Report(mode)
     except Exception as e:
         # send to feishu
         print("Exception during initialization: {}".format(e))
         raise e
+
+    r1 = Report(MODE_UP)
+    r1.success("cluster1")
+    r1.error("cluster2", "error message")
+
+    r2 = Report(MODE_DOWN)
+    r1.success("cluster1")
+
+    r2 = Report(MODE_DOWN)
+    r1.success("cluster1")
+
+    pusher.push()
 
     for cluster_name in clusters:
         try:
@@ -50,7 +62,21 @@ def lambda_handler(event, context):
             elif mode == MODE_DOWN:
                 scaler.scale_to_zero()
         except Exception as e:
-            pusher.push_error(e)
+            pusher.report_error(cluster_name, e)
+            continue
+
+    for _ in range(RETRY_SEND_REPORT):
+        try:
+            pusher = MessagePusher(
+                os.environ[ENV_FEISHU_APP_ID],
+                os.environ[ENV_FEISHU_APP_SECRET],
+            )
+            print("Sending report")
+            pusher.push(report)
+            break
+        except Exception as e:
+            print("Exception during sending report: {}".format(e))
+            print("Retrying...")
             continue
 
 
