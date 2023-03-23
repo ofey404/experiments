@@ -1,24 +1,3 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.16"
-    }
-  }
-
-  required_version = ">= 1.2.0"
-}
-
-provider "aws" {
-  region = "us-west-2"
-}
-
-data "archive_file" "lambda" {
-  type        = "zip"
-  source_dir = "lambda/"
-  output_path = "lambda_function_payload.zip"
-}
-
 resource "aws_lambda_function" "cluster_down" {
   filename      = "lambda_function_payload.zip"
   source_code_hash = data.archive_file.lambda.output_base64sha256
@@ -36,7 +15,6 @@ resource "aws_lambda_function" "cluster_down" {
         "FEISHU_APP_SECRET" = "sqOOqtWk6A4pJx8ugJE9gdMsisQC5Sn0"
       }
   }
-  timeout = 300
 }
 
 resource "aws_cloudwatch_event_rule" "daily_trigger_8pm" {
@@ -59,37 +37,3 @@ resource "aws_lambda_permission" "allow_cloudwatch_to_call_check_foo" {
     principal = "events.amazonaws.com"
     source_arn = aws_cloudwatch_event_rule.daily_trigger_8pm.arn
 }
-
-# ###################################################################
-# Role and permissions for lambda
-# ###################################################################
-
-resource "aws_iam_role" "iam_for_lambda" {
-  name               = "iam_for_lambda"
-  assume_role_policy = data.aws_iam_policy_document.assume_role.json
-}
-
-data "aws_iam_policy_document" "assume_role" {
-  statement {
-    effect = "Allow"
-
-    principals {
-      type        = "Service"
-      identifiers = ["lambda.amazonaws.com"]
-    }
-
-    actions = ["sts:AssumeRole"]
-  }
-}
-
-resource "aws_iam_role_policy_attachment" "basic" {
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-  role       = aws_iam_role.iam_for_lambda.name
-}
-
-
-resource "aws_iam_role_policy_attachment" "eks" {
-  policy_arn = "arn:aws:iam::662391098426:policy/AmazonEKSAdminPolicy"
-  role       = aws_iam_role.iam_for_lambda.name
-}
-
