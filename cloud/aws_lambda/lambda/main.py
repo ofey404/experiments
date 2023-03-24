@@ -1,15 +1,13 @@
 import boto3
 import os
 from eks_util import ClusterScaler, list_clusters
-from feishu import MessagePusher, Report
+from feishu import MessagePusher, Report, MODE_UP, MODE_DOWN
 
 # constants
 ENV_FLAG_MODE = "MODE"
 ENV_FEISHU_APP_ID = "FEISHU_APP_ID"
 ENV_FEISHU_APP_SECRET = "FEISHU_APP_SECRET"
 
-MODE_UP = "up"
-MODE_DOWN = "down"
 MODES = [
     MODE_UP,
     MODE_DOWN,
@@ -39,18 +37,6 @@ def lambda_handler(event, context):
         # send to feishu
         print("Exception during initialization: {}".format(e))
         raise e
-
-    r1 = Report(MODE_UP)
-    r1.success("cluster1")
-    r1.error("cluster2", "error message")
-
-    r2 = Report(MODE_DOWN)
-    r1.success("cluster1")
-
-    r2 = Report(MODE_DOWN)
-    r1.success("cluster1")
-
-    pusher.push()
 
     for cluster_name in clusters:
         try:

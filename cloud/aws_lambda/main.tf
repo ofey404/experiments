@@ -25,7 +25,7 @@ resource "aws_lambda_function" "cluster_down" {
 
   function_name = "cluster_down"
   role          = aws_iam_role.iam_for_lambda.arn
-  handler = "lambda.lambda_handler"
+  handler = "main.lambda_handler"
 
   runtime = "python3.7"
 

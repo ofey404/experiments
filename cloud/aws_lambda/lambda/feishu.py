@@ -1,5 +1,8 @@
 import requests
 
+MODE_UP = "up"
+MODE_DOWN = "down"
+
 
 class Report:
 
@@ -64,7 +67,7 @@ class MessagePusher:
                 "chat_id": chat_id,
                 "msg_type": "text",
                 "content": {
-                    "text": "error: {}".format(str)
+                    "text": "{}".format(str)
                 },
             }
             resp = requests.post(
@@ -76,14 +79,21 @@ class MessagePusher:
                 raise Exception("failed to send message, response: {}".format(resp.content))
 
     def push(self, state):
-        title = "Scaling {} clusters:".format(state.mode)
+        if state.mode == MODE_UP:
+            title = "Scaling up clusters on buissiness hours."
+        elif state.mode == MODE_DOWN:
+            title = "Scaling down clusters on non-buissiness hours."
+        else:
+            raise Exception("Unknown mode: {}".format(state.mode))
+
         succeeded = "\n".join(["- {}".format(name) for name in state.succeeded])
         failed = "\n".join(["- {}: {}".format(name, error) for name, error in state.errors.items()])
 
-        if len(state.errors) == 0:
-            report_string = f"{title}\n{succeeded}\n"
+        if len(state.succeeded) == 0 and len(state.errors) == 0:
+            self.push_string("No cluster to scale, have a nice day")
+        elif len(state.errors) == 0:
+            self.push_string(f"{title}\n{succeeded}\n")
+        elif len(state.succeeded) == 0:
+            self.push_string(f"[ERROR] {title}\nerror:{failed}\n")
         else:
-            title = f"[ERROR] {title}"
-            report_string = f"{title}\nsucceeded:\n{succeeded}\nerror:\n{failed}"
-
-        self.push_string(report_string)
+            self.push_string(f"[ERROR] {title}\nsucceeded:\n{succeeded}\nerror:\n{failed}")
