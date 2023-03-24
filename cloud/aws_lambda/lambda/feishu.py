@@ -8,14 +8,14 @@ class Report:
 
     def __init__(self, mode):
         self.mode = mode
-        self.succeeded = []
-        self.errors = {}
+        self._success = []
+        self._errors = {}
 
     def success(self, name):
-        self.succeeded.append(name)
+        self._success.append(name)
 
     def error(self, name, error):
-        self.errors[name] = error
+        self._errors[name] = error
 
 
 class MessagePusher:
@@ -42,18 +42,29 @@ class MessagePusher:
         raise Exception("failed to get token, response: {}".format(res.content))
 
     def _get_all_chatid(self):
-        # FIXME: handle pagination
-        params = {"page_size": 100, "page_token": ""}
-        resp = requests.get(
-            "https://open.feishu.cn/open-apis/chat/v4/list",
-            params=params,
-            headers=self._headers(),
-        )
-        if resp.status_code != 200:
-            raise Exception("get group list failed, response: {}".format(resp.content))
+        all_chatids = []
+        page_token = ""
+        while True:
+            params = {"page_size": 100, "page_token": page_token}
+            resp = requests.get(
+                "https://open.feishu.cn/open-apis/chat/v4/list",
+                params=params,
+                headers=self._headers(),
+            )
 
-        groups = resp.json()["data"]["groups"]
-        return [g.get("chat_id") for g in groups]
+            if resp.status_code != 200:
+                raise Exception("get group list failed, response: {}".format(resp.content))
+
+            groups = resp.json()["data"]["groups"]
+            has_more = resp.json()["data"]["has_more"]
+            all_chatids.extend([g.get("chat_id") for g in groups])
+
+            if not has_more or "page_token" not in resp.json()["data"]:
+                break
+
+            page_token = resp.json()["data"]["page_token"]
+
+        return all_chatids
 
     def _headers(self):
         return {
@@ -86,14 +97,14 @@ class MessagePusher:
         else:
             raise Exception("Unknown mode: {}".format(state.mode))
 
-        succeeded = "\n".join(["- {}".format(name) for name in state.succeeded])
-        failed = "\n".join(["- {}: {}".format(name, error) for name, error in state.errors.items()])
+        succeeded = "\n".join(["- {}".format(name) for name in state._success])
+        failed = "\n".join(["- {}: {}".format(name, error) for name, error in state._errors.items()])
 
-        if len(state.succeeded) == 0 and len(state.errors) == 0:
+        if len(state._success) == 0 and len(state._errors) == 0:
             self.push_string("No cluster to scale, have a nice day")
-        elif len(state.errors) == 0:
+        elif len(state._errors) == 0:
             self.push_string(f"{title}\n{succeeded}\n")
-        elif len(state.succeeded) == 0:
+        elif len(state._success) == 0:
             self.push_string(f"[ERROR] {title}\nerror:{failed}\n")
         else:
             self.push_string(f"[ERROR] {title}\nsucceeded:\n{succeeded}\nerror:\n{failed}")

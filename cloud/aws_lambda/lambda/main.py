@@ -47,8 +47,9 @@ def lambda_handler(event, context):
                 scaler.scale_to_max()
             elif mode == MODE_DOWN:
                 scaler.scale_to_zero()
+            report.success(cluster_name)
         except Exception as e:
-            pusher.report_error(cluster_name, e)
+            report.error(cluster_name, e)
             continue
 
     for _ in range(RETRY_SEND_REPORT):

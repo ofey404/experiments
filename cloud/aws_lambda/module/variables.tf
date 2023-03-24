@@ -41,6 +41,12 @@ variable "environment_variables" {
     default = {}
 }
 
+variable "timeout" {
+    description = "The maximum amount of time your Lambda Function can run in seconds."
+    type = number
+    default = 3
+}
+
 ################################################################################
 # IAM Role
 ################################################################################

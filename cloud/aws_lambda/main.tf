@@ -25,6 +25,7 @@ module "lambda" {
     "arn:aws:iam::662391098426:policy/AmazonEKSAdminPolicy"
   ]
   event_rule = aws_cloudwatch_event_rule.daily_trigger_8pm
+  timeout = 300
 
   environment_variables = {
     "MODE" = "down"
