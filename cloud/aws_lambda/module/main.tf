@@ -43,7 +43,7 @@ data "archive_file" "this" {
 resource "aws_iam_role" "this" {
   count = var.create_iam_role ? 1 : 0
 
-  name               = "iam_for_lambda"
+  name               = var.iam_role_name
   assume_role_policy = data.aws_iam_policy_document.assume_role[0].json
 }
 
