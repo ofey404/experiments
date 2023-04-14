@@ -1,2 +1,4 @@
 xformers==0.0.16
 triton==2.0.0.dev20221030
+pandas
+matplotlib
