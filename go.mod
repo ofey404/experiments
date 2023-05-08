@@ -25,9 +25,16 @@ require (
 )
 
 require (
+	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
+	github.com/jmespath/go-jmespath v0.4.0 // indirect
+	github.com/russross/blackfriday/v2 v2.1.0 // indirect
+)
+
+require (
 	github.com/Masterminds/semver/v3 v3.2.0 // indirect
 	github.com/armon/go-metrics v0.3.9 // indirect
 	github.com/armon/go-radix v1.0.0 // indirect
+	github.com/aws/aws-sdk-go v1.44.258
 	github.com/cdklabs/awscdk-asset-awscli-go/awscliv1/v2 v2.2.52 // indirect
 	github.com/cdklabs/awscdk-asset-kubectl-go/kubectlv20/v2 v2.1.1 // indirect
 	github.com/cdklabs/awscdk-asset-node-proxy-agent-go/nodeproxyagentv5/v2 v2.0.42 // indirect
@@ -101,6 +108,7 @@ require (
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/urfave/cli v1.22.13
 	github.com/yuin/goldmark v1.4.13 // indirect
 	go.opentelemetry.io/otel v1.10.0 // indirect
 	go.opentelemetry.io/otel/trace v1.10.0 // indirect
