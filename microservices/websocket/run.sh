@@ -13,6 +13,7 @@ sleep 1
 echo "## authenticated with a hardcoded token in header"
 echo "## now you can type like echo command"
 wscat -c ws://127.0.0.1:5000?hello=1 -s echo --header "token:hardcoded token"
+wscat -c ws://127.0.0.1:5000
 
 # On exit, kill the whole process group.
 # https://stackoverflow.com/questions/360201/how-do-i-kill-background-processes-jobs-when-my-shell-script-exits
