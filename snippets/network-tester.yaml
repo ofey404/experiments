@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: network-tester
+spec:
+  containers:
+    - name: netshoot
+      image: nicolaka/netshoot:v0.9
+      command: ['/bin/sh', '-c', 'while true; do echo $(date); sleep 1; done']
+    - name: grpcurl
+      image: fullstorydev/grpcurl:v1.8.7-alpine
+      command: ['/bin/sh', '-c', 'while true; do echo $(date); sleep 1; done']
+    - name: wscat
+      image: monotykamary/wscat
+      command: ['/bin/sh', '-c', 'while true; do echo $(date); sleep 1; done']
