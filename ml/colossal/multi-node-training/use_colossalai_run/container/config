@@ -1,0 +1,4 @@
+Host *
+    ForwardAgent yes
+Host *
+    StrictHostKeyChecking no

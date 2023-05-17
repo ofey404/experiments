@@ -1,0 +1,64 @@
+apiVersion: "kubeflow.org/v1"
+kind: "PyTorchJob"
+metadata:
+  name: "colossal-run-multinode"
+spec:
+  pytorchReplicaSpecs:
+    Master:
+      replicas: 1
+      restartPolicy: OnFailure
+      template:
+        metadata:
+          annotations:
+            sidecar.istio.io/inject: "false"
+        spec:
+          containers:
+            - name: pytorch
+              image: hpcaitech/colossalai:0.2.5
+              command:
+                - python
+                - -m
+                - torch.distributed.run
+                - --nproc_per_node=1
+                - --nnodes=2
+                - --node_rank=0
+                - --rdzv_backend=c10d
+                - --rdzv_endpoint=10-0-10-192.default.pod.cluster.local:29500
+                - --rdzv_id=colossalai-default-job
+                - /mnt/project/train.py
+                - "--config /mnt/project/config.py"
+                - "--optimizer lars"
+                - --synthetic
+                - "--output /output/model"
+              resources:
+                limits:
+                  nvidia.com/gpu: 1
+    Worker:
+      replicas: 1
+      restartPolicy: OnFailure
+      template:
+        metadata:
+          annotations:
+            sidecar.istio.io/inject: "false"
+        spec:
+          containers:
+            - name: pytorch
+              image: hpcaitech/colossalai:0.2.5
+              command:
+                - python
+                - -m
+                - torch.distributed.run
+                - --nproc_per_node=1
+                - --nnodes=2
+                - --node_rank=0
+                - --rdzv_backend=c10d
+                - --rdzv_endpoint=10-0-10-192.default.pod.cluster.local:29500
+                - --rdzv_id=colossalai-default-job
+                - /mnt/project/train.py
+                - "--config /mnt/project/config.py"
+                - "--optimizer lars"
+                - --synthetic
+                - "--output /output/model"
+              resources:
+                limits:
+                  nvidia.com/gpu: 1
