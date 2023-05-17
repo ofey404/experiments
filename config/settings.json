@@ -1,0 +1,230 @@
+{
+    // System
+    // "http.proxy": "http://127.0.0.1:8118",
+    "update.mode": "none",
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false,
+    "explorer.openEditors.visible": 0,
+    "security.workspace.trust.untrustedFiles": "open",
+    "security.workspace.trust.enabled": false,
+    // Editing
+    "editor.suggestSelection": "first",
+    "editor.guides.indentation": false,
+    "editor.renderLineHighlight": "all",
+    "editor.fontLigatures": true,
+    "editor.foldingStrategy": "indentation",
+    "editor.smoothScrolling": true,
+    "editor.lineNumbers": "relative",
+    "editor.renderWhitespace": "none", // removes whitespace chars
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.list.smoothScrolling": true,
+    // VSCodeVim
+    "vim.autoSwitchInputMethod.enable": true,
+    "vim.autoSwitchInputMethod.defaultIM": "1033",
+    "vim.autoSwitchInputMethod.obtainIMCmd": "C:\\Users\\Ofey Chan\\Desktop\\helpers\\im-select.exe", 
+    "vim.autoSwitchInputMethod.switchIMCmd": "C:\\Users\\Ofey Chan\\Desktop\\helpers\\im-select.exe {im}",
+    "vim.incsearch": true,
+    "vim.useSystemClipboard": true,
+    "vim.useCtrlKeys": true,
+    "vim.history": 5000,
+    "vim.hlsearch": true,
+    "vim.insertModeKeyBindings": [
+        {
+            "before": [
+                "j",
+                "k"
+            ],
+            "after": [
+                "<Esc>"
+            ]
+        }
+    ],
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "<C-h>"
+            ],
+            "after": [
+                "<C-w>",
+                "h"
+            ]
+        },
+        {
+            "before": [
+                "g",
+                "r"
+            ],
+            "commands": [
+                "editor.action.goToReferences"
+            ]
+        },
+        {
+            "before": [
+                "<C-k>"
+            ],
+            "commands": [
+                "editor.action.showHover"
+            ]
+        },
+        {
+            "before": [
+                "<C-l>"
+            ],
+            "after": [
+                "<C-w>",
+                "l"
+            ]
+        },
+        {
+            "before": [
+                ","
+            ],
+            "after": [
+                "<C-w>"
+            ]
+        }
+    ],
+    "vim.visualModeKeyBindings": [
+        {
+            "before": [
+                ">"
+            ],
+            "commands": [
+                "editor.action.indentLines"
+            ]
+        },
+        {
+            "before": [
+                "<"
+            ],
+            "commands": [
+                "editor.action.outdentLines"
+            ]
+        }
+    ],
+    "vim.handleKeys": {
+        "<C-a>": false,
+        "<C-f>": false,
+        "<C-b>": false,
+        "<C-t>": false,
+        "<C-e>": false,
+        "<C-w>": false,
+        "<C-j>": false
+    },
+    "vim.sneak": true,
+    "vim.sneakUseIgnorecaseAndSmartcase": true,
+    "vim.surround": true,
+    "vim.camelCaseMotion.enable": true,
+    "vim.debug.silent": true,
+    // Extensions
+    "leetcode.hint.configWebviewMarkdown": false,
+    "leetcode.workspaceFolder": "/home/ofey/.leetcode",
+    "leetcode.defaultLanguage": "python3",
+    "leetcode.hint.commentDescription": false,
+    "leetcode.hint.commandShortcut": false,
+    "git.ignoreLegacyWarning": true,
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "cmake.configureOnOpen": true,
+    "notebook.cellToolbarLocation": {
+        "default": "right",
+        "jupyter-notebook": "left"
+    },
+    "settingsSync.ignoredSettings": [
+        "editor.fontFamily",
+        "terminal.integrated.fontFamily"
+    ],
+    "settingsSync.keybindingsPerPlatform": false,
+    "files.associations": {
+        "*.grm": "yacc",
+        "*.lex": "lex",
+        ".env": "shellscript",
+        "Grammar": "plaintext"
+    },
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook"
+    },
+    "cSpell.enabled": false,
+    "files.autoSave": "afterDelay",
+    "terminal.integrated.commandsToSkipShell": [
+        "language-julia.interrupt"
+    ],
+    "julia.symbolCacheDownload": true,
+    "julia.enableTelemetry": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "license.author": "Weiwen Chen",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "workbench.startupEditor": "none",
+    "C_Cpp.clang_format_fallbackStyle": "Google",
+    "python.autoComplete.extraPaths": [
+        "__pypackages__/<major.minor>/lib"
+    ],
+    "python.analysis.extraPaths": [
+        "__pypackages__/<major.minor>/lib"
+    ],
+    // File specific settings
+    "[markdown]": {
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions": {
+            "comments": "off",
+            "strings": "off",
+            "other": "off"
+        },
+        "editor.tabSize": 2
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    // Personal hack
+    "terminal.integrated.env.linux": {
+        "IN_VSCODE_INTEGRATED_TERMINAL": "true",
+    },
+    "workspaceNotes.noteRepoPath": "~/Documents/Notes",
+    "remote.SSH.remotePlatform": {
+        "DASLab-40": "linux",
+        "Deep-251": "linux",
+        "HPC-AI": "linux",
+        "ToyBox": "linux",
+        "pybind11-zhechao": "linux",
+        "HPC-AI-WYX": "linux",
+        "HPC-AI-Small": "linux",
+        "HPC-AI-LR": "linux",
+        "HPC": "linux"
+    },
+    "terminal.integrated.inheritEnv": false,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python"
+    },
+    "editor.accessibilitySupport": "off",
+    "git.ignoreRebaseWarning": true,
+    "terminal.integrated.scrollback": 100000,
+    "zls.path": "/home/ofey/.vscode-server/data/User/globalStorage/augusterame.zls-vscode/zls_install/zls",
+    "[zig]": {
+        "editor.defaultFormatter": "tiehuis.zig"
+    },
+    "workbench.activityBar.visible": false,
+    "go.toolsManagement.autoUpdate": true,
+    "window.menuBarVisibility": "compact",
+    "bookmarks.saveBookmarksInProject": true,
+    "bookmarks.sideBar.expanded": true,
+    "editor.minimap.enabled": false,
+    "editor.inlineSuggest.enabled": true,
+    "github.copilot.enable": {
+        "*": true,
+        "yaml": true,
+        "plaintext": false,
+        "markdown": true,
+        "scminput": false
+    },
+    "vs-kubernetes": {
+        "vs-kubernetes.minikube-show-information-expiration": "2023-10-01T06:08:59.155Z"
+    },
+    "jupyter.interactiveWindowMode": "perFile",
+    "window.zoomLevel": 2,
+}
