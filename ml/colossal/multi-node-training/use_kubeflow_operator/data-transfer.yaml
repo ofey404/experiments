@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multinode-project
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: multinode-project
+  template:
+    metadata:
+      labels:
+        app: multinode-project
+    spec:
+      nodeSelector:
+        eks.amazonaws.com/nodegroup: g4dn-xlarge-2-chi3b80fs65ir5p2k57g
+      containers:
+        - name: netshoot
+          image: nicolaka/netshoot:v0.9
+          command: ['/bin/sh', '-c', 'while true; do echo $(date); sleep 1; done']
+          resources:
+            limits:
+              nvidia.com/gpu: 1
+          volumeMounts:
+            - mountPath: /mnt/project
+              name: project
+      volumes:
+        - name: project
+          hostPath:
+            path: /tmp/data/multinode

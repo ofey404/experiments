@@ -12,6 +12,8 @@ spec:
           annotations:
             sidecar.istio.io/inject: "false"
         spec:
+          nodeSelector:
+            eks.amazonaws.com/nodegroup: g4dn-xlarge-2-chi3b80fs65ir5p2k57g
           containers:
             - name: pytorch
               image: hpcaitech/colossalai:0.2.5
@@ -19,20 +21,24 @@ spec:
                 - python
                 - -m
                 - torch.distributed.run
-                - --nproc_per_node=1
-                - --nnodes=2
-                - --node_rank=0
-                - --rdzv_backend=c10d
-                - --rdzv_endpoint=10-0-10-192.default.pod.cluster.local:29500
-                - --rdzv_id=colossalai-default-job
                 - /mnt/project/train.py
-                - "--config /mnt/project/config.py"
-                - "--optimizer lars"
+                - --config
+                - /mnt/project/config.py
+                - --optimizer
+                - lars
                 - --synthetic
-                - "--output /output/model"
+                - --output
+                - /mnt/project/
               resources:
                 limits:
                   nvidia.com/gpu: 1
+              volumeMounts:
+                - mountPath: /mnt/project
+                  name: project
+          volumes:
+            - name: project
+              hostPath:
+                path: /tmp/data/multinode
     Worker:
       replicas: 1
       restartPolicy: OnFailure
@@ -41,6 +47,8 @@ spec:
           annotations:
             sidecar.istio.io/inject: "false"
         spec:
+          nodeSelector:
+            eks.amazonaws.com/nodegroup: g4dn-xlarge-2-chi3b80fs65ir5p2k57g
           containers:
             - name: pytorch
               image: hpcaitech/colossalai:0.2.5
@@ -48,17 +56,21 @@ spec:
                 - python
                 - -m
                 - torch.distributed.run
-                - --nproc_per_node=1
-                - --nnodes=2
-                - --node_rank=0
-                - --rdzv_backend=c10d
-                - --rdzv_endpoint=10-0-10-192.default.pod.cluster.local:29500
-                - --rdzv_id=colossalai-default-job
                 - /mnt/project/train.py
-                - "--config /mnt/project/config.py"
-                - "--optimizer lars"
+                - --config
+                - /mnt/project/config.py
+                - --optimizer
+                - lars
                 - --synthetic
-                - "--output /output/model"
+                - --output
+                - /mnt/project/
               resources:
                 limits:
                   nvidia.com/gpu: 1
+              volumeMounts:
+                - mountPath: /mnt/project
+                  name: project
+          volumes:
+            - name: project
+              hostPath:
+                path: /tmp/data/multinode
