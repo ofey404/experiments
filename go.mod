@@ -14,6 +14,7 @@ require (
 	github.com/kubeflow/training-operator v1.5.0
 	github.com/pkg/errors v0.9.1
 	github.com/pkg/profile v1.7.0
+	github.com/r3labs/sse/v2 v2.10.0
 	github.com/segmentio/kafka-go v0.4.38
 	github.com/zeromicro/go-zero v1.4.3
 	go.uber.org/goleak v1.2.0
@@ -28,6 +29,7 @@ require (
 	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
+	gopkg.in/cenkalti/backoff.v1 v1.1.0 // indirect
 )
 
 require (
