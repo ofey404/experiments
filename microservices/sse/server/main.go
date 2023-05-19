@@ -28,6 +28,9 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/events", server.ServeHTTP)
 
-	log.Printf("listening on http://localhost:8080")
-	_ = http.ListenAndServe(":8080", mux) // #nosec
+	log.Printf("listening on http://0.0.0.0:8080")
+	err := http.ListenAndServe("0.0.0.0:8080", mux) // #nosec
+	if err != nil {
+		log.Printf("err = %+v\n", err)
+	}
 }
