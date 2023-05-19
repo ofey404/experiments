@@ -17,18 +17,20 @@ spec:
           containers:
             - name: pytorch
               image: hpcaitech/colossalai:0.2.5
-              command:
-                - python
-                - -m
-                - torch.distributed.run
-                - /mnt/project/train.py
-                - --config
-                - /mnt/project/config.py
-                - --optimizer
-                - lars
-                - --synthetic
-                - --output
-                - /mnt/project/
+              command: ["/bin/sh","-c"]
+              args:
+                - |
+                python
+                -m
+                torch.distributed.run
+                /mnt/project/train.py
+                --config
+                /mnt/project/config.py
+                --optimizer
+                 lars
+                --synthetic
+                --output
+                /mnt/project/
               resources:
                 limits:
                   nvidia.com/gpu: 1

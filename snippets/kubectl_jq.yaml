@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kubectl-jq
+spec:
+  containers:
+    - name: app
+      image: bskim45/helm-kubectl-jq:3.3.4
+      command: ['/bin/sh', '-c', 'while true; do echo $(date); sleep 1; done']
+
