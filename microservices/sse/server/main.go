@@ -12,12 +12,13 @@ func main() {
 	server := sse.New()
 
 	server.CreateStream("messages")
+	server.Headers["Access-Control-Allow-Origin"] = "*"
 
 	go func() {
 		for {
 			// Publish a payload to the stream
 			server.Publish("messages", &sse.Event{
-				Data: []byte("ping"),
+				Data: []byte("ping with linebreak\n"),
 			})
 			log.Print("published event ping")
 			time.Sleep(time.Second)
