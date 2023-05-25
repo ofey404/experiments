@@ -1,8 +1,11 @@
 package main
 
 import (
+	"net"
 	"log"
 	"net/http"
+	"net/http/httptest"
+
 	"time"
 
 	"github.com/r3labs/sse/v2"
@@ -30,8 +33,26 @@ func main() {
 	mux.HandleFunc("/events", server.ServeHTTP)
 
 	log.Printf("listening on http://0.0.0.0:8080")
-	err := http.ListenAndServe("0.0.0.0:8080", mux) // #nosec
+
+	l, err := net.Listen("tcp", "0.0.0.0:8080")
 	if err != nil {
-		log.Printf("err = %+v\n", err)
+		log.Fatal(err)
 	}
+
+	ts := httptest.NewUnstartedServer(mux)
+	ts.Listener.Close()
+	ts.Listener = l
+	ts.Start()
+	defer ts.Close()
+
+	go func() {
+		for {
+			log.Printf("Close Client Connections")
+			ts.CloseClientConnections()
+			time.Sleep(5 * time.Second)
+		}
+	}()
+
+	log.Printf("listening on http://0.0.0.0:8080")
+	time.Sleep(time.Hour * 9999)
 }
