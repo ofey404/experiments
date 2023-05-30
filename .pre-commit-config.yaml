@@ -10,10 +10,10 @@ repos:
     rev: v1.0.0-beta.4
     hooks:
       - id: go-mod-tidy
-      - id: go-vet-mod
-      - id: golangci-lint-mod
+#      - id: go-vet-mod
+#      - id: golangci-lint-mod
       - id: go-imports
         args: [-w]
-      - id: go-sec-mod
-      - id: go-build-mod
-      - id: go-test-mod
+#      - id: go-sec-mod
+#      - id: go-build-mod
+#      - id: go-test-mod

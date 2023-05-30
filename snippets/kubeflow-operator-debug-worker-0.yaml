@@ -1,0 +1,34 @@
+apiVersion: "kubeflow.org/v1"
+kind: PyTorchJob
+metadata:
+  name: pytorch-job-worker-num-0
+  namespace: kubeflow
+spec:
+  runPolicy:
+    cleanPodPolicy: None
+    activeDeadlineSeconds: 1800 # if the pytorch job won't become active after this 30min
+  pytorchReplicaSpecs:
+    Master:
+      replicas: 1
+      restartPolicy: Never # set the pytorch job never restart
+      template:
+        spec:
+          containers:
+            - name: pytorch
+              image: docker.io/kubeflowkatib/pytorch-mnist:v1beta1-45c5727
+              imagePullPolicy: Always
+              command: ["/bin/sh","-c"]
+              args:
+              - python3 /opt/pytorch-mnist/mnist.py --epochs=1
+    Worker:
+      replicas: 0
+      restartPolicy: Never
+      template:
+        spec:
+          containers:
+            - name: pytorch
+              image: docker.io/kubeflowkatib/pytorch-mnist:v1beta1-45c5727
+              imagePullPolicy: Always
+              command: ["/bin/sh","-c"]
+              args:
+              - python3 /opt/pytorch-mnist/mnist.py --epochs=1
