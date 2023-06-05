@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tos-yaml-230605  # PV 名称。
+spec:
+  accessModes:  # 访问方式，ReadWriteMany：多点读写。
+    - ReadWriteMany
+  csi:
+    driver: tos.csi.volcengine.com  # 驱动类型，本示例为 tos.csi.volcengine.com ，表示火山引擎 csi-tos 插件。
+    nodePublishSecretRef:
+      name: chenweiwen-key
+      namespace: kubeflow
+    volumeAttributes:
+      bucket: luchen-storage
+      path: /test-tos-mount-230605
+      url: http://tos-s3-cn-beijing.ivolces.com
+    volumeHandle: vke-tos
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
+  capacity:
+    storage: 20Gi

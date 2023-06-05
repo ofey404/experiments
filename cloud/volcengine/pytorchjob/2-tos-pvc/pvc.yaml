@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tos-yaml-230605
+spec:
+  accessModes:  # PVC 访问模式。目前仅支持 ReadWriteMany ，表示多点读写。
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi  # 声明的存储使用量。
+  volumeMode: Filesystem # 挂载对象存储的格式，本示例填写 Filesystem，表示文件系统挂载。
+  volumeName: tos-yaml-230605  # 绑定到该 PVC 的 PV 名称。
