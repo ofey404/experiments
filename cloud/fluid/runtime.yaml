@@ -1,0 +1,15 @@
+# https://www.alluxio.io/
+
+apiVersion: data.fluid.io/v1alpha1
+kind: AlluxioRuntime
+metadata:
+  name: demo
+spec:
+  replicas: 1
+  tieredstore:
+    levels:
+      - mediumtype: MEM
+        path: /dev/shm
+        quota: 2Gi
+        high: "0.95"
+        low: "0.7"
