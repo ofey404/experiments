@@ -34,9 +34,10 @@ time cp /data/spark/spark-3.4.0/spark-3.4.0-bin-without-hadoop.tgz /dev/null
 # sys     0m0.948s
 
 ##############################################
-# Recreate the application
+# Demonstrate the effect of cache
 ##############################################
 
+# Recreate the application
 kubectl delete -f app.yaml && kubectl create -f app.yaml
 
 kubectl exec -it demo-app -- bash
