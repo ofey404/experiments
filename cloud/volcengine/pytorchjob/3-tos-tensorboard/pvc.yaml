@@ -4,6 +4,7 @@ metadata:
   name: tos-tensorboard-230608
   namespace: kubeflow-user-example-com
 spec:
+#  storageClassName: ""  # 假如配置了 default 的 StorageClass，将会失败。
   accessModes:  # PVC 访问模式。目前仅支持 ReadWriteMany ，表示多点读写。
     - ReadWriteMany
   resources:
