@@ -9,17 +9,6 @@ import (
 	"go.temporal.io/sdk/workflow"
 )
 
-type Activities struct {
-	bank BankingService
-}
-
-type PaymentDetails struct {
-	ReferenceID   string
-	SourceAccount string
-	TargetAccount string
-	Amount        int
-}
-
 func MoneyTransfer(ctx workflow.Context, input PaymentDetails) (string, error) {
 	// RetryPolicy specifies how to automatically handle retries if an Activity fails.
 	retrypolicy := &temporal.RetryPolicy{
@@ -72,6 +61,17 @@ func MoneyTransfer(ctx workflow.Context, input PaymentDetails) (string, error) {
 
 	result := fmt.Sprintf("Transfer complete (transaction IDs: %s, %s)", withdrawOutput, depositOutput)
 	return result, nil
+}
+
+type Activities struct {
+	bank BankingService
+}
+
+type PaymentDetails struct {
+	ReferenceID   string
+	SourceAccount string
+	TargetAccount string
+	Amount        int
 }
 
 func (a *Activities) Withdraw(ctx context.Context, data PaymentDetails) (string, error) {
