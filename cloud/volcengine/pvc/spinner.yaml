@@ -1,0 +1,18 @@
+# This yaml demonstrates how to wait for a daemonset until it starts,
+# by setting `initContainers` field.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-ebs-ssd-spinner
+spec:
+  containers:
+    - name: myapp-container
+      image: busybox:1.28
+      command: ['sh', '-c', 'while true; do echo $(date); sleep 1; done']
+      volumeMounts:
+        - mountPath: "/tmp/data"
+          name: data
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: test-ebs-ssd-pvc
