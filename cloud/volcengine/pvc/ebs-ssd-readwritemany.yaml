@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tensorboard-controller-readwritemany
+  namespace: kubeflow-user-example-com
+spec:
+  accessModes:
+    - ReadWriteMany  # Not supported
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: ebs-ssd
