@@ -11,3 +11,9 @@ https://sdk.operatorframework.io/docs/installation/#compile-and-install-from-mas
 ## memcached-operator
 
 This is the example from the operator-sdk.
+
+Tutorial: https://sdk.operatorframework.io/docs/building-operators/golang/tutorial/
+
+**NOTE:** I do not finish the tutorial.
+
+I stop at the point: [Generating CRD manifests | Go Operator Tutorial](https://sdk.operatorframework.io/docs/building-operators/golang/tutorial/#generating-crd-manifests)
