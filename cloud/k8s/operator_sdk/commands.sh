@@ -9,7 +9,6 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-#operator-sdk init --domain example.com --repo github.com/example/memcached-operator
 mkdir memcached-operator
 cd memcached-operator
 operator-sdk init --domain example.com --repo github.com/ofey404/experiments/cloud/k8s/operator_sdk/memcached-operator

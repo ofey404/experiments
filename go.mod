@@ -13,6 +13,8 @@ require (
 	github.com/hashicorp/vault/api v1.8.3
 	github.com/kubeflow/common v0.4.3
 	github.com/kubeflow/training-operator v1.5.0
+	github.com/onsi/ginkgo/v2 v2.6.0
+	github.com/onsi/gomega v1.24.1
 	github.com/pkg/errors v0.9.1
 	github.com/pkg/profile v1.7.0
 	github.com/r3labs/sse/v2 v2.10.0
