@@ -7,3 +7,7 @@ I use [operator-framework/operator-sdk](https://github.com/operator-framework/op
 ## Installation Guide
 
 https://sdk.operatorframework.io/docs/installation/#compile-and-install-from-master
+
+## memcached-operator
+
+This is the example from the operator-sdk.
