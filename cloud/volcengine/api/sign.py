@@ -11,12 +11,17 @@ import requests
 
 @dataclass
 class RequestInput:
+    # required fields
     method: str
     action: str
-    date: typing.Any = field(default_factory=lambda: datetime.datetime.utcnow())
-    query: dict = field(default_factory=lambda: {})
+
+    # optional fields
     header: dict = field(default_factory=lambda: {})
-    body: typing.Any = None
+    query: dict = field(default_factory=lambda: {})
+    body: str = ""
+
+    # metadata
+    date: typing.Any = field(default_factory=lambda: datetime.datetime.utcnow())
 
 
 @dataclass
@@ -54,8 +59,6 @@ class API:
                 **i.query
             },
         }
-        if i.body is None:
-            request_param["body"] = ""
 
         # 接下来开始计算签名。在计算签名前，先准备好用于接收签算结果的 signResult 变量，并设置一些参数。
         # 初始化签名结果的结构体
