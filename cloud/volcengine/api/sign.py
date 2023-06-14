@@ -23,10 +23,10 @@ class API:
     AK: str
     SK: str
     Host: str = "iam.volcengineapi.com"
-    ContentType: str = "application/x-www-form-urlencoded"
     Region: str = "cn-north-1"
     Service: str = "iam"
     Version: str = "2018-01-01"
+    ContentType: str = "application/x-www-form-urlencoded"
 
     def request(self, input: RequestInput):
         method, date, query, header, action, body = (
@@ -160,13 +160,15 @@ if __name__ == "__main__":
     api = API(
         AK=os.environ.get("VOLCENGINE_ACCESS_KEY"),
         SK=os.environ.get("VOLCENGINE_SECRET_KEY"),
+        Host="open.volcengineapi.com",
+        Region="cn-beijing",
+        Service="cfs",
+        Version="2022-02-02",
+        ContentType="application/json",
     )
     resp = api.request(input=RequestInput(
         method="Get",
         date=now,
-        query={"Limit": "2"},
-        header={},
-        action="ListUsers",
-        body=None,
+        action="ListFs",
     ))
-    print(f'ListUsers: {resp}')
+    print(f"Resp: {resp}")
