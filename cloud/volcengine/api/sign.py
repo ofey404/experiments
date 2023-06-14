@@ -115,7 +115,7 @@ class API:
             params=request_param["query"],
             data=request_param["body"],
         )
-        return r.json()
+        return r
 
 
 def norm_query(params):
@@ -151,4 +151,4 @@ if __name__ == "__main__":
         method="Get",
         action="ListFs",
     ))
-    print(f"Resp: {resp}")
+    print(f"Resp: {resp.json()}")
