@@ -56,6 +56,18 @@ def create_fs(api: API, i: CreateFsInput):
     return resp
 
 
+def delete_fs(api: API):
+    """https://www.volcengine.com/docs/6720/108365"""
+    resp = api.request(i=RequestInput(
+        method="POST",
+        action="DeleteFs",
+        body=json.dumps({"FsName": "disposable-230614"}),
+    ))
+
+    print(f"Resp: {resp.json()}")
+    return resp
+
+
 def main():
     api = API(
         region="cn-beijing",
@@ -64,8 +76,11 @@ def main():
     )
 
     # create_fs(api, i=CreateFsInput())
-    resp = list_fs(api)
-    print(resp.json()["Result"]["Items"][0]["Status"])
+
+    # resp = list_fs(api)
+    # print(resp.json()["Result"]["Items"][0]["Status"])
+
+    delete_fs(api)
 
 
 if __name__ == "__main__":
