@@ -11,8 +11,8 @@ import requests
 @dataclass
 class RequestInput:
     method: str
-    date: typing.Any
     action: str
+    date: typing.Any = field(default_factory=lambda: datetime.datetime.utcnow())
     query: dict = field(default_factory=lambda: {})
     header: dict = field(default_factory=lambda: {})
     body: typing.Any = None
@@ -20,53 +20,39 @@ class RequestInput:
 
 @dataclass
 class API:
-    AK: str
-    SK: str
-    Host: str = "iam.volcengineapi.com"
-    Region: str = "cn-north-1"
-    Service: str = "iam"
-    Version: str = "2018-01-01"
-    ContentType: str = "application/x-www-form-urlencoded"
+    Service: str
+    Version: str
+    Region: str
+    Host: str = "open.volcengineapi.com"
+    ContentType: str = "application/json"
+    AK: str = field(default_factory=lambda: os.environ.get("VOLCENGINE_ACCESS_KEY"))
+    SK: str = field(default_factory=lambda: os.environ.get("VOLCENGINE_SECRET_KEY"))
 
-    def request(self, input: RequestInput):
-        method, date, query, header, action, body = (
-            input.method,
-            input.date,
-            input.query,
-            input.header,
-            input.action,
-            input.body,
-        )
-        ak, sk = self.AK, self.SK
-        Service, Region = self.Service, self.Region
-        Host = self.Host
-        ContentType = self.ContentType
-        Version = self.Version
-
-        # 第三步：创建身份证明。其中的 Service 和 Region 字段是固定的。ak 和 sk 分别代表
+    def request(self, i: RequestInput):
+        # 创建身份证明。其中的 Service 和 Region 字段是固定的。ak 和 sk 分别代表
         # AccessKeyID 和 SecretAccessKey。同时需要初始化签名结构体。一些签名计算时需要的属性也在这里处理。
         # 初始化身份证明结构体
         credential = {
-            "access_key_id": ak,
-            "secret_access_key": sk,
-            "service": Service,
-            "region": Region,
+            "access_key_id": self.AK,
+            "secret_access_key": self.SK,
+            "service": self.Service,
+            "region": self.Region,
         }
         # 初始化签名结构体
         request_param = {
-            "body": body,
-            "host": Host,
+            "body": i.body,
+            "host": self.Host,
             "path": "/",
-            "method": method,
-            "content_type": ContentType,
-            "date": date,
+            "method": i.method,
+            "content_type": self.ContentType,
+            "date": i.date,
             "query": {
-                "Action": action,
-                "Version": Version,
-                **query
+                "Action": i.action,
+                "Version": self.Version,
+                **i.query
             },
         }
-        if body is None:
+        if i.body is None:
             request_param["body"] = ""
         # 第四步：接下来开始计算签名。在计算签名前，先准备好用于接收签算结果的 signResult 变量，并设置一些参数。
         # 初始化签名结果的结构体
@@ -119,11 +105,11 @@ class API:
             signed_headers_str,
             signature,
         )
-        header = {**header, **sign_result}
+        header = {**i.header, **sign_result}
         # header = {**header, **{"X-Security-Token": SessionToken}}
         # 第六步：将 Signature 签名写入 HTTP Header 中，并发送 HTTP 请求。
         r = requests.request(
-            method=method,
+            method=i.method,
             url="https://{}{}".format(request_param["host"], request_param["path"]),
             headers=header,
             params=request_param["query"],
@@ -144,7 +130,7 @@ def norm_query(params):
     return query.replace("+", "%20")
 
 
-# 第一步：准备辅助函数。
+# 准备辅助函数。
 # sha256 非对称加密
 def hmac_sha256(key: bytes, content: str):
     return hmac.new(key, content.encode("utf-8"), hashlib.sha256).digest()
@@ -156,19 +142,13 @@ def hash_sha256(content: str):
 
 
 if __name__ == "__main__":
-    now = datetime.datetime.utcnow()
     api = API(
-        AK=os.environ.get("VOLCENGINE_ACCESS_KEY"),
-        SK=os.environ.get("VOLCENGINE_SECRET_KEY"),
-        Host="open.volcengineapi.com",
         Region="cn-beijing",
         Service="cfs",
         Version="2022-02-02",
-        ContentType="application/json",
     )
-    resp = api.request(input=RequestInput(
+    resp = api.request(i=RequestInput(
         method="Get",
-        date=now,
         action="ListFs",
     ))
     print(f"Resp: {resp}")
