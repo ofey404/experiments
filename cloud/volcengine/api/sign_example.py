@@ -1,7 +1,11 @@
 # coding:utf-8
 #
-# See
+# This is an example script, about how to sign a request to VolcEngine API.
+#
+# Comes from:
 # https://github.com/volcengine/volc-openapi-demos/blob/775a553be3fcca1fe5cbbcdcd4ea8aee6d7839ea/signature/python/sign.py#L65
+#
+# The documentation: [认证鉴权](https://www.volcengine.com/docs/6720/107855)
 """
 Copyright (year) Beijing Volcano Engine Technology Ltd.
 
