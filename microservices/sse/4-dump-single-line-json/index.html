@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real-time data updates</title>
+</head>
+<body>
+<h1>Real-time data updates</h1>
+<ul id="data-updates"></ul>
+
+<script>
+    // Create a new EventSource object and listen for "message" events
+    const eventSource = new EventSource('http://localhost:8080/');
+    eventSource.onmessage = (event) => {
+        // Add the received data to the list
+        const dataUpdates = document.getElementById('data-updates');
+        const listItem = document.createElement('li');
+        listItem.innerText = JSON.parse(`${event.data}`);
+        dataUpdates.appendChild(listItem);
+
+        // print the event
+        const obj = JSON.parse(`${event.data}`);
+        console.log(obj);
+    };
+    eventSource.addEventListener('testEvent', function (event) {
+        // Add the received data to the list
+        const dataUpdates = document.getElementById('data-updates');
+        const listItem = document.createElement('li');
+        listItem.innerText = "This is a test event: " + JSON.parse(`${event.data}`);
+        listItem.style.color = "blue";
+        dataUpdates.appendChild(listItem);
+
+        // print the event
+        const obj = JSON.parse(`${event.data}`);
+        console.log("event body:\n" + obj);
+    }, false);
+</script>
+</body>
+</html>
