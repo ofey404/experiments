@@ -1,5 +1,6 @@
 # https://github.com/volcengine/volc-openapi-demos/blob/775a553be3fcca1fe5cbbcdcd4ea8aee6d7839ea/signature/python/sign.py#L65
 import typing
+import json
 import datetime
 import hashlib
 import hmac
@@ -22,6 +23,10 @@ class RequestInput:
 
     # metadata
     date: typing.Any = field(default_factory=lambda: datetime.datetime.utcnow())
+
+
+class ErrPagedRequest(Exception):
+    pass
 
 
 @dataclass
@@ -129,6 +134,41 @@ class API:
             data=request_param["body"],
         )
         return r
+
+    def request_auto_paged(self, i: RequestInput):
+        """Implement pagination, based on VolcEngine's convention"""
+
+        def update_page_number(n: int):
+            try:
+                params = json.loads(i.body)
+            except json.JSONDecodeError:
+                params = {}
+            params["PageNumber"] = n
+            i.body = json.dumps(params)
+
+        merged_items = []
+
+        update_page_number(1)
+
+        while True:
+            resp = self.request(i)
+            if resp.status_code != 200:
+                raise ErrPagedRequest(f"Error in pagination: {resp.json()}")
+
+            r = resp.json()
+            items = r.get('Result', {}).get('Items', [])
+            total_count = r.get('Result', {}).get('TotalCount', 0)
+            page_number = r.get('Result', {}).get('PageNumber', 1)
+            page_size = r.get('Result', {}).get('PageSize', 10)
+
+            merged_items.extend(items)
+
+            if (page_number * page_size) >= total_count:
+                break
+
+            update_page_number(page_number + 1)
+
+        return merged_items
 
 
 def norm_query(params):
