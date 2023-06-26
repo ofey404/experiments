@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: tensorboard
+
+resources:
+  # - namespace.yaml
+
+  # Tensorboards Controller
+  -  github.com/kubeflow/manifests/apps/tensorboard/tensorboard-controller/upstream/base
+  # Tensorboard Web App
+  -  github.com/kubeflow/manifests/apps/tensorboard/tensorboards-web-app/upstream/base
+
+images:
+  - name: docker.io/kubeflownotebookswg/tensorboard-controller
+    newName: 662391098426.dkr.ecr.us-west-2.amazonaws.com/cloud-platform/kubeflow/tensorboard-controller
+    newTag: latest
