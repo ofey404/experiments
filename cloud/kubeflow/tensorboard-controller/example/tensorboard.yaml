@@ -12,4 +12,4 @@ metadata:
   namespace: tensorboard
   name: my-tensorboard-hostpath
 spec:
-  logspath: host://logs
+  logspath: host://tensorboard/log/dir # hostpath /tensorboard/log/dir
