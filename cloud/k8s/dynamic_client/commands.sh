@@ -9,11 +9,10 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-push get_metadata/
+cd get_metadata/
   go run .
-popd
+cd -
 
-push create_delete_crd/
-  go run .
-popd
-
+cd create_delete_crd/
+  go run . -kubeconfig ~/.kube/config -f tensorboard.yaml
+cd -

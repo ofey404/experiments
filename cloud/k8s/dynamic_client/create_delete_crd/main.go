@@ -1,50 +1,98 @@
+// https://gist.github.com/pytimer/0ad436972a073bb37b8b6b8b474520fc
 package main
 
 import (
+	"bytes"
 	"context"
 	"flag"
-	"fmt"
+	"io"
+	"log"
+
 	"os"
 
-	"github.com/ofey404/experiments/cloud/k8s/dynamic_client/shared"
-	"github.com/ofey404/experiments/cloud/k8s/utils"
-	"github.com/zeromicro/go-zero/core/logx"
+	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
-	"k8s.io/apimachinery/pkg/util/yaml"
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/runtime/serializer/yaml"
+	yamlutil "k8s.io/apimachinery/pkg/util/yaml"
 	"k8s.io/client-go/dynamic"
+	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/restmapper"
+	"k8s.io/client-go/tools/clientcmd"
 )
 
-var yamlFile = flag.String("f", "./tensorboard.yaml", "the yaml file")
-
-func tensorboard(filePath string) *unstructured.Unstructured {
-	content, err := os.ReadFile(filePath)
-	logx.Must(err)
-
-	fmt.Printf("content: %s\n", string(content))
-	obj := &unstructured.Unstructured{}
-	logx.Must(
-		yaml.Unmarshal(content, &obj.Object),
-	)
-	fmt.Printf("obj: %v\n", obj.Object)
-	return obj
-}
+var (
+	kubeconfig string
+	filename   string
+)
 
 func main() {
+	flag.StringVar(&kubeconfig, "kubeconfig", "", "")
+	flag.StringVar(&filename, "f", "", "")
 	flag.Parse()
-	config := utils.MustGetLocalConfig()
 
-	client, err := dynamic.NewForConfig(config)
-	logx.Must(err)
+	b, err := os.ReadFile(filename)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	resource := client.Resource(shared.TensorboardGVR)
+	config, err := clientcmd.BuildConfigFromFlags("", kubeconfig)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	obj := tensorboard(*yamlFile)
-	result, err := resource.Apply(context.TODO(), "dynamical-created", obj, metav1.ApplyOptions{})
-	logx.Must(err)
+	c, err := kubernetes.NewForConfig(config)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	resultJson, err := result.MarshalJSON()
-	logx.Must(err)
+	dd, err := dynamic.NewForConfig(config)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	fmt.Printf("result: %s\n", resultJson)
+	decoder := yamlutil.NewYAMLOrJSONDecoder(bytes.NewReader(b), 100)
+	for {
+		var rawObj runtime.RawExtension
+		if err = decoder.Decode(&rawObj); err != nil {
+			break
+		}
+
+		obj, gvk, err := yaml.NewDecodingSerializer(unstructured.UnstructuredJSONScheme).Decode(rawObj.Raw, nil, nil)
+		unstructuredMap, err := runtime.DefaultUnstructuredConverter.ToUnstructured(obj)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		unstructuredObj := &unstructured.Unstructured{Object: unstructuredMap}
+
+		gr, err := restmapper.GetAPIGroupResources(c.Discovery())
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		mapper := restmapper.NewDiscoveryRESTMapper(gr)
+		mapping, err := mapper.RESTMapping(gvk.GroupKind(), gvk.Version)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		var dri dynamic.ResourceInterface
+		if mapping.Scope.Name() == meta.RESTScopeNameNamespace {
+			if unstructuredObj.GetNamespace() == "" {
+				unstructuredObj.SetNamespace("default")
+			}
+			dri = dd.Resource(mapping.Resource).Namespace(unstructuredObj.GetNamespace())
+		} else {
+			dri = dd.Resource(mapping.Resource)
+		}
+
+		if _, err := dri.Create(context.Background(), unstructuredObj, metav1.CreateOptions{}); err != nil {
+			log.Fatal(err)
+		}
+	}
+	if err != io.EOF {
+		log.Fatal("eof ", err)
+	}
 }
