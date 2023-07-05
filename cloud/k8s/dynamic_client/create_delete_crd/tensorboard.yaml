@@ -1,0 +1,14 @@
+# CRD definition
+# 
+# https://github.com/kubeflow/kubeflow/blob/29ee2648f4e0ce597b0fd4ad0b992720aab2e624/components/tensorboard-controller/config/crd/bases/tensorboard.kubeflow.org_tensorboards.yaml#L1-L86 
+#
+# tensorboard_types.go
+#
+# https://github.com/kubeflow/kubeflow/blob/29ee2648f4e0ce597b0fd4ad0b992720aab2e624/components/tensorboard-controller/api/v1alpha1/tensorboard_types.go#L28-L32
+
+apiVersion: "tensorboard.kubeflow.org/v1alpha1"
+kind: Tensorboard
+metadata:
+  name: created-by-dynamic-client
+spec:
+  logspath: host://tensorboard/log/dir # hostpath /tensorboard/log/dir

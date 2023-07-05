@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: test-cron-job-echo
+spec:
+  schedule: "*/2 * * * *"
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: echoer
+            image: busybox:1.28
+            imagePullPolicy: IfNotPresent
+            command: ['sh', '-c', 'echo $(date)']

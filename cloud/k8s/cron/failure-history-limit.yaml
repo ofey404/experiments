@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: test-cron-job-failure-history-limit
+spec:
+  schedule: "*/1 * * * *"
+  failedJobsHistoryLimit: 0
+  successfulJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  # The CronJob does not allow concurrent runs;
+  # if it is time for a new job run and the previous
+  # job run hasn't finished yet, the CronJob skips
+  # the new job run
+
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: loser
+            image: busybox:1.28
+            imagePullPolicy: IfNotPresent
+            command: ['sh', '-c', 'exit 1']

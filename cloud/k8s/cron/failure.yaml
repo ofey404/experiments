@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: test-cron-job-failure
+spec:
+  schedule: "*/2 * * * *"
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: loser
+            image: busybox:1.28
+            imagePullPolicy: IfNotPresent
+            command: ['sh', '-c', 'exit 1']
