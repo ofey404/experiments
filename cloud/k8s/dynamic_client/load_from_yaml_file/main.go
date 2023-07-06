@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"context"
 	"flag"
+	"fmt"
 	"io"
 	"log"
 
@@ -66,6 +67,7 @@ func main() {
 		}
 
 		unstructuredObj := &unstructured.Unstructured{Object: unstructuredMap}
+		fmt.Printf("unstructuredMap = %+v\n", unstructuredMap)
 
 		gr, err := restmapper.GetAPIGroupResources(c.Discovery())
 		if err != nil {
@@ -77,6 +79,7 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
+		fmt.Printf("mapping.Resource = {%+v}\n", mapping.Resource)
 
 		var dri dynamic.ResourceInterface
 		if mapping.Scope.Name() == meta.RESTScopeNameNamespace {

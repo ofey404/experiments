@@ -6,22 +6,14 @@ import (
 	"time"
 
 	"github.com/ofey404/experiments/cloud/k8s/dynamic_client/shared"
-	"github.com/ofey404/experiments/cloud/k8s/utils"
-
 	"github.com/zeromicro/go-zero/core/logx"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/dynamic"
 )
 
 func main() {
-	config := utils.MustGetLocalConfig()
+	resource := shared.TensorboardApi()
 
-	client, err := dynamic.NewForConfig(config)
-	logx.Must(err)
-
-	resource := client.Resource(shared.TensorboardGVR)
-
-	data, err := resource.Namespace("kubeflow-user-example-com").Get(context.TODO(), "tos-tensorboard-230630", metav1.GetOptions{})
+	data, err := resource.Namespace("default").Get(context.TODO(), "my-tensorboard-hostpath", metav1.GetOptions{})
 	//data, err := resource.Namespace("kubeflow-user-example-com").Get(context.TODO(), "tos-tensorboard-230630", metav1.GetOptions{})
 	logx.Must(err)
 

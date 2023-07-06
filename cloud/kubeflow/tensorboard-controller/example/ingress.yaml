@@ -1,0 +1,38 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-tensorboard-hostpath
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /my/tensorboard/hostpath/(.*$)
+            pathType: Prefix
+            backend:
+              service:
+                name: my-tensorboard-hostpath
+                port:
+                  number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-tensorboard-hostpath-redirect
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/permanent-redirect: /my/tensorboard/hostpath/
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /my/tensorboard/hostpath
+            pathType: Exact
+            backend:
+              service:
+                name: my-tensorboard-hostpath
+                port:
+                  number: 80

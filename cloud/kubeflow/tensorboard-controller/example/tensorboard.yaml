@@ -9,7 +9,7 @@
 apiVersion: "tensorboard.kubeflow.org/v1alpha1"
 kind: Tensorboard
 metadata:
-  namespace: tensorboard
+  # namespace: tensorboard
   name: my-tensorboard-hostpath
 spec:
   logspath: host://tensorboard/log/dir # hostpath /tensorboard/log/dir
