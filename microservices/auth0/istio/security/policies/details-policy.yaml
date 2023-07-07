@@ -1,0 +1,14 @@
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "details-policy"
+  namespace: demo
+spec:
+  action: ALLOW
+  selector:
+    matchLabels:
+      app: details
+  rules:
+  - when:
+    - key: request.auth.claims[permissions]
+      values: ["read:book-details"]

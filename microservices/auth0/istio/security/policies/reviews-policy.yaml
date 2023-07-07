@@ -1,0 +1,14 @@
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "reviews-policy"
+  namespace: demo
+spec:
+  action: ALLOW
+  selector:
+    matchLabels:
+      app: reviews
+  rules:
+  - when:
+    - key: request.auth.claims[permissions]
+      values: ["read:book-reviews"]

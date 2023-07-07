@@ -1,0 +1,9 @@
+apiVersion: security.istio.io/v1beta1
+kind: RequestAuthentication
+metadata:
+  name: "auth0"
+  namespace: demo
+spec:
+  jwtRules:
+  - issuer: "https://{YOUR_DOMAIN}/"
+    jwksUri: "https://{YOUR_DOMAIN}/.well-known/jwks.json"

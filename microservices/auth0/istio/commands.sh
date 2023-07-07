@@ -9,3 +9,4 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
+kind create cluster --image=kindest/node:v1.23.1
