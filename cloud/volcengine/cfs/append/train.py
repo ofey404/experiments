@@ -12,7 +12,7 @@ except IndexError:
 print(f"## Log dir: {log_dir}")
 
 # Writer will output to ./runs/ directory by default.
-writer = SummaryWriter(log_dir)
+writer = SummaryWriter(log_dir, filename_suffix='.log')
 atexit.register(writer.close)
 
 x = torch.arange(-5, 5, 0.1).view(-1, 1)

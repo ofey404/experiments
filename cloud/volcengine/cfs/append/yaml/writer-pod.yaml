@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cfs-append-experiment-writer
+spec:
+  containers:
+    - name: writer
+      image: cloud-platform-registry-cn-beijing.cr.volces.com/disposable-experiments/tensorboard-output-generator:latest
+      volumeMounts:
+        - mountPath: /root/runs
+          name: shared-tensorboard-logs
+  volumes:
+    - name: shared-tensorboard-logs
+      hostPath:
+        path: /data/tmp-cfs-append-experiment
