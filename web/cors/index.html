@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>POST Request Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>POST Request Example</h1>
+    <button onclick="makeRequest()">Make POST Request</button>
+    <div id="response"></div>
+
+    <script>
+        function makeRequest() {
+            var url = "http://xx.xx.xx.xx/api/metrics/tensorboard/get";
+            var token = "XXX";
+            var data = {
+                jobId: "42"
+            };
+
+            $.ajax({
+                url: url,
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                data: JSON.stringify(data),
+                success: function(response) {
+                    $("#response").text("POST request successful!");
+                    console.log(response);
+                },
+                error: function(xhr) {
+                    $("#response").text("POST request failed. Check the browser console for more details.");
+                    console.error(xhr);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
