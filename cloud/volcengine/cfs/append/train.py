@@ -3,6 +3,9 @@ from torch.utils.tensorboard import SummaryWriter
 import time
 import atexit
 import sys
+from tensorboard.compat.tensorflow_stub.io.gfile import LocalFileSystem
+
+delattr(LocalFileSystem, "append")
 
 try:
     log_dir = sys.argv[1]
@@ -12,7 +15,7 @@ except IndexError:
 print(f"## Log dir: {log_dir}")
 
 # Writer will output to ./runs/ directory by default.
-writer = SummaryWriter(log_dir, filename_suffix='.log')
+writer = SummaryWriter(log_dir)
 atexit.register(writer.close)
 
 x = torch.arange(-5, 5, 0.1).view(-1, 1)
@@ -39,6 +42,6 @@ while True:
     writer.flush()
     time.sleep(1)
 
-    if epoch >= 15:
+    if epoch % 15 == 0:
         print("## Recreate model")
         model = torch.nn.Linear(1, 1)

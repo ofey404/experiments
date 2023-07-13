@@ -9,8 +9,13 @@ spec:
       command: ['sh', '-c', 'while true; do echo $(date); sleep 1; done']
       volumeMounts:
         - mountPath: /root/runs
-          name: shared-tensorboard-logs
+          name: cfs
+        - mountPath: /root/runs-no-cfs
+          name: no-cfs
   volumes:
-    - name: shared-tensorboard-logs
+    - name: cfs
       hostPath:
         path: /data/tmp-cfs-append-experiment
+    - name: no-cfs
+      hostPath:
+        path: /tmp/no-cfs

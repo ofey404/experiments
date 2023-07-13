@@ -1,0 +1,9 @@
+apiVersion: "tensorboard.kubeflow.org/v1alpha1"
+kind: Tensorboard
+metadata:
+  name: cfs-append-experiment-tensorboard-no-cfs
+spec:
+  logspath: host://tmp/no-cfs
+  ingress:
+    enabled: true
+    path: /tensorboard/cfs-append-experiment-tensorboard-no-cfs
