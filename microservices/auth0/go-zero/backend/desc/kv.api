@@ -1,0 +1,31 @@
+syntax = "v1"
+
+info(
+	title: "KV Service"
+	desc: "An sample service"
+	author: "Weiwen Chen"
+	email: "ofey206@gmail.com"
+	version: "0.0.1"
+)
+
+type (
+	GetRequest {
+		Key string `json:"key"`
+	}
+	GetResponse {
+		Value string `json:"value"`
+	}
+
+	SetRequest {
+		Key   string `json:"key"`
+		Value string `json:"value"`
+	}
+)
+
+service kv {
+	@handler GetHandler
+	post /api/get (GetRequest) returns (GetResponse)
+	
+	@handler SetHandler
+	post /api/set (SetRequest)
+}

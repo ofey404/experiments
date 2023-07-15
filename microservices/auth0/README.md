@@ -17,3 +17,11 @@ go run .
 [Authenticating and Authorizing end-users with Istio and Auth0](https://auth0.com/blog/securing-kubernetes-clusters-with-istio-and-auth0/)
 
 [Learn Istio – How to Manage, Monitor, and Secure Microservices](https://www.freecodecamp.org/news/learn-istio-manage-microservices/)
+
+## go-zero
+
+The stack:
+
+auth0 -> istio -> k8s -> go-zero
+
+See [./go-zero/README.md](./go-zero/README.md) for more.
