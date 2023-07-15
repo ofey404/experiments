@@ -13,7 +13,7 @@ import (
 func main() {
 	resource := shared.TensorboardApi()
 
-	data, err := resource.Namespace("default").Get(context.TODO(), "my-tensorboard-hostpath", metav1.GetOptions{})
+	data, err := resource.Namespace("default").Get(context.TODO(), "tensorboard-268", metav1.GetOptions{})
 	//data, err := resource.Namespace("kubeflow-user-example-com").Get(context.TODO(), "tos-tensorboard-230630", metav1.GetOptions{})
 	logx.Must(err)
 

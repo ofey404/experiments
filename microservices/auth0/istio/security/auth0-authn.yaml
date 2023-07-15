@@ -5,5 +5,5 @@ metadata:
   namespace: demo
 spec:
   jwtRules:
-  - issuer: "https://{YOUR_DOMAIN}/"
-    jwksUri: "https://{YOUR_DOMAIN}/.well-known/jwks.json"
+  - issuer: "https://dev-15m7pbrhilpcom2k.us.auth0.com/"
+    jwksUri: "https://dev-15m7pbrhilpcom2k.us.auth0.com/.well-known/jwks.json"

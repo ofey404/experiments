@@ -70,3 +70,67 @@ istioctl proxy-config all deploy/productpage-v1 -o json | \
   jq -r 'select(.name == "default")' | \
   jq -r '.tls_certificate.certificate_chain.inline_bytes' | \
   base64 -d - | step certificate inspect
+
+USER=user@bookinfo.com
+MODER=mod@bookinfo.com
+PASSWORD=t^L5RGtl^lC7
+
+echo "## Create test user via dashboard"
+echo "user: $USER"
+echo "moder: $MODER"
+echo "password: $PASSWORD"
+
+# There can be three different outcomes based on the user requests:
+#
+# Requests with valid tokens are admitted into the cluster, and their claims are made available to policies (as we'll see later on in the article)
+# Requests with invalid tokens are rejected
+# Requests without tokens (or with tokens that don't match any issuer) are admitted into the cluster but lack the claims (thus those requests can be denied by policies due to lack of claims)
+kubectl apply -f security/auth0-authn.yaml
+kubectl apply -f security/app-credentials.yaml
+
+# Then patch deployment
+kubectl -n demo patch deployment productpage-v1 --patch "
+spec:
+  template:
+    spec:
+      containers:
+      - name: productpage
+        image: rinormaloku/productpage:istio-auth0
+        envFrom:
+        - secretRef:
+            name: app-credentials
+"
+
+# login, then
+# decode the token, to inspect the outcome
+kubectl logs deploy/productpage-v1 | grep Bearer | tail -n 1 | \
+    awk -F'Bearer ' '{print $2}' | \
+    awk -F\\ '{print $1}'
+
+# Visualize JWT on https://jwt.io/
+#
+# header:
+# {
+#   "alg": "RS256",
+#   "typ": "JWT",
+#   "kid": "CstMCrv4lxQuxZPfz_zy4"
+# }
+#
+# payload
+# {
+#   "iss": "https://dev-15m7pbrhilpcom2k.us.auth0.com/",
+#   "sub": "auth0|64b21aa8e0dbe84c1a330b50",
+#   "aud": [
+#     "https://bookinfo.io",
+#     "https://dev-15m7pbrhilpcom2k.us.auth0.com/userinfo"
+#   ],
+#   "iat": 1689395128,
+#   "exp": 1689481528,
+#   "azp": "CexKuxiCnGXKyoGTBeVflUadFRuDNS2d",
+#   "scope": "openid profile",
+#   "permissions": [
+#     "read:book-details"
+#   ]
+# }
+
+kubectl apply -f security/policies/
