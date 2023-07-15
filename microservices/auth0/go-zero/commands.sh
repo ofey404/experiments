@@ -9,5 +9,15 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-# build image auth0-go-zero-backend:latest
+# local test #################################
+backend/launch.sh
+frontend/launch.sh
+
+# docker test ################################
+# auth0-go-zero-backend:latest
 backend/build.sh
+# auth0-go-zero-frontend:latest
+frontend/build.sh
+
+backend/docker-launch.sh
+frontend/docker-launch.sh

@@ -19,6 +19,8 @@ function App() {
     const [value, setValue] = useState("");
     const [result, setResult] = useState("");
 
+    const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || "http://localhost:8888";
+
     const handleSet = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -28,7 +30,7 @@ function App() {
         };
 
         try {
-            const response = await fetch("http://localhost:8888/api/set", {
+            const response = await fetch(`${apiEndpoint}/api/set`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -39,11 +41,11 @@ function App() {
             if (response.ok) {
                 setResult("Set successful!");
             } else {
-                setResult("Set failed!");
+                setResult(`Set failed!, return code ${response.status}`);
             }
         } catch (error) {
             console.error(error);
-            setResult("Set failed!");
+            setResult(`Set failed with ${error}!`);
         }
     };
 
@@ -55,7 +57,7 @@ function App() {
         };
 
         try {
-            const response = await fetch("http://localhost:8888/api/get", {
+            const response = await fetch(`${apiEndpoint}/api/get`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -71,7 +73,7 @@ function App() {
             }
         } catch (error) {
             console.error(error);
-            setResult("Get failed!");
+            setResult(`Get failed with ${error}!`);
         }
     };
 
