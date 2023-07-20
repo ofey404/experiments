@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@auth0/auth0-react':
+    specifier: ^2.2.0
+    version: registry.npmmirror.com/@auth0/auth0-react@2.2.0(react-dom@18.2.0)(react@18.2.0)
   '@testing-library/jest-dom':
     specifier: ^5.16.5
     version: registry.npmmirror.com/@testing-library/jest-dom@5.16.5
@@ -90,6 +93,26 @@ packages:
       json-schema: registry.npmmirror.com/json-schema@0.4.0
       jsonpointer: registry.npmmirror.com/jsonpointer@5.0.1
       leven: registry.npmmirror.com/leven@3.1.0
+    dev: false
+
+  registry.npmmirror.com/@auth0/auth0-react@2.2.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Kqk73HamFDDit9rGlmqUMbZiSuYcAJ0+P3ZS3kek79fsrUTc2od9tTVOjkNbzMLifetevOJ3Mgt/6f/6To4vkg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@auth0/auth0-react/-/auth0-react-2.2.0.tgz}
+    id: registry.npmmirror.com/@auth0/auth0-react/2.2.0
+    name: '@auth0/auth0-react'
+    version: 2.2.0
+    peerDependencies:
+      react: ^16.11.0 || ^17 || ^18
+      react-dom: ^16.11.0 || ^17 || ^18
+    dependencies:
+      '@auth0/auth0-spa-js': registry.npmmirror.com/@auth0/auth0-spa-js@2.1.0
+      react: registry.npmmirror.com/react@18.2.0
+      react-dom: registry.npmmirror.com/react-dom@18.2.0(react@18.2.0)
+    dev: false
+
+  registry.npmmirror.com/@auth0/auth0-spa-js@2.1.0:
+    resolution: {integrity: sha512-7cF2NxrslgjArIdBwpNg02atPldpHHOrXxDScL71cbxKuKny3eziZIpNHQAdsPFiLhjKQ+izWmLq2ZRFlYB/eQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@auth0/auth0-spa-js/-/auth0-spa-js-2.1.0.tgz}
+    name: '@auth0/auth0-spa-js'
+    version: 2.1.0
     dev: false
 
   registry.npmmirror.com/@babel/code-frame@7.22.5:

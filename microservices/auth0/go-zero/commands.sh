@@ -21,3 +21,7 @@ frontend/build.sh
 
 backend/docker-launch.sh
 frontend/docker-launch.sh
+
+# istio test ################################
+# create cluster
+./deploy/commands.sh

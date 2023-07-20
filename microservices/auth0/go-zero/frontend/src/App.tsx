@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
 import './App.css';
+import LoginButton from "./Login";
+import LogoutButton from "./Logout";
+import {useAuth0} from '@auth0/auth0-react';
 
 interface GetRequest {
     key: string;
@@ -18,11 +21,23 @@ function App() {
     const [key, setKey] = useState("");
     const [value, setValue] = useState("");
     const [result, setResult] = useState("");
+    const {getAccessTokenSilently} = useAuth0();
 
     const apiEndpoint = process.env.REACT_APP_API_ENDPOINT || "http://localhost:8888";
 
     const handleSet = async (e: React.FormEvent) => {
         e.preventDefault();
+        let token = ""
+        try {
+            token = await getAccessTokenSilently({
+                authorizationParams: {
+                    audience: 'https://bookinfo.io/api/v2', // Value in Identifier field for the API being called.
+                    scope: 'read:book-reviews', // Scope that exists for the API being called. You can create these through the Auth0 Management API or through the Auth0 Dashboard in the Permissions view of your API.
+                }
+            });
+        } catch (error) {
+            alert("Error getting access token: " + error)
+        }
 
         const data: SetRequest = {
             key,
@@ -80,6 +95,8 @@ function App() {
     return (
         <div className="App">
             <h1>Key-Value Store</h1>
+            <LoginButton/>
+            <LogoutButton/>
             <form onSubmit={handleSet}>
                 <label htmlFor="setKey">Key:</label>
                 <input
