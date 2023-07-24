@@ -1,0 +1,14 @@
+# This yaml demonstrates how to wait for a daemonset until it starts,
+# by setting `initContainers` field.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sidecar-log-spinner
+spec:
+  containers:
+    - name: app 
+      image: busybox:1.28
+      command: ['sh', '-c', 'while true; do echo $(date); sleep 1; done']
+    - name: log-sidecar
+      image: bitnami/kubectl
+      command: ['sh', '-c', 'kubectl logs xxx -c app > output.log']
