@@ -14,4 +14,6 @@ spec:
     - name: cfs
       hostPath:
         path: /data/
+  nodeSelector:
+    cluster.vke.volcengine.com/node-name: node-z2dx9f
 
