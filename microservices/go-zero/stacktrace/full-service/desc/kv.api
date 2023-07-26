@@ -22,10 +22,13 @@ type (
 	}
 )
 
+@server(
+	middleware: TraceIDMiddleware
+)
 service kv {
 	@handler GetHandler
 	post /api/get (GetRequest) returns (GetResponse)
-	
+
 	@handler SetHandler
 	post /api/set (SetRequest)
 }

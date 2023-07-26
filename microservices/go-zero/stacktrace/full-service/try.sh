@@ -23,7 +23,7 @@ curl -X POST localhost:8888/api/set -H "Content-Type: application/json" -d '{
 
 echo ""
 
-curl -X POST localhost:8888/api/get -H "Content-Type: application/json" -d '{
+curl -X POST -vv localhost:8888/api/get -H "Content-Type: application/json" -d '{
   "key": "key"
 }'
 
