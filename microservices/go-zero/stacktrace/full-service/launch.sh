@@ -8,4 +8,4 @@ SERVICE_ROOT=$SCRIPT_DIR
 
 cd "$SERVICE_ROOT"
 
-go run . 2>&1 | tee -a backend.log
+go run . -f ./etc/kv.yaml 2>&1 | tee -a backend.log
