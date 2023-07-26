@@ -16,7 +16,7 @@ func NewTraceIDMiddleware() *TraceIDMiddleware {
 func (m *TraceIDMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		trace.TraceIDFromContext(r.Context())
-		w.Header().Set("x-trace-id", trace.TraceIDFromContext(r.Context()))
+		//w.Header().Set("x-trace-id", trace.TraceIDFromContext(r.Context()))
 		next(w, r)
 	}
 }
