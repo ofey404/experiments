@@ -8,4 +8,3 @@ contact:
     - '0987654321'
   meta:
     id: "nested dataclass field"
-  
