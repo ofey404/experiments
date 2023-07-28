@@ -1,0 +1,9 @@
+name: fromNestedYaml
+prize: 404
+contact:
+  city: mountainView
+  email: noreply@gmail.com
+  phone:
+    - '1234567890'
+    - '0987654321'
+  

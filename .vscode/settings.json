@@ -2,7 +2,7 @@
     "yaml.schemas": {
         "kubernetes://schema/v1@pod": "file:///home/ofey/cloud-workspace/experiments/cloud/snippets/spinner.yaml"
     },
-    "python.formatting.provider": "black",
+    "python.formatting.provider": "none",
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#0ea325",
         "activityBar.background": "#0ea325",
@@ -22,5 +22,8 @@
         "titleBar.inactiveBackground": "#0a741a99",
         "titleBar.inactiveForeground": "#e7e7e799"
     },
-    "peacock.remoteColor": "#0a741a"
+    "peacock.remoteColor": "#0a741a",
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    }
 }
