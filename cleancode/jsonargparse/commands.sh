@@ -9,7 +9,7 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-pip install jsonargparse==4.23.0 pydantic
+pip install jsonargparse[all]==4.23.0
 
 python 1-parser.py 
 # usage: 1-parser.py [-h] [--config CONFIG] [--print_config[=flags]] [--prize PRIZE] name
@@ -45,8 +45,6 @@ python 2-nested.py --config 2-nested.yaml
 # Contact info: Contact(city='mountainView', email='noreply@gmail.com', phone=['1234567890', '0987654321'])
 
 python 2-nested.py --help
-# /home/ofey/.local/lib/python3.10/site-packages/pydantic/_migration.py:283: UserWarning: `pydantic.utils:Representation` has been removed. We are importing from `pydantic.v1.utils:Representation` instead.See the migration guide for more details: https://docs.pydantic.dev/latest/migration/
-#   warnings.warn(
 # usage: 2-nested.py [-h] [--config CONFIG] [--print_config[=flags]] [--contact CONFIG] --contact.city CITY --contact.email EMAIL
 #                    --contact.phone PHONE [--contact.meta CONFIG] --contact.meta.m1 M1 [--prize PRIZE]
 #                    name
@@ -77,3 +75,32 @@ python 2-nested.py --help
 #                         Path to a configuration file.
 #   --contact.meta.m1 M1  (required, type: str)
 
+
+python 4-attribute-docstring.py -h
+# usage: 4-attribute-docstring.py [-h] [--config CONFIG] [--print_config[=flags]] [--options CONFIG] --options.name NAME [--options.residence CONFIG]
+#                                 --options.residence.city CITY --options.residence.email EMAIL [--options.prize PRIZE] [--options.metadata METADATA]
+# 
+# Prints the prize won by a person.
+# 
+# options:
+#   -h, --help            Show this help message and exit.
+#   --config CONFIG       Path to a configuration file.
+#   --print_config[=flags]
+#                         Print the configuration after applying all other arguments and exit. The optional flags customizes the output and are one or more
+#                         keywords separated by comma. The supported flags are: comments, skip_default, skip_null.
+# 
+# Options for a competition winner:
+#   --options CONFIG      Path to a configuration file.
+#   --options.name NAME   Name of winner. (required, type: str)
+#   --options.prize PRIZE
+#                         Amount won. (type: int, default: 100)
+#   --options.metadata METADATA
+#                         Metadata is a optional nested option. (type: Optional[OptionalNestedOptions], default: null)
+# 
+# Residence is a nested option:
+#   --options.residence CONFIG
+#                         Path to a configuration file.
+#   --options.residence.city CITY
+#                         City of winner. (required, type: str)
+#   --options.residence.email EMAIL
+#                         Email of winner. (required, type: str)
