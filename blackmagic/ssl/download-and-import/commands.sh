@@ -19,9 +19,6 @@ cd "$SCRIPT_DIR"
 echo | openssl s_client -connect IP:port 2>/dev/null | openssl x509 -noout -text
 echo | openssl s_client -connect IP:port 2>/dev/null | openssl x509 > certificate.crt
 
-# Linux distributions use a directory (/etc/ssl/certs by default) to hold trusted CA certificates.
-sudo cp certificate.crt /etc/ssl/certs/disposable-$(date +%Y-%m-%d-%H-%M-%S).crt
-
 # BE CAREFUL!
 sudo cp certificate.crt /usr/local/share/ca-certificates/disposable-$(date +%Y-%m-%d-%H-%M-%S).crt
 sudo update-ca-certificates
