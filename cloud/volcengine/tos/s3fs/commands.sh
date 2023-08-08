@@ -24,8 +24,12 @@ nano /root/.passwd-s3fs
 chmod 600 /root/.passwd-s3fs
 
 mkdir /mnt/tos
-s3fs {bucket-name} /mnt/tos -o passwd_file=${HOME}/.passwd-s3fs -o url=http://{S3 Endpoint} -d -o f2
+s3fs {bucket-name} /mnt/tos -o passwd_file=${HOME}/.passwd-s3fs -o umask=0000,uid=0,gid=0 -o url=http://{S3 Endpoint} -d -o f2
 
 # verify
 df -hT
 # s3fs           fuse.s3fs  256T     0  256T   0% /mnt/tos
+
+# NOTE: permission issue, hard to cure.
+#       check ../goofs/README. instead.
+# https://github.com/s3fs-fuse/s3fs-fuse/issues/673
