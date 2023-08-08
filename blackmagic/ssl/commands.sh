@@ -9,12 +9,6 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-# Download secrets from ingress-nginx
-# None of them are the right one.
-./download-secrets.sh kube-system general-webhook-certs
-./download-secrets.sh kube-system ingress-nginx-admission
+# fake domain name for local testing.
 
-# WORKS:
-# grab certificate directly from the server
-echo | openssl s_client -connect IP:port 2>/dev/null | openssl x509 -noout -text
-echo | openssl s_client -connect IP:port 2>/dev/null | openssl x509 > certificate.crt
+

@@ -23,8 +23,6 @@ with open(file_path, "rb") as f:
     out = requests.put(presigned_url, content)
     out.close()
     if out.status_code != 200:
-        raise Exception(
-            f"upload failed: {out.status_code} {out.text}"
-        )
+        raise Exception(f"upload failed: {out.status_code} {out.text}")
 
 print("uploaded")
