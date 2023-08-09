@@ -27,7 +27,7 @@ scp credentials MACHINE:/root/.aws/credentials
 # OR
 nano /root/.aws/credentials
 
-goofys --subdomain --dir-mode=0777 --file-mode=0666 --profile default --endpoint=https://{S3 Endpoint} {bucket-name} /mnt/tos
+goofys --subdomain --dir-mode=0777 --file-mode=0666 --profile default --endpoint=https://{S3 Endpoint} -o allow_other {bucket-name} /mnt/tos
 
 # verify
 df -hT
