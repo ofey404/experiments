@@ -24,7 +24,6 @@ func NewSetKeyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *SetKeyLogi
 }
 
 func (l *SetKeyLogic) SetKey(req *types.SetKeyReq) error {
-	// todo: add your logic here and delete this line
-
+	l.svcCtx.Kv[req.Key] = req.Value
 	return nil
 }

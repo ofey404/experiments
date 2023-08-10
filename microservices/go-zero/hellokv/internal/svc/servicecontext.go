@@ -6,10 +6,12 @@ import (
 
 type ServiceContext struct {
 	Config config.Config
+	Kv     map[string]string
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
 		Config: c,
+		Kv:     make(map[string]string),
 	}
 }

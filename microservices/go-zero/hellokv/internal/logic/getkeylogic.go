@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"errors"
 
 	"github.com/ofey404/experiments/microservices/go-zero/hellokv/internal/svc"
 	"github.com/ofey404/experiments/microservices/go-zero/hellokv/internal/types"
@@ -24,7 +25,13 @@ func NewGetKeyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetKeyLogi
 }
 
 func (l *GetKeyLogic) GetKey(req *types.GetKeyReq) (resp *types.GetKeyResp, err error) {
-	// todo: add your logic here and delete this line
+	val, ok := l.svcCtx.Kv[req.Key]
 
-	return
+	if !ok {
+		return nil, errors.New("key not found")
+	}
+
+	return &types.GetKeyResp{
+		Value: val,
+	}, nil
 }

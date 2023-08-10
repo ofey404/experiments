@@ -1,0 +1,61 @@
+# hellokv and its service
+apiVersion: v1
+kind: Service
+metadata:
+  name: hellokv
+  labels:
+    app: hellokv
+    service: hellokv
+spec:
+  ports:
+  - port: 8888
+    name: http
+  selector:
+    app: hellokv
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hellokv-v1
+  labels:
+    app: hellokv
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hellokv
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: hellokv
+        version: v1
+    spec:
+      containers:
+      - name: app
+        image: hellokv:latest
+        # KiND - How I Wasted a Day Loading Local Docker Images
+        # https://iximiuz.com/en/posts/kubernetes-kind-load-docker-image/
+        imagePullPolicy: IfNotPresent
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: network-tester
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: network-tester
+  template:
+    metadata:
+      labels:
+        app: network-tester
+    spec:
+      containers:
+      - name: netshoot
+        image: nicolaka/netshoot:v0.9
+        command: ['/bin/sh', '-c', 'while true; do echo $(date); sleep 1; done']
+---
+# gateway

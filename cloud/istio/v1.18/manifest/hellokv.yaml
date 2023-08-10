@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hellokv
+spec:
+  containers:
+    - name: app
+      image: hellokv:latest
+      # KiND - How I Wasted a Day Loading Local Docker Images
+      # https://iximiuz.com/en/posts/kubernetes-kind-load-docker-image/
+      imagePullPolicy: IfNotPresent
