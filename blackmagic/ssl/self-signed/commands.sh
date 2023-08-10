@@ -24,7 +24,7 @@ go run main.go
 # Starting server at :443...
 
 # cert wont work when we visit localhost
-curl https://localhost:8443
+curl https://localhost:443
 # curl: (60) SSL certificate problem: self-signed certificate
 # More details here: https://curl.se/docs/sslcerts.html
 # 
@@ -33,14 +33,14 @@ curl https://localhost:8443
 # how to fix it, please visit the web page mentioned above.
 
 # verify server runs
-curl --insecure https://localhost:8443
+curl --insecure https://localhost:443
 # Hello, you've connected successfully!
 
 sudo vim /etc/hosts
 # add this line
 # 127.0.0.1       $DOMAIN
 
-curl https://$DOMAIN:8443
+curl https://$DOMAIN:443
 # curl: (60) SSL certificate problem: self-signed certificate
 # More details here: https://curl.se/docs/sslcerts.html
 # 
