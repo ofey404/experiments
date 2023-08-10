@@ -1,3 +1,36 @@
+# Gateway
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: hellokv-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: hellokv
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - hellokv-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: hellokv
+---
 # hellokv and its service
 apiVersion: v1
 kind: Service

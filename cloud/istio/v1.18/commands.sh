@@ -15,7 +15,7 @@ docker stop kind-control-plane
 docker start kind-control-plane
 
 curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.18.2 TARGET_ARCH=x86_64 sh -
-export PATH=$PATH:$(pwd)/istio-1.18.2/bin
+PATH=$PATH:$(pwd)/istio-1.18.2/bin
 
 istioctl install --set profile=demo -y
 # check the profile
@@ -34,7 +34,7 @@ kubectl apply -f manifest/network-tester.yaml
 
 # in network-tester pod
 # verify the service is running
-export IP=10.244.0.9
+IP=10.244.0.9
 
 curl -X GET -i "$IP:8888/getkey" \
 -H "Content-Type: application/json" \
@@ -53,7 +53,7 @@ kubectl apply -f manifest/hellokv.yaml
 kubectl apply -f manifest/network-tester.yaml
 
 # go in network-tester pod again
-export IP=10.244.0.11
+IP=10.244.0.11
 
 # we can still access the service
 curl -X GET -i "$IP:8888/getkey" \
@@ -64,5 +64,17 @@ curl -X GET -i "$IP:8888/getkey" \
 kubectl delete -f manifest/hellokv.yaml
 kubectl delete -f manifest/network-tester.yaml
 
+#####################################################################
+# Istio feature test
+#####################################################################
+
 # all with istio
 kubectl apply -f manifest/all-with-istio.yaml
+
+INGRESS_SERVICE=
+# Now we have Gateway, visit it
+kubectl port-forward svc/istio-ingressgateway -n istio-system 8888:80
+
+curl -X GET -i "localhost:8888/getkey" \
+-H "Content-Type: application/json" \
+-d '{ "key": "key1" }'
