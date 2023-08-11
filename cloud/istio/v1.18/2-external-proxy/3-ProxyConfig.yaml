@@ -1,0 +1,7 @@
+# Idea:
+# 5. Can we inject $HTTP_PROXY and $HTTPS_PROXY,
+#    into sidecar as ProxyConfig?
+# https://istio.io/latest/docs/reference/config/networking/proxy-config/
+
+
+# It's too hacky. we would place this method at lowest priority.

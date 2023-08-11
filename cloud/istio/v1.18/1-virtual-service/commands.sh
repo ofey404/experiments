@@ -15,7 +15,7 @@ docker stop kind-control-plane
 docker start kind-control-plane
 
 curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.18.2 TARGET_ARCH=x86_64 sh -
-PATH=$PATH:$(pwd)/istio-1.18.2/bin
+PATH=$PATH:$(pwd)/../istio-1.18.2/bin
 
 istioctl install --set profile=demo -y
 # check the profile
@@ -32,8 +32,11 @@ kind load docker-image hellokv:latest
 kubectl apply -f manifest/hellokv.yaml
 kubectl apply -f manifest/network-tester.yaml
 
-# in network-tester pod
+#####################################################################
 # verify the service is running
+#####################################################################
+
+# in network-tester pod
 IP=10.244.0.9
 
 curl -X GET -i "$IP:8888/getkey" \
@@ -78,3 +81,5 @@ kubectl port-forward svc/istio-ingressgateway -n istio-system 8888:80
 curl -X GET -i "localhost:8888/getkey" \
 -H "Content-Type: application/json" \
 -d '{ "key": "key1" }'
+
+kubectl delete -f manifest/all-with-istio.yaml

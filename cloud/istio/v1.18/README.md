@@ -7,6 +7,8 @@ Docs:
 - https://istio.io/v1.18/docs/setup/install/istioctl/#install-istio-using-the-default-profile
 - https://istio.io/v1.18/docs/setup/getting-started/#download
 
+Commands to set up cluster are at [1-virtual-service/commands.sh](1-virtual-service/commands.sh)
+
 ## TODO
 
 1. (Done) External access of hellokv (Gateway, VirtualService)

@@ -1,0 +1,17 @@
+# From:
+# Using an External HTTPS Proxy
+# https://istio.io/latest/docs/tasks/traffic-management/egress/http-proxy/
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: proxy
+spec:
+  hosts:
+  - my-company-proxy.com # ignored
+  addresses:
+  - host.docker.internal # localhost tinyproxy, mapping into kind cluster
+  ports:
+  - number: 8888
+    name: tcp
+    protocol: TCP
+  location: MESH_EXTERNAL
