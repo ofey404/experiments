@@ -1,18 +1,10 @@
-import hiyapyco
 from pathlib import Path
+try:
+    import hiyapyco
+except ImportError:
+    print("""Please install hiyapyco first:
 
-
-def merge_dicts(a, b):
-    """https://stackoverflow.com/questions/47424865/merge-two-yaml-files-in-python"""
-    for key in b:
-        if key in a:
-            if isinstance(a[key], dict) and isinstance(b[key], dict):
-                merge_dicts(a[key], b[key])
-            else:
-                a[key] = b[key]
-        else:
-            a[key] = b[key]
-    return a
+pip install HiYaPyCo==0.5.1""")
 
 
 def load(path: Path) -> str:
