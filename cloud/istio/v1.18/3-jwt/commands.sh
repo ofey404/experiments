@@ -25,6 +25,7 @@ kubectl config use-context kind-kind
 # See:
 # cloud/istio/v1.18/1-virtual-service/commands.sh
 kind load docker-image test-pyjwt:latest
+kind load docker-image hellokv:latest
 
 ##############################################
 kubectl apply -f network-tester.yaml
@@ -108,3 +109,15 @@ TOKEN=$(curl https://raw.githubusercontent.com/istio/istio/release-1.18/security
 curl --header "Authorization: Bearer $TOKEN" -X GET -i "localhost:8888/getkey" -H "Content-Type: application/json" -d '{ "key": "key1" }'
 
 kubectl delete -f 6-rej-without-token.yaml
+
+##############################################
+# https://istio.io/latest/docs/tasks/security/authentication/claim-to-header/
+kubectl apply -f 7-claim-to-header.yaml
+
+# ACC - correct token
+TOKEN=$(curl https://raw.githubusercontent.com/istio/istio/release-1.18/security/tools/jwt/samples/demo.jwt -s)
+curl --header "Authorization: Bearer $TOKEN" -X GET -i "localhost:8888/getkey" -H "Content-Type: application/json" -d '{ "key": "key1" }'
+
+# check the header
+kubectl logs hellokv-v1-775d56c685-8bzgd
+# X-Jwt-Claim-Foo: bar
