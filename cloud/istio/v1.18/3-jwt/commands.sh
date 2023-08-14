@@ -112,6 +112,10 @@ kubectl delete -f 6-rej-without-token.yaml
 
 ##############################################
 # https://istio.io/latest/docs/tasks/security/authentication/claim-to-header/
+#
+# Another outdated way:
+# [Question] Decode JWT and put “sub” into a request header
+# https://discuss.istio.io/t/question-decode-jwt-and-put-sub-into-a-request-header/1213/3
 kubectl apply -f 7-claim-to-header.yaml
 
 # ACC - correct token
@@ -119,5 +123,33 @@ TOKEN=$(curl https://raw.githubusercontent.com/istio/istio/release-1.18/security
 curl --header "Authorization: Bearer $TOKEN" -X GET -i "localhost:8888/getkey" -H "Content-Type: application/json" -d '{ "key": "key1" }'
 
 # check the header
-kubectl logs hellokv-v1-775d56c685-8bzgd
+
+kubectl logs hellokv-v1-775d56c685-pt8gg
+# In header:
 # X-Jwt-Claim-Foo: bar
+# X-Jwt-Claim-Sub: testing@secure.istio.io
+# 
+# [HTTP] GET - 400 - 127.0.0.6:53541 - 0.1ms
+# => GET /getkey HTTP/1.1
+# Host: localhost:8888
+# Accept: */*
+# Content-Length: 17
+# Content-Type: application/json
+# User-Agent: curl/7.81.0
+# X-B3-Parentspanid: 670d17026ea26758
+# X-B3-Sampled: 1
+# X-B3-Spanid: 105098da9da6655c
+# X-B3-Traceid: 2665fbdccffd51c9670d17026ea26758
+# X-Envoy-Attempt-Count: 1
+# X-Envoy-Internal: true
+# X-Forwarded-Client-Cert: By=spiffe://cluster.local/ns/default/sa/default;Hash=bcc63ab94b5f93b69839939aacd6aef79e4093c7af3951b6bfe2827e12b5de69;Subject="";URI=spiffe://cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account
+# X-Forwarded-For: 10.244.0.4
+# X-Forwarded-Proto: http
+# X-Jwt-Claim-Foo: bar
+# X-Jwt-Claim-Sub: testing@secure.istio.io
+# X-Request-Id: 1bbd7bda-5ee8-9211-b423-5c9205dda695
+# 
+# { "key": "key1" }
+# <= key not found
+
+kubectl delete -f 7-claim-to-header.yaml

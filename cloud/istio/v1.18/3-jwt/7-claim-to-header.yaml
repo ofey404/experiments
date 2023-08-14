@@ -80,6 +80,8 @@ spec:
     outputClaimToHeaders:
     - header: "x-jwt-claim-foo"
       claim: "foo"
+    - header: "x-jwt-claim-sub"
+      claim: "sub"
 ---
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
