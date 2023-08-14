@@ -12,6 +12,6 @@ Commands to set up cluster are at [1-virtual-service/commands.sh](1-virtual-serv
 ## TODO
 
 1. (Done) External access of hellokv (Gateway, VirtualService)
-2. Using external proxy. (EnvoyFilter?)
+2. (I workaround this) Using external proxy. (EnvoyFilter?)
 3. Parse JWT
 4. Traffic restriction

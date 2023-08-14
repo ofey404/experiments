@@ -24,7 +24,7 @@ curl -H "x-access-tokens: $TOKEN" http://localhost:5000/protected
 ./build.sh
 #  => => naming to docker.io/library/test-pyjwt:latest
 
-docker run -it --rm test-pyjwt:latest
+docker run -it --rm -p 5000:5000 test-pyjwt:latest
 #  * Serving Flask app 'server'
 #  * Debug mode: on
 # WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.

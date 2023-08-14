@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hellokv-v1
+  labels:
+    app: hellokv
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hellokv
+  template:
+    metadata:
+      labels:
+        app: hellokv
+    spec:
+      containers:
+      - name: app
+        image: hellokv:latest
+        # KiND - How I Wasted a Day Loading Local Docker Images
+        # https://iximiuz.com/en/posts/kubernetes-kind-load-docker-image/
+        imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hellokv
+spec:
+  ports:
+  - port: 80
+    targetPort: 8888
+    name: http
+  selector:
+    app: hellokv
+---
+# istio End-user authentication
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: hellokv-gateway
+spec:
+  selector:
+    istio: ingressgateway # use Istio default gateway implementation
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: hellokv
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - hellokv-gateway
+  http:
+  - route:
+    - destination:
+        port:
+          number: 80
+        host: hellokv.default.svc.cluster.local
+---
+apiVersion: security.istio.io/v1
+kind: RequestAuthentication
+metadata:
+  name: "jwt-example"
+  namespace: istio-system
+spec:
+  selector:
+    matchLabels:
+      istio: ingressgateway
+  jwtRules:
+  - issuer: "testing@secure.istio.io"
+    jwksUri: "https://raw.githubusercontent.com/istio/istio/release-1.18/security/tools/jwt/samples/jwks.json"
+---
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: "reject-no-token-req"
+  namespace: istio-system
+spec:
+  selector:
+    matchLabels:
+      istio: ingressgateway
+  action: DENY
+  rules:
+  - from:
+    - source:
+        notRequestPrincipals: ["*"]

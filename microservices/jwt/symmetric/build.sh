@@ -8,4 +8,4 @@ SERVICE_ROOT=$SCRIPT_DIR
 
 cd "$SERVICE_ROOT"
 
-docker build -t test-pyjwt:latest .
+docker build -t pyjwt-hs256:latest .

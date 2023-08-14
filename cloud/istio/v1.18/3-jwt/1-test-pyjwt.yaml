@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-pyjwt-v1
+  labels:
+    app: test-pyjwt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-pyjwt
+  template:
+    metadata:
+      labels:
+        app: test-pyjwt
+    spec:
+      containers:
+      - name: app
+        image: test-pyjwt:latest
+        # KiND - How I Wasted a Day Loading Local Docker Images
+        # https://iximiuz.com/en/posts/kubernetes-kind-load-docker-image/
+        imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-pyjwt
+spec:
+  ports:
+  - port: 80
+    targetPort: 5000
+    name: http
+  selector:
+    app: test-pyjwt
