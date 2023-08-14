@@ -1,0 +1,48 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: huggingface-entry
+spec:
+  hosts:
+  - huggingface.co
+  location: MESH_EXTERNAL
+  ports:
+  - number: 80
+    name: tcp
+    protocol: TCP
+  resolution: DNS
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: huggingface-vservice
+spec:
+  hosts:
+  - huggingface.co
+  gateways:
+  - huggingface-gateway
+  http:
+  - route:
+    - destination:
+        host: host.docker.internal
+        port:
+          number: 8888
+    headers:
+      request:
+        set:
+          Host: huggingface.co
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: huggingface-gateway
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"

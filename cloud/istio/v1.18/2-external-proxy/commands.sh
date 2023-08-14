@@ -79,8 +79,38 @@ cat 2-external-proxy.yaml
 # https://istio.io/latest/docs/reference/config/networking/proxy-config/
 cat 3-ProxyConfig.yaml
 # It's too hacky. we would place this method at lowest priority.
+#
+# Some products implements it.
+# But I feel it's suspicious.
+# Pod level external HTTP(S) proxy configuration with Istio | Cisco tech blog
+# https://techblog.cisco.com/blog/istio-external-proxy
 
 ##############################################
 # 6. Can we use service entry, to redirect
 #    huggingface.com to use our http proxy?
 #    So that we can do it transparently.
+curl huggingface.co
+# <html>
+# <head><title>301 Moved Permanently</title></head>
+# <body>
+# <center><h1>301 Moved Permanently</h1></center>
+# <hr><center>CloudFront</center>
+# </body>
+# </html>
+
+# check the proxy behavior if it works
+curl -x http://localhost:8888 huggingface.co
+curl -x host.docker.internal:8888 huggingface.co
+# In the terminal of
+# tinyproxy -d -c tinyproxy.conf
+# INFO      Aug 11 17:35:01.472 [560961]: No upstream proxy for huggingface.co
+# INFO      Aug 11 17:35:01.472 [560961]: opensock: opening connection to huggingface.co:80
+# INFO      Aug 11 17:35:01.474 [560961]: opensock: getaddrinfo returned for huggingface.co:80
+# CONNECT   Aug 11 17:35:01.484 [560961]: Established connection to host "huggingface.co" using file descriptor 5.
+# INFO      Aug 11 17:35:01.497 [560961]: Closed connection between local client (fd:4) and remote client (fd:5)
+
+kubectl apply -f 4-proxy-huggingface.yaml
+
+# IT DOESN'T WORK AS EXPECTED.
+
+

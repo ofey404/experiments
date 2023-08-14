@@ -28,9 +28,9 @@ if __name__ == "__main__":
     import sys
 
     if len(sys.argv) != 3:
-        print(f"""Usage: python {sys.argv[0]} <kubeconfig1> <kubeconfig2>
+        print(f"""Usage: python {sys.argv[0]} <yaml1> <yaml2>
 
-Merged kubeconfig will go to stdout""")
+Merged yaml will go to stdout""")
         exit(1)
     main(
         Path(sys.argv[1]),

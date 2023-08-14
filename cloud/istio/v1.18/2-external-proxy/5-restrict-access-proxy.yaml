@@ -1,0 +1,88 @@
+# GPT4 explaination:
+# 
+# However, due to the way proxies work, the current version of Istio is not able to apply its AuthorizationPolicy
+# to a proxy specified in this way. The issue is that Istio's AuthorizationPolicy is based on the destination
+# of the HTTP request, and when you use a proxy, the destination is the final destination (huggingface.co in your
+# example), not the proxy server (host.docker.internal:8888).
+#
+# This is a known limitation of Istio, and there are ongoing discussions in the Istio community about how to address it. 
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: external-proxy
+spec:
+  hosts:
+  - "host.docker.internal"
+  ports:
+  - number: 8888
+    name: http
+    protocol: HTTP
+  location: MESH_EXTERNAL
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: external-proxy
+spec:
+  hosts:
+  - "host.docker.internal"
+  http:
+  - route:
+    - destination:
+        host: "host.docker.internal"
+        port:
+          number: 8888
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: network-tester-pod1
+  labels:
+    app: pod1
+spec:
+  containers:
+    - name: netshoot
+      image: nicolaka/netshoot:v0.9
+      command: ['/bin/sh', '-c', 'while true; do echo $(date); sleep 1; done']
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: network-tester-pod2
+  labels:
+    app: pod2
+spec:
+  containers:
+    - name: netshoot
+      image: nicolaka/netshoot:v0.9
+      command: ['/bin/sh', '-c', 'while true; do echo $(date); sleep 1; done']
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: external-proxy
+spec:
+  selector:
+    matchLabels:
+      app: pod1
+  rules:
+  - to:
+    - operation:
+        hosts:
+        - "host.docker.internal"
+
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: block-pod2
+spec:
+  selector:
+    matchLabels:
+      app: pod2
+  action: DENY
+  rules:
+  - to:
+    - operation:
+        hosts:
+        - "host.docker.internal"
