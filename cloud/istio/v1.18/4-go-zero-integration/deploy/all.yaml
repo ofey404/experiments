@@ -1,0 +1,118 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hellokv-api
+  labels:
+    app: hellokv
+spec:
+  ports:
+  - port: 80
+    name: http
+  selector:
+    app: hellokv-api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hellokv-api
+  labels:
+    app: hellokv
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hellokv-api
+  template:
+    metadata:
+      labels:
+        app: hellokv-api
+    spec:
+      containers:
+      - name: app
+        image: hellokv2-api:latest
+        args: ["-f", "/etc/service/config.yaml"]
+        # KiND - How I Wasted a Day Loading Local Docker Images
+        # https://iximiuz.com/en/posts/kubernetes-kind-load-docker-image/
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: config
+          mountPath: /etc/service
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          name: hellokv-api
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hellokv-api
+  labels:
+   app: hellokv
+data:
+  config.yaml: |
+    Name: hellokv2
+    Host: 0.0.0.0
+    Mode: dev
+    Port: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hellokv-rpc
+  labels:
+    app: hellokv
+spec:
+  ports:
+  - port: 80
+    name: grpc
+  selector:
+    app: hellokv-rpc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hellokv-rpc
+  labels:
+    app: hellokv
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hellokv-rpc
+  template:
+    metadata:
+      labels:
+        app: hellokv-rpc
+    spec:
+      containers:
+      - name: app
+        image: hellokv2-rpc:latest
+        args: ["-f", "/etc/service/config.yaml"]
+        # KiND - How I Wasted a Day Loading Local Docker Images
+        # https://iximiuz.com/en/posts/kubernetes-kind-load-docker-image/
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: config
+          mountPath: /etc/service
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          name: hellokv-rpc
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hellokv-rpc
+  labels:
+   app: hellokv
+data:
+  config.yaml: |
+    Name: hellokv2.rpc
+    ListenOn: 0.0.0.0:80
+    Mode: dev
+    Mongo:
+      Uri: mongodb://root:RootPassword@mongodb
+      Db:  hellokv
+      Collection: kv
