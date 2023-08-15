@@ -17,3 +17,5 @@ popd
 #####################################################################
 # Installation okteto
 curl https://get.okteto.com -sSfL | sh
+okteto version
+# okteto version 2.18.3 

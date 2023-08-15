@@ -10,9 +10,7 @@ cd "$SCRIPT_DIR"
 ##############################################
 
 # prepare test env: hellokv2
-pushd ../4-go-zero-integration
-    kubectl apply -f deploy/all.yaml
-popd
+kubectl apply -f all-with-tele-patch.yaml
 
 #####################################################################
 # Installation Telepresence
@@ -90,8 +88,10 @@ telepresence intercept hellokv-rpc --port 8080
 curl -d '{"key": "hello"}' \
 -H "Content-Type: application/json" \
 -X POST hellokv-api.default/getkey
+# {"value":"world2"}
 
 # stop interception
-telepresence leave
+telepresence leave hellokv-rpc
 
-
+#####################################################################
+telepresence helm uninstall
