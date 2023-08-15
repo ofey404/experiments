@@ -3,7 +3,7 @@ package logic
 import (
 	"context"
 
-	"github.com/ofey404/experiments/cloud/istio/v1.18/4-go-zero-integration/cmd/rpc/hellokv"
+	"github.com/ofey404/experiments/cloud/istio/v1.18/4-go-zero-integration/cmd/rpc/hellokv2"
 	"github.com/ofey404/experiments/cloud/istio/v1.18/4-go-zero-integration/cmd/rpc/internal/svc"
 	"github.com/ofey404/experiments/cloud/istio/v1.18/4-go-zero-integration/model"
 
@@ -24,7 +24,7 @@ func NewSetLogic(ctx context.Context, svcCtx *svc.ServiceContext) *SetLogic {
 	}
 }
 
-func (l *SetLogic) Set(in *hellokv.SetRequest) (*hellokv.SetResponse, error) {
+func (l *SetLogic) Set(in *hellokv2.SetRequest) (*hellokv2.SetResponse, error) {
 	old_kvs, err := l.svcCtx.Model.FindByKey(l.ctx, in.Key)
 	if err != model.ErrNotFound {
 		for _, old := range old_kvs {
@@ -45,5 +45,5 @@ func (l *SetLogic) Set(in *hellokv.SetRequest) (*hellokv.SetResponse, error) {
 		return nil, err
 	}
 
-	return &hellokv.SetResponse{}, nil
+	return &hellokv2.SetResponse{}, nil
 }

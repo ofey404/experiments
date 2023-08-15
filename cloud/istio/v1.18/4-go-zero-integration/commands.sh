@@ -14,9 +14,7 @@ PATH=$PATH:$(pwd)/../istio-1.18.2/bin
 ./scripts/generate.sh
 
 # build docker file
-./scripts/build.sh
-kind load docker-image hellokv2-api:latest
-kind load docker-image hellokv2-rpc:latest
+./scripts/build.sh; ./scripts/load_to_kind.sh
 
 # run a local test
 docker run -it --rm \
@@ -49,19 +47,19 @@ kubectl apply -f deploy/network-tester.yaml
 grpcurl -plaintext hellokv-rpc:80 list
 # grpc.health.v1.Health
 # grpc.reflection.v1alpha.ServerReflection
-# hellokv.Hellokv
-grpcurl -plaintext hellokv-rpc:80 list hellokv.Hellokv
-# hellokv.Hellokv.Get
-# hellokv.Hellokv.Set
-grpcurl -plaintext hellokv-rpc:80 describe hellokv.Hellokv.Get
-# hellokv.Hellokv.Get is a method:
+# hellokv2.Hellokv2
+grpcurl -plaintext hellokv-rpc:80 list hellokv2.Hellokv2
+# hellokv2.Hellokv2.Get
+# hellokv2.Hellokv2.Set
+grpcurl -plaintext hellokv-rpc:80 describe hellokv2.Hellokv2.Get
+# hellokv2.Hellokv2.Get is a method:
 # rpc Get ( .hellokv.GetRequest ) returns ( .hellokv.GetResponse );
 grpcurl -d '{"key": "hello"}' \
 -plaintext hellokv-rpc:80 \
-hellokv.Hellokv.Get
+hellokv2.Hellokv2.Get
 # ERROR:
 #   Code: Unknown
 #   Message: invalid objectId
 grpcurl -d '{"key": "hello", "value": "world"}' \
 -plaintext hellokv-rpc:80 \
-hellokv.Hellokv.Set
+hellokv2.Hellokv2.Set

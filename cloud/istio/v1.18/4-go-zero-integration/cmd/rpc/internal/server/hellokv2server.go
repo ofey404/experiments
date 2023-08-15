@@ -6,28 +6,28 @@ package server
 import (
 	"context"
 
-	"github.com/ofey404/experiments/cloud/istio/v1.18/4-go-zero-integration/cmd/rpc/hellokv"
+	"github.com/ofey404/experiments/cloud/istio/v1.18/4-go-zero-integration/cmd/rpc/hellokv2"
 	"github.com/ofey404/experiments/cloud/istio/v1.18/4-go-zero-integration/cmd/rpc/internal/logic"
 	"github.com/ofey404/experiments/cloud/istio/v1.18/4-go-zero-integration/cmd/rpc/internal/svc"
 )
 
-type HellokvServer struct {
+type Hellokv2Server struct {
 	svcCtx *svc.ServiceContext
-	hellokv.UnimplementedHellokvServer
+	hellokv2.UnimplementedHellokv2Server
 }
 
-func NewHellokvServer(svcCtx *svc.ServiceContext) *HellokvServer {
-	return &HellokvServer{
+func NewHellokv2Server(svcCtx *svc.ServiceContext) *Hellokv2Server {
+	return &Hellokv2Server{
 		svcCtx: svcCtx,
 	}
 }
 
-func (s *HellokvServer) Get(ctx context.Context, in *hellokv.GetRequest) (*hellokv.GetResponse, error) {
+func (s *Hellokv2Server) Get(ctx context.Context, in *hellokv2.GetRequest) (*hellokv2.GetResponse, error) {
 	l := logic.NewGetLogic(ctx, s.svcCtx)
 	return l.Get(in)
 }
 
-func (s *HellokvServer) Set(ctx context.Context, in *hellokv.SetRequest) (*hellokv.SetResponse, error) {
+func (s *Hellokv2Server) Set(ctx context.Context, in *hellokv2.SetRequest) (*hellokv2.SetResponse, error) {
 	l := logic.NewSetLogic(ctx, s.svcCtx)
 	return l.Set(in)
 }

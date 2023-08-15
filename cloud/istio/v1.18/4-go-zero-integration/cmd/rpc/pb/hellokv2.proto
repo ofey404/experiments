@@ -1,7 +1,7 @@
 syntax = "proto3";
 
-package hellokv;
-option go_package="./hellokv";
+package hellokv2;
+option go_package="./hellokv2";
 
 message GetRequest {
   string key = 1;
@@ -18,7 +18,7 @@ message SetRequest {
 
 message SetResponse {}
 
-service Hellokv {
+service Hellokv2 {
   rpc Get(GetRequest) returns(GetResponse);
   rpc Set(SetRequest) returns(SetResponse);
 }
