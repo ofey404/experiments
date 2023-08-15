@@ -89,6 +89,10 @@ curl -d '{"key": "hello"}' \
 -H "Content-Type: application/json" \
 -X POST hellokv-api.default/getkey
 # {"value":"world2"}
+#
+# At the same time, you can see the logs of the local service
+# {"@timestamp":"2023-08-15T18:14:58.934+08:00","caller":"mon/collection.go:538","content":"mongo(kv) - Find - ok - [[{\"Key\":\"key\",\"Value\":\"hello\"}]]","duration":"3.0ms","level":"info","span":"b29757045183276c","trace":"8b55c441110220331f667fb472c54eb9"}
+# {"@timestamp":"2023-08-15T18:14:58.934+08:00","caller":"serverinterceptors/statinterceptor.go:90","content":"127.0.0.1:42008 - /hellokv2.Hellokv2/Get - {\"key\":\"hello\"}","duration":"3.3ms","level":"info","span":"aa6838ca27ce61ad","trace":"8b55c441110220331f667fb472c54eb9"}
 
 # stop interception
 telepresence leave hellokv-rpc
