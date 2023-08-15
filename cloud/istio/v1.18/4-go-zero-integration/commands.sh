@@ -63,3 +63,12 @@ hellokv2.Hellokv2.Get
 grpcurl -d '{"key": "hello", "value": "world"}' \
 -plaintext hellokv-rpc:80 \
 hellokv2.Hellokv2.Set
+
+# check HTTP service
+curl -d '{"key": "hello"}' \
+-H "Content-Type: application/json" \
+-X POST hellokv-api/getkey
+
+curl -d '{"key": "hello", "value": "world"}' \
+-H "Content-Type: application/json" \
+-X POST hellokv-api/setkey

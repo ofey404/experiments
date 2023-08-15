@@ -55,6 +55,9 @@ data:
     Host: 0.0.0.0
     Mode: dev
     Port: 80
+    RpcConf:
+      Endpoints:
+        - hellokv-rpc:80
 ---
 apiVersion: v1
 kind: Service

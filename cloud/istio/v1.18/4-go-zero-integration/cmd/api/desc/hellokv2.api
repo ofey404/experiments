@@ -30,7 +30,7 @@ service hellokv2 {
 	/*
 	* Route doc (if needed)
 	*/
-	get /getkey(getKeyReq) returns(getKeyResp)
+	post /getkey(getKeyReq) returns(getKeyResp)
 
 	// Handle set key.
 	@handler SetKeyHandler

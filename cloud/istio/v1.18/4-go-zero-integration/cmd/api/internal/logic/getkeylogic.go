@@ -5,6 +5,7 @@ import (
 
 	"github.com/ofey404/experiments/cloud/istio/v1.18/4-go-zero-integration/cmd/api/internal/svc"
 	"github.com/ofey404/experiments/cloud/istio/v1.18/4-go-zero-integration/cmd/api/internal/types"
+	"github.com/ofey404/experiments/cloud/istio/v1.18/4-go-zero-integration/cmd/rpc/hellokv2client"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -24,7 +25,14 @@ func NewGetKeyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetKeyLogi
 }
 
 func (l *GetKeyLogic) GetKey(req *types.GetKeyReq) (resp *types.GetKeyResp, err error) {
-	// todo: add your logic here and delete this line
+	r, err := l.svcCtx.Rpc.Get(l.ctx, &hellokv2client.GetRequest{
+		Key: req.Key,
+	})
+	if err != nil {
+		return nil, err
+	}
 
-	return
+	return &types.GetKeyResp{
+		Value: r.Value,
+	}, nil
 }
