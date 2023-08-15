@@ -1,0 +1,7 @@
+Name: hellokv2.rpc
+ListenOn: 0.0.0.0:8080
+Mode: dev
+Mongo:
+  Uri: mongodb://root:RootPassword@mongodb.default
+  Db:  hellokv
+  Collection: kv

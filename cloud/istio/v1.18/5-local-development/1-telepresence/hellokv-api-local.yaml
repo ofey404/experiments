@@ -1,0 +1,7 @@
+Name: hellokv2
+Host: 0.0.0.0
+Mode: dev
+Port: 8888
+RpcConf:
+  Endpoints:
+    - hellokv-rpc.default:80

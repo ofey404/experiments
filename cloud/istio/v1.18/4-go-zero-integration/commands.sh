@@ -72,3 +72,7 @@ curl -d '{"key": "hello"}' \
 curl -d '{"key": "hello", "value": "world"}' \
 -H "Content-Type: application/json" \
 -X POST hellokv-api/setkey
+
+# some visualization
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.18/samples/addons/prometheus.yaml
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.18/samples/addons/kiali.yaml
