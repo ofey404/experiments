@@ -1,5 +1,9 @@
 # 8-production-best-practice
 
+## Which Istio installation method should I use?
+
+[Istio / FAQ](https://istio.io/latest/about/faq/#install-method-selection)
+
 ## General
 
 [Best practices for setting up and managing an Istio service mesh.](https://istio.io/latest/docs/ops/best-practices/)
