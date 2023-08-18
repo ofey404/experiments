@@ -15,6 +15,8 @@ docker start kind-control-plane
 
 istioctl install --set profile=default -y
 
+kubectl label namespace default istio-injection=enabled --overwrite
+
 kubectl apply -f ../4-go-zero-integration/deploy/network-tester.yaml
 # curl google ok.
 # external traffic are all allowed.

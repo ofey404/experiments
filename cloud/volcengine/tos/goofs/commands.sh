@@ -34,3 +34,37 @@ df -hT
 
 # check the permission
 ls -la /mnt/
+
+
+#####################################################################
+# goofys sometimes fails.
+# tos_mount_fix.sh allows an ordinary user to mount it again.
+cat <<EOF > tos_mount_fix.sh
+#!/usr/bin/env bash
+set -x             # for debug
+set -euo pipefail  # fail early
+
+# clear the ground
+umount /mnt/tos || true
+
+BUCKET="<bucket_name>"
+
+echo mount tos to /mnt/tos
+
+/usr/local/bin/goofys \
+--subdomain \
+--dir-mode=0777 \
+--file-mode=0666 \
+--profile default \
+--endpoint=https://tos-s3-cn-beijing.ivolces.com \
+-o allow_other \
+\$BUCKET /mnt/tos
+EOF
+chmod 774 tos_mount_fix.sh
+mv tos_mount_fix.sh -t /usr/local/bin/
+
+visudo
+# Add this line:
+# 
+# ALL ALL=NOPASSWD: /usr/local/bin/tos_mount_fix.sh
+sudo tos_mount_fix.sh
