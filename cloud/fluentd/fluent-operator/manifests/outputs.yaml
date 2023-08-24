@@ -21,7 +21,7 @@ metadata:
 spec:
   matchRegex: (?:kube|service)\.(.*)
   es:
-    host: elasticsearch-master.elastic.svc
+    host: elasticsearch-master.default.svc
     port: 9200
     generateID: true
     logstashPrefix: fluent-app-log-fb-only

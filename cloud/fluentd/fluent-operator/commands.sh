@@ -14,8 +14,21 @@ kubectl config use-context minikube
 
 ./deploy-kafka.sh 
 
-# deprecated
-# ./deploy-es.sh 
+# I fixed this script
+# TODO(ofey404): contribute it back to the repo.
+# 
+# Helm chart is here:
+# 
+# https://artifacthub.io/packages/helm/elastic/elasticsearch
+# https://artifacthub.io/packages/helm/elastic/kibana
+./deploy-es.sh 
+
+# try kibana
+kubectl port-forward svc/kibana-kibana 5601:5601
+# username: elastic
+# password:
+kubectl get secrets --namespace=default elasticsearch-master-credentials -ojsonpath='{.data.password}' | base64 -d
+# jHHLcWCjL1VmIZfC
 
 ./deploy-loki.sh
 # To port forward Grafana to http://localhost:3000 'kubectl port-forward --namespace loki service/loki-grafana 3000:80'

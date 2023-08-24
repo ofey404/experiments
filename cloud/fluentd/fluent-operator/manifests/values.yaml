@@ -1,0 +1,4 @@
+# https://github.com/elastic/helm-charts/blob/main/elasticsearch/examples/security/values.yaml
+esConfig:
+  elasticsearch.yml: |
+    xpack.security.enabled: false
