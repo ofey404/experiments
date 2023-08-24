@@ -36,3 +36,10 @@ ls -la --block-size=M
 # -rw-r--r-- 1 ofey ofey  5120M Aug 23 11:08 fallocate.largefile
 
 rm *.largefile
+
+# create a random one
+dd if=/dev/random of=dd.random.largefile bs=1M count=10
+
+# get checksum to verify integrity
+sha256sum dd.random.largefile 
+# 6cfff1f6e979506aa35ed500cf5beb16cd7bacda66e8886b511ed5bbfab4f1c8  dd.random.largefile

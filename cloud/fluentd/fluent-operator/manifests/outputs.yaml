@@ -1,0 +1,43 @@
+apiVersion: fluentbit.fluent.io/v1alpha2
+kind: ClusterOutput
+metadata:
+  name: kafka
+  labels:
+    fluentbit.fluent.io/enabled: "true"
+    fluentbit.fluent.io/mode: "k8s"
+spec:
+  matchRegex: (?:kube|service)\.(.*)
+  kafka:
+    brokers: my-cluster-kafka-brokers.kafka.svc:9092
+    topics: fluent-log
+---
+apiVersion: fluentbit.fluent.io/v1alpha2
+kind: ClusterOutput
+metadata:
+  name: k8s-app-es
+  labels:
+    fluentbit.fluent.io/enabled: "true"
+    fluentbit.fluent.io/mode: "k8s"
+spec:
+  matchRegex: (?:kube|service)\.(.*)
+  es:
+    host: elasticsearch-master.elastic.svc
+    port: 9200
+    generateID: true
+    logstashPrefix: fluent-app-log-fb-only
+    logstashFormat: true
+    timeKey: "@timestamp"
+---
+apiVersion: fluentbit.fluent.io/v1alpha2
+kind: ClusterOutput
+metadata:
+  name: k8s-app-loki
+  labels:
+    fluentbit.fluent.io/enabled: "true"
+    fluentbit.fluent.io/mode: "k8s"
+spec:
+  matchRegex: (?:kube|service)\.(.*)
+  loki:
+    host: loki.loki.svc
+    labels:
+      - job=fluentbit
