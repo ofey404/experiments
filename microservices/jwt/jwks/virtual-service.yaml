@@ -1,0 +1,33 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: request-visualizer-gateway
+spec:
+  selector:
+    istio: ingressgateway # use Istio default gateway implementation
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: request-visualizer
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - request-visualizer-gateway
+  http:
+    - match:
+      - uri:
+          prefix: /request-visualizer
+      route:
+        - destination:
+            port:
+              number: 80
+            host: request-visualizer.default.svc.cluster.local

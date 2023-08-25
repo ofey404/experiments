@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pod-tester-never-on-same-node
+spec:
+  selector:
+    matchLabels:
+      app: never-on-same-node
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: never-on-same-node
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - never-on-same-node
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: app
+        image: busybox:1.28
+        command: ['sh', '-c', 'while true; do echo $(date); sleep 1; done']
+        volumeMounts:
+        - mountPath: /data
+          name: data
+      volumes:
+        - name: data
+          hostPath:
+            path: /data/
