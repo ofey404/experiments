@@ -1,3 +1,6 @@
+# ignored playground directory
+playground/
+
 *.pprof
 
 # Local .terraform directories
