@@ -1,0 +1,29 @@
+apiVersion: config.istio.io/v1alpha2
+kind: handler
+metadata:
+  name: token-blacklist
+spec:
+  compiledAdapter: listchecker
+  params:
+    providerUrl: http://jwt-authentication.default.svc.cluster.local/api/v2/token/blacklist
+    blacklist: true
+    entryType: STRINGS
+---
+apiVersion: config.istio.io/v1alpha2
+kind: instance
+metadata:
+  name: tokenid
+spec:
+  compiledTemplate: listentry
+  params:
+    value: request.auth.claims["jti"] | "nobody"
+---
+apiVersion: config.istio.io/v1alpha2
+kind: rule
+metadata:
+  name: auth-blacklist
+spec:
+  match: source.labels["istio"] == "ingressgateway" && (request.auth.principal | "nobody") != "nobody"
+  actions:
+  - handler: token-blacklist
+    instances: [ tokenid ]
