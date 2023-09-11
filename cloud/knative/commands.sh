@@ -44,11 +44,6 @@ kubectl patch configmap/config-domain \
       --patch '{"data":{"example.com":""}}'
 
 # verify the serving endpoint
-# TODO: make a PR to update this documentation.
-#       It has a backward reference.
-#       https://knative.dev/docs/install/operator/knative-with-operators/#configure-dns
-#       > After starting your application, get the URL of your application:
-#       But we don't know what's `your application`.
 kn service create hello-example \
 --image gcr.io/knative-samples/helloworld-go \
 --env TARGET="First"

@@ -15,7 +15,6 @@ kubectl config use-context minikube
 ./deploy-kafka.sh 
 
 # I fixed this script
-# TODO(ofey404): contribute it back to the repo.
 # 
 # Helm chart is here:
 # 
