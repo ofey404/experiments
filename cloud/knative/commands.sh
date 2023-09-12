@@ -54,6 +54,25 @@ kubectl get ksvc
 curl -H "Host: hello-example.default.example.com" http://localhost:8080
 # Hello First!
 
+kn revision list
+# NAME                  SERVICE         TRAFFIC   TAGS   GENERATION   AGE    CONDITIONS   READY   REASON
+# hello-example-00001   hello-example   100%             1            156m   3 OK / 4     True    
+kn revision describe hello-example-00001
+# Name:       hello-example-00001
+# Namespace:  default
+# Age:        2h
+# Image:      gcr.io/knative-samples/helloworld-go (pinned to 2babda)
+# Replicas:   0/0
+# Env:        TARGET=First
+# Service:    hello-example
+# 
+# Conditions:  
+#   OK TYPE                  AGE REASON
+#   ++ Ready                  2h 
+#   ++ ContainerHealthy       2h 
+#   ++ ResourcesAvailable     2h 
+#    I Active                 2h NoTraffic
+
 #####################################################################
 # Knative eventing
 #####################################################################

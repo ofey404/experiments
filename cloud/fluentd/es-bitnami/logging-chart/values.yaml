@@ -1,0 +1,28 @@
+elasticsearch:
+  image:
+    tag: 7.17.13-debian-11-r2
+  master:
+    persistence:
+      size: 20Gi
+      # TODO(ofey404): This is too small for production.
+      #                Find out the right size by experiment.
+      #                (log size per day) * (retention days)
+  data:
+    persistence:
+      size: 20Gi
+kibana:
+  image:
+    tag: 7.17.12-debian-11-r43
+  elasticsearch:
+    hosts:
+      - elasticsearch
+    port: 9200
+  persistence:
+    size: 20Gi
+fluent-operator:
+  containerRuntime: containerd
+  fluentbit:
+    output:
+      es:
+        enable: true
+        host: elasticsearch

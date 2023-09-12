@@ -1,0 +1,12 @@
+dependencies:
+- name: elasticsearch
+  repository: https://charts.bitnami.com/bitnami
+  version: 19.11.1
+- name: kibana
+  repository: https://charts.bitnami.com/bitnami
+  version: 10.5.2
+- name: fluent-operator
+  repository: https://fluent.github.io/helm-charts
+  version: 2.4.0
+digest: sha256:633f81c3def918daade1e669159af7ceb1c0f637be19d0d46c177e604e4bd54b
+generated: "2023-09-12T11:53:47.867785948+08:00"

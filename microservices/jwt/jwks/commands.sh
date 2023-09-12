@@ -9,6 +9,9 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
+# This site can generate a JWK set.
+# https://mkjwk.org/
+
 go run .
 # {
 #   "aud": [

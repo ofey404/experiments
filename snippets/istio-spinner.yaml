@@ -1,0 +1,66 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: istio-spinner-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: istio-spinner-vs
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - istio-spinner-gateway
+  http:
+  - match:
+    - uri:
+        # TODO: change this
+        prefix: /.well-known/pki-validation/fileauth.txt
+    route:
+    - destination:
+        host: istio-spinner-python
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: istio-spinner-python
+spec:
+  ports:
+  - port: 80
+    name: http
+  selector:
+    app: istio-spinner-python
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: istio-spinner-python
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: istio-spinner-python
+  template:
+    metadata:
+      labels:
+        app: istio-spinner-python
+    spec:
+      containers:
+        - name: app
+          image: python:3.7.7-slim
+          command:
+          - '/bin/sh'
+          - '-c'
+          - |
+            while true; do echo $(date); sleep 1; done

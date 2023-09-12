@@ -1,0 +1,20 @@
+# From: https://github.com/fluent/fluent-operator/blob/master/manifests/logging-stack/output-elasticsearch.yaml
+apiVersion: fluentbit.fluent.io/v1alpha2
+kind: ClusterOutput
+metadata:
+  name: es
+  labels:
+    fluentbit.fluent.io/enabled: "true"
+    fluentbit.fluent.io/component: logging
+    fluentbit.fluent.io/mode: "k8s"
+spec:
+  matchRegex: (?:kube|service)\.(.*)
+  es:
+    host: elasticsearch.default.svc
+    port: 9200
+    generateID: true
+    bufferSize: 20MB
+    traceError: true
+    logstashPrefix: ks-logstash-log
+    logstashFormat: true
+    timeKey: "@timestamp"

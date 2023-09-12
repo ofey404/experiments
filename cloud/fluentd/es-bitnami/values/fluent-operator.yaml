@@ -1,0 +1,6 @@
+containerRuntime: containerd
+fluentbit:
+  output:
+    es:
+      enable: true
+      host: elasticsearch

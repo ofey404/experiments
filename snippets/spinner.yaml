@@ -9,4 +9,8 @@ spec:
   containers:
     - name: myapp-container
       image: busybox:1.28
-      command: ['sh', '-c', 'while true; do echo $(date); sleep 1; done']
+      command:
+      - '/bin/sh'
+      - '-c'
+      - |
+        while true; do echo $(date); sleep 1; done

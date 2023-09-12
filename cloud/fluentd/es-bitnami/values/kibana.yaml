@@ -1,0 +1,6 @@
+image:
+  tag: 7.17.12-debian-11-r43
+elasticsearch:
+  hosts:
+  - elasticsearch
+  port: 9200
