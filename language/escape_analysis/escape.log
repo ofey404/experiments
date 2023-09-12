@@ -1,7 +1,0 @@
-# command-line-arguments
-./main.go:9:20: leaking param: name
-./main.go:10:10: new(Demo) escapes to heap
-./main.go:15:22: leaking param content: demo
-./main.go:16:13: ... argument does not escape
-./main.go:16:18: demo.name escapes to heap
-./main.go:21:14: new(Demo) does not escape
