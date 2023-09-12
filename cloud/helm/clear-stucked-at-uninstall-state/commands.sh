@@ -9,7 +9,7 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-# Use this to clear the helm installation stucked at `uninstall` state
+# Use this to clear the helm installation stucked at `uninstalling` state
 # https://github.com/helm/helm-mapkubeapis
 helm plugin install https://github.com/helm/helm-mapkubeapis
 

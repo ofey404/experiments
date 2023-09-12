@@ -8,4 +8,19 @@ spec:
   containers:
     - name: app
       image: python:bullseye
-      command: ['sh', '-c', 'while true; do echo $(date); sleep 1; done']
+      command:
+      - 'sh'
+      - '-c'
+      - |
+        pip install -i https://pypi.tuna.tsinghua.edu.cn/simple jsonargparse>=4.23.0 datasets huggingface_hub
+        python - <<EOF
+        import jsonargparse
+        import datasets
+        import huggingface_hub
+        print("jsonargparse: " + jsonargparse.__version__)
+        print("datasets: " + datasets.__version__)
+        print("huggingface_hub: " + huggingface_hub.__version__)
+
+        import time
+        time.sleep(100)
+        EOF
