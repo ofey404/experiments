@@ -46,3 +46,5 @@ curl -v -H "Authorization: Bearer $TOKEN_DEADBEEF" -H "Host: sklearn-iris.defaul
 
 # EXTRA: debug RBAC
 istioctl proxy-config log istio-ingressgateway-6ddb58d5c5-bwzdm.istio-system --level rbac:trace,jwt:trace
+istioctl proxy-config log sklearn-iris-predictor-00001-deployment-759bcdffcd-mc8l7.default --level rbac:trace,jwt:trace
+

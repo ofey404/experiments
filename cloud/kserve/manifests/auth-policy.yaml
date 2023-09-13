@@ -42,3 +42,19 @@ spec:
     # - when:
     #     - key: request.auth.principal
     #       notValues: ["ofey404@test.com/ofey404"]
+---
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: first-inference-service-allow-metrics
+  namespace: istio-system
+spec:
+  selector:
+    matchLabels:
+      serving.kserve.io/inferenceservice: sklearn-iris
+    #  istio: ingressgateway # use Istio default gateway implementation
+  action: ALLOW
+  rules:
+    - to:
+      - operation:
+          paths: ["/metrics"]
