@@ -1,0 +1,44 @@
+apiVersion: security.istio.io/v1
+kind: RequestAuthentication
+metadata:
+  name: inference-service
+  namespace: istio-system
+spec:
+  selector:
+    matchLabels:
+      serving.kserve.io/inferenceservice: sklearn-iris
+      # istio: ingressgateway # use Istio default gateway implementation
+  jwtRules:
+    - issuer: "ofey404@test.com"
+      jwks: |
+        {
+          "keys": [
+            {
+              "kty": "RSA",
+              "n": "mmO0OvOPQ53HRxV4eHOkTTxLVfk6zcq8KAD86gbnydYBNO_Si4Q1twyvefd58-BaO4N4NCEA97QrYm57ThKCe8agLGwWPHhxgbu_SAuYQehXxkf4sWy7Q17kGFG5k5AfQGZBqTY-YaawQqLlF6ILVbWab_AoEF4yB7pI3AnNnXs",
+              "e": "AQAB"
+            }
+          ]
+        }
+---
+# accept only
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: first-inference-service
+  namespace: istio-system
+spec:
+  selector:
+    matchLabels:
+      serving.kserve.io/inferenceservice: sklearn-iris
+    #  istio: ingressgateway # use Istio default gateway implementation
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            requestPrincipals: #  <ISS>/<SUB>
+              - ofey404@test.com/ofey404
+    # # OR:
+    # - when:
+    #     - key: request.auth.principal
+    #       notValues: ["ofey404@test.com/ofey404"]

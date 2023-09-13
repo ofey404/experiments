@@ -50,7 +50,7 @@ func main() {
 	jwkey, err := jwk.ParseKey([]byte(jwkStr))
 
 	if err != nil {
-		log.Fatal("erro")
+		log.Fatal("error")
 	}
 
 	// signed and return a jwt
