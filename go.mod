@@ -34,6 +34,7 @@ require (
 	go.uber.org/goleak v1.2.1
 	golang.org/x/time v0.3.0
 	gopkg.in/errgo.v2 v2.1.0
+	istio.io/api v1.19.0-beta.1.0.20230821193953-6d232ba686ad
 	istio.io/client-go v1.19.0
 	k8s.io/api v0.28.0
 	k8s.io/apimachinery v0.28.0
@@ -113,7 +114,6 @@ require (
 	golang.org/x/sync v0.2.0 // indirect
 	gomodules.xyz/jsonpatch/v2 v2.2.0 // indirect
 	gopkg.in/cenkalti/backoff.v1 v1.1.0 // indirect
-	istio.io/api v1.19.0-beta.1.0.20230821193953-6d232ba686ad // indirect
 	k8s.io/apiextensions-apiserver v0.26.1 // indirect
 	k8s.io/component-base v0.26.1 // indirect
 )
