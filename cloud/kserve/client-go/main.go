@@ -122,6 +122,11 @@ func main() {
 
 	MustCreateRequestAuthenticationSync(ic, namespace)
 	MustCreateAuthorizationPolicySync(ic, namespace)
+
+	if false {
+		MustDeleteRequestAuthentication(ic, namespace)
+		MustDeleteAuthorizationPolicy(ic, namespace)
+	}
 }
 
 func MustCreateAuthorizationPolicySync(ic *versionedclient.Clientset, namespace string) {
@@ -179,6 +184,21 @@ func MustCreateAuthorizationPolicySync(ic *versionedclient.Clientset, namespace 
 	log.Printf("AuthorizationPolicy %s created", name)
 }
 
+func MustDeleteAuthorizationPolicy(ic *versionedclient.Clientset, namespace string) {
+	authorizationPolicyApi := ic.SecurityV1().AuthorizationPolicies(namespace)
+	const name = "first-inference-service"
+	err := authorizationPolicyApi.Delete(
+		context.TODO(),
+		name,
+		metav1.DeleteOptions{},
+	)
+	if err != nil {
+		log.Fatalf("Failed to delete AuthorizationPolicy in %s namespace: %s", namespace, err)
+	}
+
+	log.Printf("AuthorizationPolicy %s deleted", name)
+}
+
 func MustCreateRequestAuthenticationSync(ic *versionedclient.Clientset, namespace string) {
 	requestAuthenticationApi := ic.SecurityV1().RequestAuthentications(namespace)
 	const name = "inference-service"
@@ -224,4 +244,19 @@ func MustCreateRequestAuthenticationSync(ic *versionedclient.Clientset, namespac
 	}
 
 	log.Printf("RequestAuthentication %s created", name)
+}
+
+func MustDeleteRequestAuthentication(ic *versionedclient.Clientset, namespace string) {
+	requestAuthenticationApi := ic.SecurityV1().RequestAuthentications(namespace)
+	const name = "inference-service"
+	err := requestAuthenticationApi.Delete(
+		context.TODO(),
+		name,
+		metav1.DeleteOptions{},
+	)
+	if err != nil {
+		log.Fatalf("Failed to delete RequestAuthentication in %s namespace: %s", namespace, err)
+	}
+
+	log.Printf("RequestAuthentication %s deleted", name)
 }
