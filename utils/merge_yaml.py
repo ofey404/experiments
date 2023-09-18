@@ -25,7 +25,10 @@ def main(k1: Path, k2: Path):
 
 
 if __name__ == "__main__":
+    import os
     import sys
+    print("This script has bug. Do not use it.", file=sys.stderr)
+    os._exit(1)
 
     if len(sys.argv) != 3:
         print(f"""Usage: python {sys.argv[0]} <yaml1> <yaml2>

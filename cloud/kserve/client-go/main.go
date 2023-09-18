@@ -21,27 +21,21 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"os"
 	"strings"
 	"time"
+
+	"github.com/ofey404/experiments/utils"
 
 	v1 "istio.io/api/security/v1"
 	"istio.io/api/type/v1beta1"
 	securityv1 "istio.io/client-go/pkg/apis/security/v1"
 
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/tools/clientcmd"
-
 	versionedclient "istio.io/client-go/pkg/clientset/versioned"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func MustNewIstioClientSet() *versionedclient.Clientset {
-	kubeconfig := fmt.Sprintf("%s/.kube/config", os.Getenv("HOME"))
-
-	restConfig, err := clientcmd.BuildConfigFromFlags("", kubeconfig)
-	if err != nil {
-		log.Fatalf("Failed to create k8s rest client: %s", err)
-	}
+	restConfig := utils.MustLoadKubeconfig()
 
 	ic, err := versionedclient.NewForConfig(restConfig)
 	if err != nil {
@@ -123,7 +117,11 @@ func main() {
 	MustCreateRequestAuthenticationSync(ic, namespace)
 	MustCreateAuthorizationPolicySync(ic, namespace)
 
-	if false {
+	time.Sleep(3 * time.Second)
+
+	fmt.Println("Delete AuthorizationPolicy and RequestAuthentication.")
+
+	if true {
 		MustDeleteRequestAuthentication(ic, namespace)
 		MustDeleteAuthorizationPolicy(ic, namespace)
 	}
