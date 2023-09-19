@@ -1,0 +1,63 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: istio-spinner-nginx-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: istio-spinner-nginx-vs
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - istio-spinner-nginx-gateway
+  http:
+    - match:
+        - uri:
+            # TODO: change this
+            prefix: /istio-spinner-nginx
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: istio-spinner-nginx.default.svc.cluster.local
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: istio-spinner-nginx
+spec:
+  ports:
+    - port: 80
+      name: http
+  selector:
+    app: istio-spinner-nginx
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: istio-spinner-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: istio-spinner-nginx
+  template:
+    metadata:
+      labels:
+        app: istio-spinner-nginx
+    spec:
+      containers:
+        - name: app
+          image: nginx:stable

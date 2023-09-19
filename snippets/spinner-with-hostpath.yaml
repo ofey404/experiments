@@ -8,12 +8,9 @@ spec:
       image: busybox:1.28
       command: ['sh', '-c', 'while true; do echo $(date); sleep 1; done']
       volumeMounts:
-        - name: cfs
+        - name: hostpath
           mountPath: /data/
   volumes:
-    - name: cfs
+    - name: hostpath
       hostPath:
         path: /data/
-  nodeSelector:
-    cluster.vke.volcengine.com/node-name: node-z2dx9f
-
