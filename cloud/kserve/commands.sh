@@ -57,3 +57,6 @@ kubectl delete -f manifests/auth-policy.yaml
 go run client-go/main.go
 
 # test with curl
+
+# test https
+kubectl apply -f manifests/test-gateway-https.yaml

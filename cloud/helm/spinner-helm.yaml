@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: spinner-helm-2
+spec:
+  containers:
+    - name: app
+      image: alpine/helm:3.11.1
+      command:
+        - '/bin/sh'
+        - '-c'
+        - |
+          while true; do echo $(date); sleep 1; done
+      volumeMounts:
+        - name: backend-metadata
+          mountPath: /etc/backend-metadata
+          readOnly: true
+  volumes:
+    - name: backend-metadata
+      configMap:
+        name: backend-metadata
