@@ -1,3 +1,5 @@
+# A good example configuration:
+# https://github.com/dexidp/dex/blob/master/examples/config-dev.yaml
 config:
   # Set it to a valid URL
   issuer: http://127.0.0.1:5556/dex
