@@ -8,10 +8,10 @@ spec:
       image: busybox:1.28
       command: ['sh', '-c', 'while true; do echo $(date); sleep 1; done']
       volumeMounts:
-      - mountPath: /output
-        name: output
+      - mountPath: /data
+        name: data
   volumes:
   - hostPath:
-      path: /data/17/job/522/output
+      path: /data/
       type: ""
-    name: output
+    name: data

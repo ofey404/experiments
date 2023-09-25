@@ -9,6 +9,7 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-goctl model mongo -t Playground -d .
-# generate multiple document schemas
-goctl model mongo -t Playground -t Object -d .
+go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
+
+sqlc generate
+

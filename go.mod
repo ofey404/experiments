@@ -18,6 +18,7 @@ require (
 	github.com/kubeflow/common v0.4.3
 	github.com/kubeflow/training-operator v1.5.0
 	github.com/lestrrat-go/jwx/v2 v2.0.12
+	github.com/mattn/go-sqlite3 v2.0.3+incompatible
 	github.com/onsi/ginkgo/v2 v2.9.4
 	github.com/onsi/gomega v1.27.6
 	github.com/pkg/errors v0.9.1
