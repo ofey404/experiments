@@ -17,4 +17,5 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 # root:password
 helm install mongodb bitnami/mongodb --version 13.9.4 --values values.yaml
 
-while true; do kubectl port-forward svc/mongodb 27017:27017; done
+# use 27027 to avoid conflict with local mongodb
+while true; do kubectl port-forward svc/mongodb 27027:27017; done
