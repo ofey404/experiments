@@ -6,9 +6,14 @@ SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd "$SCRIPT_DIR"
 
 # go code
-protoc --go_out=. --go_opt=paths=source_relative \
-    --go-grpc_out=. --go-grpc_opt=paths=source_relative \
-    helloworld/helloworld.proto
+protoc --go_out=./go/helloworld --go_opt=paths=source_relative \
+    --go-grpc_out=./go/helloworld --go-grpc_opt=paths=source_relative \
+    helloworld.proto
 
 # python code
-python -m grpc_tools.protoc -I../../protos --python_out=. --pyi_out=. --grpc_python_out=. ../../protos/helloworld.proto
+python -m grpc_tools.protoc \
+       -I. \
+       --python_out=./python \
+       --pyi_out=./python \
+       --grpc_python_out=./python \
+       ./helloworld.proto
