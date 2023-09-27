@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-option go_package = "hello";
+option go_package = "github.com/ofey404/experiments/microservices/go-zero/shared-proto/greeter";
 
-package hello;
+package greeter;
 
 import "protoc/common.proto";
 

@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package common;
 
+option go_package = "github.com/ofey404/experiments/microservices/go-zero/shared-proto/common";
+
 enum GreetType {
   HI = 0;
   ALOHA = 1;
