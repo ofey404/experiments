@@ -1,18 +1,17 @@
 syntax = "proto3";
 
-option go_package = "github.com/ofey404/experiments/microservices/go-zero/shared-proto/greeter/greeter";
+option go_package = "github.com/ofey404/experiments/microservices/go-zero/shared-proto/greeter2/greeter2";
 
-package greeter;
+package greeter2;
 
 import "common.proto";
 
 // The greeting service definition.
-service Greeter {
+service Greeter2 {
   // Sends a greeting
   rpc SayHello (HelloRequest) returns (HelloReply) {}
 }
 
-// The request message containing the user's name.
 message HelloRequest {
   string name = 1;
   common.GreetType greeting = 2;

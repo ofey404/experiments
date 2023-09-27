@@ -2,13 +2,12 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v3.20.3
-// source: protoc/greeter.proto
+// source: greeter.proto
 
 package greeter
 
 import (
 	context "context"
-
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -108,5 +107,5 @@ var Greeter_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "protoc/greeter.proto",
+	Metadata: "greeter.proto",
 }

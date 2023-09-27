@@ -6,7 +6,7 @@ package server
 import (
 	"context"
 
-	"github.com/ofey404/experiments/microservices/go-zero/shared-proto/greeter/github.com/ofey404/experiments/microservices/go-zero/shared-proto/greeter"
+	"github.com/ofey404/experiments/microservices/go-zero/shared-proto/greeter/greeter"
 	"github.com/ofey404/experiments/microservices/go-zero/shared-proto/greeter/internal/logic"
 	"github.com/ofey404/experiments/microservices/go-zero/shared-proto/greeter/internal/svc"
 )

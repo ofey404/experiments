@@ -6,7 +6,7 @@ package greeterclient
 import (
 	"context"
 
-	"github.com/ofey404/experiments/microservices/go-zero/shared-proto/greeter/github.com/ofey404/experiments/microservices/go-zero/shared-proto/greeter"
+	"github.com/ofey404/experiments/microservices/go-zero/shared-proto/greeter/greeter"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"
