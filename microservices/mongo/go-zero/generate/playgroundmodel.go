@@ -1,4 +1,4 @@
-package model
+package generate
 
 import "github.com/zeromicro/go-zero/core/stores/mon"
 

@@ -11,22 +11,22 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-type playgroundModel interface {
-	Insert(ctx context.Context, data *Playground) error
-	FindOne(ctx context.Context, id string) (*Playground, error)
-	Update(ctx context.Context, data *Playground) (*mongo.UpdateResult, error)
+type billingRecordModel interface {
+	Insert(ctx context.Context, data *BillingRecord) error
+	FindOne(ctx context.Context, id string) (*BillingRecord, error)
+	Update(ctx context.Context, data *BillingRecord) (*mongo.UpdateResult, error)
 	Delete(ctx context.Context, id string) (int64, error)
 }
 
-type defaultPlaygroundModel struct {
+type defaultBillingRecordModel struct {
 	conn *mon.Model
 }
 
-func newDefaultPlaygroundModel(conn *mon.Model) *defaultPlaygroundModel {
-	return &defaultPlaygroundModel{conn: conn}
+func newDefaultBillingRecordModel(conn *mon.Model) *defaultBillingRecordModel {
+	return &defaultBillingRecordModel{conn: conn}
 }
 
-func (m *defaultPlaygroundModel) Insert(ctx context.Context, data *Playground) error {
+func (m *defaultBillingRecordModel) Insert(ctx context.Context, data *BillingRecord) error {
 	if data.ID.IsZero() {
 		data.ID = primitive.NewObjectID()
 		data.CreateAt = time.Now()
@@ -37,13 +37,13 @@ func (m *defaultPlaygroundModel) Insert(ctx context.Context, data *Playground) e
 	return err
 }
 
-func (m *defaultPlaygroundModel) FindOne(ctx context.Context, id string) (*Playground, error) {
+func (m *defaultBillingRecordModel) FindOne(ctx context.Context, id string) (*BillingRecord, error) {
 	oid, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return nil, ErrInvalidObjectId
 	}
 
-	var data Playground
+	var data BillingRecord
 
 	err = m.conn.FindOne(ctx, &data, bson.M{"_id": oid})
 	switch err {
@@ -56,14 +56,14 @@ func (m *defaultPlaygroundModel) FindOne(ctx context.Context, id string) (*Playg
 	}
 }
 
-func (m *defaultPlaygroundModel) Update(ctx context.Context, data *Playground) (*mongo.UpdateResult, error) {
+func (m *defaultBillingRecordModel) Update(ctx context.Context, data *BillingRecord) (*mongo.UpdateResult, error) {
 	data.UpdateAt = time.Now()
 
 	res, err := m.conn.UpdateOne(ctx, bson.M{"_id": data.ID}, bson.M{"$set": data})
 	return res, err
 }
 
-func (m *defaultPlaygroundModel) Delete(ctx context.Context, id string) (int64, error) {
+func (m *defaultBillingRecordModel) Delete(ctx context.Context, id string) (int64, error) {
 	oid, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return 0, ErrInvalidObjectId

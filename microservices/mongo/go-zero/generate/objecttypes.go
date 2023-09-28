@@ -1,4 +1,4 @@
-package model
+package generate
 
 import (
 	"time"
@@ -6,7 +6,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-type Playground struct {
+type Object struct {
 	ID primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
 	// TODO: Fill your own fields
 	UpdateAt time.Time `bson:"updateAt,omitempty" json:"updateAt,omitempty"`
