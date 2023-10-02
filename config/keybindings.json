@@ -323,7 +323,7 @@
         "command": "workbench.action.toggleAuxiliaryBar"
     },
     {
-        "key": "ctrl+shift+1",
+        "key": "ctrl+shift+e",
         "command": "workbench.action.focusAuxiliaryBar"
     },
     {

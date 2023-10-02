@@ -20,9 +20,9 @@
     "workbench.list.smoothScrolling": true,
     // VSCodeVim
     "vim.autoSwitchInputMethod.enable": true,
-    "vim.autoSwitchInputMethod.defaultIM": "1033",
-    "vim.autoSwitchInputMethod.obtainIMCmd": "C:\\Users\\Ofey Chan\\Desktop\\helpers\\im-select.exe", 
-    "vim.autoSwitchInputMethod.switchIMCmd": "C:\\Users\\Ofey Chan\\Desktop\\helpers\\im-select.exe {im}",
+    "vim.autoSwitchInputMethod.defaultIM": "English",
+    "vim.autoSwitchInputMethod.obtainIMCmd": "C:\\Users\\ofey\\Desktop\\helpers\\im-select-mspy.exe -t=Taskbar -k=\"ctrl+space\" -i=\"Tray Input Indicator\\s+(\\w+)\"", 
+    "vim.autoSwitchInputMethod.switchIMCmd": "C:\\Users\\ofey\\Desktop\\helpers\\im-select-mspy.exe -t=Taskbar -k=\"ctrl+space\" -i=\"Tray Input Indicator\\s+(\\w+)\" {im}",
     "vim.incsearch": true,
     "vim.useSystemClipboard": true,
     "vim.useCtrlKeys": true,
@@ -176,7 +176,8 @@
             "strings": "off",
             "other": "off"
         },
-        "editor.tabSize": 2
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "[typescript]": {
         "editor.defaultFormatter": "dbaeumer.vscode-eslint"
@@ -185,7 +186,6 @@
     "terminal.integrated.env.linux": {
         "IN_VSCODE_INTEGRATED_TERMINAL": "true",
     },
-    "workspaceNotes.noteRepoPath": "~/Documents/Notes",
     "remote.SSH.remotePlatform": {
         "DASLab-40": "linux",
         "Deep-251": "linux",
@@ -195,7 +195,21 @@
         "HPC-AI-WYX": "linux",
         "HPC-AI-Small": "linux",
         "HPC-AI-LR": "linux",
-        "HPC": "linux"
+        "HPC": "linux",
+        "coder-vscode--ofey404--MyFirstWorkspace": "linux",
+        "coder-vscode--ofey404--MyFirstAWSWorkspace": "linux",
+        "coder-vscode--ofey404--TestWorkspaceAutoStop": "linux",
+        "coder-vscode--ofey404--Test1": "linux",
+        "coder-vscode--ofey404--TestDisk1": "linux",
+        "coder-vscode--ofey404--TestDiskMount": "linux",
+        "coder-vscode--ofey404--TestDiskTransfer": "linux",
+        "coder-vscode--ofey404--TestSpot3": "linux",
+        "coder-vscode--ofey404--TestSpotRestart": "linux",
+        "coder-vscode--ofey404--TestSpotRestart2": "linux",
+        "coder-vscode--ofey404--TestDeepLearningAMI": "linux",
+        "coder-vscode--ofey404--TestVolumeMount": "linux",
+        "coder-vscode--ofey404--TestPermission": "linux",
+        "HPC-A100": "linux"
     },
     "terminal.integrated.inheritEnv": false,
     "[python]": {
@@ -208,23 +222,25 @@
     "[zig]": {
         "editor.defaultFormatter": "tiehuis.zig"
     },
-    "workbench.activityBar.visible": false,
-    "go.toolsManagement.autoUpdate": true,
     "window.menuBarVisibility": "compact",
     "bookmarks.saveBookmarksInProject": true,
     "bookmarks.sideBar.expanded": true,
     "editor.minimap.enabled": false,
     "editor.inlineSuggest.enabled": true,
-    "github.copilot.enable": {
-        "*": true,
-        "yaml": true,
-        "plaintext": false,
-        "markdown": true,
-        "scminput": false
+    "foam.files.newNotePath": "currentDir",
+    "[yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
     },
-    "vs-kubernetes": {
-        "vs-kubernetes.minikube-show-information-expiration": "2023-10-01T06:08:59.155Z"
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
     },
-    "jupyter.interactiveWindowMode": "perFile",
+    "jupyter.interactiveWindow.creationMode": "perFile",
+    "pasteImage.showFilePathConfirmInputBox": true,
+    "pasteImage.filePathConfirmInputBoxMode": "fullPath",
+    "terminal.integrated.cwd": "",
     "window.zoomLevel": 2,
+    "security.allowedUNCHosts": [
+        "wsl.localhost"
+    ],
+    "workbench.activityBar.visible": false,
 }
