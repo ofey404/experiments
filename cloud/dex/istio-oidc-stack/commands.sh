@@ -9,9 +9,8 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-kind create cluster -n dex-istio
+# This scrip follows the steps of this awesome article
+# https://datastrophic.io/secure-kubeflow-ingress-and-authentication/
 
-helm repo add dex https://charts.dexidp.io
-helm upgrade --install dex dex/dex --values example-app/values.yaml
-
-kubectl port-forward svc/dex 5556:5556
+kind create cluster -n istio-dex-oauth2-proxy-stack
+docker update --restart=no istio-dex-oauth2-proxy-stack-control-plane
