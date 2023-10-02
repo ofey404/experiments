@@ -1,0 +1,17 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: gateway-cert
+  namespace: auth
+spec:
+  secretName: gateway-cert
+  ipAddresses:
+  - "127.0.0.1"
+  duration: 2160h # 90d
+  renewBefore: 360h # 15d
+  subject:
+    organizations:
+      - Datastrophic
+  issuerRef:
+    name: ca-issuer
+    kind: ClusterIssuer

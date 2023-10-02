@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+ name: dex
+ namespace: auth
+spec:
+ hosts:
+ - "*"
+ gateways:
+ - ingress/ingress-gateway
+ http:
+ - name: "dex"
+   match:
+   - uri:
+       prefix: "/dex"
+   route:
+   - destination:
+       host: dex.auth.svc.cluster.local
+       port:
+         number: 5556

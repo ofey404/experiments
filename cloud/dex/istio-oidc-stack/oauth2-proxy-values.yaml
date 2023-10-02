@@ -1,0 +1,27 @@
+config:
+  clientID: "oauth2-proxy"
+  # openssl rand -base64 32 | head -c 40
+  clientSecret: "LG7jUjNiyVDPJdlarO5Mgz3CxS7kNL/1OZ0spRsL"
+  # openssl rand -base64 32 | head -c 32 | base64
+  #cookieSecret: "SXRNTGYzNUFtNi9MTGUvbXJmUnlLdUlYTU00a29ick4="
+  configFile: |-
+    provider = "oidc"
+    provider_ca_files = "/etc/gateway-cert/ca.crt"
+    oidc_issuer_url = "http://dex.auth.svc.cluster.local/dex"
+
+    set_authorization_header = true
+    set_xauthrequest = true
+    cookie_samesite = "lax"
+
+    email_domains = ["*"]
+    skip_provider_button = true
+    upstreams = [ "static://200" ]
+
+extraVolumes:
+  - name: gateway-cert
+    secret:
+      secretName: gateway-cert
+
+extraVolumeMounts:
+  - mountPath: /etc/gateway-cert/
+    name: gateway-cert

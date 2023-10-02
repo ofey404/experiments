@@ -1,0 +1,25 @@
+config:
+  issuer: "https://localhost:8443/dex"
+
+  storage:
+    type: kubernetes
+    config:
+      inCluster: true
+
+  oauth2:
+    skipApprovalScreen: true
+
+  staticClients:
+  - id: oauth2-proxy
+    name: OAuth2 Proxy
+    secret: "LG7jUjNiyVDPJdlarO5Mgz3CxS7kNL/1OZ0spRsL"
+    redirectURIs:
+      - "https://localhost:8443/oauth2/callback"
+
+  # Password DB must be enabled in order to specify static users
+  enablePasswordDB: true
+  staticPasswords:
+  - email: "user1@datastrophic.io"
+    hash: "$2y$10$/7EdQXN7bSo4OZH0pS8X.u90ZaSRoY.RLwShWj3Pi0LGYFTQoGKlq"
+  - email: "user2@datastrophic.io"
+    hash: "$2y$10$/7EdQXN7bSo4OZH0pS8X.u90ZaSRoY.RLwShWj3Pi0LGYFTQoGKlq"
