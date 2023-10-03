@@ -8,3 +8,5 @@ https://github.com/arrikto/oidc-authservice#sequence-diagram-for-an-authenticati
 ## References
 
 [Kubeflow: Authentication with Istio + Dex](https://www.arrikto.com/blog/kubeflow/news/kubeflow-authentication-with-istio-dex/)
+
+[Istio Usage in Kubeflow](https://www.kubeflow.org/docs/components/multi-tenancy/istio/)

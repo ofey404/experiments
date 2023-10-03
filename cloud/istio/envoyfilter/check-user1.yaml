@@ -1,0 +1,44 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: request-visualizer
+  namespace: request-visualizer
+spec:
+  workloadSelector:
+    labels:
+      app: request-visualizer
+  configPatches:
+  - applyTo: HTTP_FILTER
+    match:
+      context: SIDECAR_INBOUND
+      listener:
+        portNumber: 80
+        filterChain:
+          filter:
+            name: "envoy.filters.network.http_connection_manager"
+            subFilter:
+              name: "envoy.filters.http.router"
+    patch:
+      operation: INSERT_BEFORE
+      value: # lua filter specification
+       name: envoy.filters.http.lua
+       typed_config:
+          "@type": "type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua"
+          defaultSourceCode:
+            inlineString: |
+              function envoy_on_request(request_handle)
+                request_handle:headers():add("my-custom-header", "it works!")
+
+                -- Get the JWT claim from the request
+                local user_claim = request_handle:headers():get("user")
+
+                -- Check if the claim value is "user1"
+                if user_claim == "user1" then
+                  request_handle:headers():add("print", "branch1")
+                else
+                  request_handle:headers():add("print", "branch2")
+                  request_handle:respond(
+                    {[":status"] = "403"},
+                    "Access denied")
+                end
+              end
