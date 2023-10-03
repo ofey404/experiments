@@ -9,14 +9,20 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
+# THIS SCRIPT IS BROKEN
+
 # This scrip follows the steps of this awesome article
 # https://datastrophic.io/secure-kubeflow-ingress-and-authentication/
 
-# istio 1.12.1 is not compatible with latest kind cluster.
-# It supports 1.19, 1.20, 1.21, 1.22
-# https://istio.io/v1.12/docs/releases/supported-releases/
-# kind create cluster -n istio-dex-oauth2-proxy-stack --image kindest/node:v1.22.17
-# docker update --restart=no istio-dex-oauth2-proxy-stack-control-plane
+# istio 1.12.1 supports 1.19, 1.20, 1.21, 1.22
+
+# We use rancher, cause kind doesn't have a public IP
+sudo rm -rf /etc/kubernetes/* /var/lib/etcd/*
+docker run -d --restart=unless-stopped --name rancher -p 8080:80 -p 8443:443 --privileged rancher/rancher:v2.6.10
+docker logs rancher  2>&1 | grep "Bootstrap Password:"
+
+# Randomly generated password
+# Mo0fmASUGPWiv38a
 
 #####################################################################
 # Install cert-manager, istio

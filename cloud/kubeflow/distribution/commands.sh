@@ -15,6 +15,10 @@ docker update --restart=no kubeflow-control-plane
 git clone git@github.com:kubeflow/manifests.git kubeflow-manifests
 cd kubeflow-manifests
 
+# output and examine the resources
+kubectl kustomize example/ > kubeflow.yaml
+
+# install to cluster
 while ! kubectl kustomize example | awk '!/well-defined/' | kubectl apply -f -; do echo "Retrying to apply resources"; sleep 10; done
 
 kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80

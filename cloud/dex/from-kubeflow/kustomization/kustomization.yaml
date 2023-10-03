@@ -1,0 +1,51 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+sortOptions:
+  order: legacy
+  legacySortOptions:
+    orderFirst:
+    - Namespace
+    - ResourceQuota
+    - StorageClass
+    - CustomResourceDefinition
+    - MutatingWebhookConfiguration
+    - ServiceAccount
+    - PodSecurityPolicy
+    - Role
+    - ClusterRole
+    - RoleBinding
+    - ClusterRoleBinding
+    - ConfigMap
+    - Secret
+    - Endpoints
+    - Service
+    - LimitRange
+    - PriorityClass
+    - PersistentVolume
+    - PersistentVolumeClaim
+    - Deployment
+    - StatefulSet
+    - CronJob
+    - PodDisruptionBudget
+    orderLast:
+    - ValidatingWebhookConfiguration
+
+resources:
+# Cert-Manager
+- ssh://git@github.com/kubeflow/manifests.git//common/cert-manager/cert-manager/base
+- ssh://git@github.com/kubeflow/manifests.git//common/cert-manager/kubeflow-issuer/base
+# Istio
+- ssh://git@github.com/kubeflow/manifests.git//common/istio-1-17/istio-crds/base
+- ssh://git@github.com/kubeflow/manifests.git//common/istio-1-17/istio-namespace/base
+- ssh://git@github.com/kubeflow/manifests.git//common/istio-1-17/istio-install/base
+# OIDC Authservice
+- ssh://git@github.com/kubeflow/manifests.git//common/oidc-client/oidc-authservice/base
+# Dex
+- ssh://git@github.com/kubeflow/manifests.git//common/dex/overlays/istio
+# Kubeflow namespace
+- ssh://git@github.com/kubeflow/manifests.git//common/kubeflow-namespace/base
+# Kubeflow Roles
+- ssh://git@github.com/kubeflow/manifests.git//common/kubeflow-roles/base
+# Kubeflow Istio Resources
+- ssh://git@github.com/kubeflow/manifests.git//common/istio-1-17/kubeflow-istio-resources/base
