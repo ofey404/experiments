@@ -14,3 +14,7 @@ cd "$SCRIPT_DIR"
 go run github.com/zitadel/oidc/v2/example/server
 # start oidc web client (in a new terminal)
 CLIENT_ID=web CLIENT_SECRET=secret ISSUER=http://localhost:9998/ SCOPES="openid profile" PORT=9999 go run github.com/zitadel/oidc/v2/example/client/app
+
+# visit http://localhost:9998/login
+# User = test-user@localhost
+# Password = verysecure
