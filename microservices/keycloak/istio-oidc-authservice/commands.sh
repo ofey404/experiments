@@ -64,6 +64,8 @@ echo OIDC_PROFILE_URL = $OIDC_PROFILE_URL
 # More to see
 # [Keycloak realm login page is not appearing](https://stackoverflow.com/questions/61858077/keycloak-realm-login-page-is-not-appearing)
 
+kubectl apply -f nginx-test-application.yaml
+
 #####################################################################
 # use oidc-authservice
 #####################################################################
@@ -89,4 +91,4 @@ kubectl delete -k oidc-authservice/
 
 kubectl apply -k oauth2-proxy/
 
-kubectl apply -k request-visualizer.yaml
+kubectl apply -f request-visualizer.yaml
