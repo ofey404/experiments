@@ -87,3 +87,21 @@ spec:
       name: http
       number: 80
       protocol: HTTP
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: nginx-auth-policy
+spec:
+  selector:
+    matchLabels:
+      istio: ingressgateway
+  action: CUSTOM
+  provider:
+    name: "oauth2-proxy"
+  rules:
+  - to:
+    - operation:
+        hosts:
+        - "*"
+        # paths: ["/nginx"]  
