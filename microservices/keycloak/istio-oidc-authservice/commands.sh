@@ -89,3 +89,4 @@ kubectl delete -k oidc-authservice/
 
 kubectl apply -k oauth2-proxy/
 
+kubectl apply -k request-visualizer.yaml
