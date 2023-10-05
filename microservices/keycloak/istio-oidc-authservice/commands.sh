@@ -65,7 +65,7 @@ echo OIDC_PROFILE_URL = $OIDC_PROFILE_URL
 # [Keycloak realm login page is not appearing](https://stackoverflow.com/questions/61858077/keycloak-realm-login-page-is-not-appearing)
 
 #####################################################################
-# configure oidc-authservice
+# use oidc-authservice
 #####################################################################
 
 kubectl apply -k oidc-authservice/
@@ -80,3 +80,12 @@ kubectl apply -k oidc-authservice/
 
 # We can edit hosts file to make localhost point to keycloak.default.svc.cluster.local.
 # The login process would be successful.
+
+kubectl delete -k oidc-authservice/
+
+#####################################################################
+# use oauth2-proxy
+#####################################################################
+
+kubectl apply -k oauth2-proxy/
+

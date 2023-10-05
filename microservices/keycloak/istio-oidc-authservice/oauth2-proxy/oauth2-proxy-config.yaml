@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oauth2-proxy
+  labels:
+    app: oauth2-proxy
+data:
+  oauth2_proxy.cfg: >-
+    email_domains = [ "*" ]
+    skip_auth_regex=["/auth/.*", "/oauth2/.*"]
+    skip_provider_button = true
+    redirect_url = "http://localhost/oauth2/callback"
+
+binaryData: {}

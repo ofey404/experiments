@@ -346,15 +346,3 @@ curl http://localhost:8080/realms/myrealm/.well-known/openid-configuration
 #         "backchannel_authentication_endpoint": "http://localhost:8080/realms/myrealm/protocol/openid-connect/ext/ciba/auth"
 #     }
 # }
-
-#####################################################################
-# FIXME: those instructions don't work
-#####################################################################
-
-istioctl install --set profile=demo -y
-# kubectl apply -k kustomization
-kubectl apply -f nginx-test-application.yaml
-kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80
-curl localhost:8080/nginx
-# success
-kubectl apply -f request-authentication.yaml
