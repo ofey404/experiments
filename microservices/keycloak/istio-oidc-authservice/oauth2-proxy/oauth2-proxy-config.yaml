@@ -5,10 +5,13 @@ metadata:
   labels:
     app: oauth2-proxy
 data:
+  # See: How to invoke a backend api secured with oauth2-proxy from cli #809
+  # https://github.com/oauth2-proxy/oauth2-proxy/issues/809
   oauth2_proxy.cfg: >-
     email_domains = [ "*" ]
     skip_auth_regex=["/auth/.*", "/oauth2/.*"]
     skip_provider_button = true
     redirect_url = "http://localhost/oauth2/callback"
+    skip_jwt_bearer_tokens = true
 
 binaryData: {}
