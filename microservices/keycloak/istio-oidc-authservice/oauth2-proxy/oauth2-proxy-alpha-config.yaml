@@ -25,7 +25,7 @@ data:
       redeemURL: http://keycloak.default.svc.cluster.local/auth/realms/myrealm/protocol/openid-connect/token
       oidcConfig:
         audienceClaims:
-        - aud
+        - azp
         emailClaim: email
         insecureAllowUnverifiedEmail: true
         issuerURL: http://localhost/auth/realms/myrealm
