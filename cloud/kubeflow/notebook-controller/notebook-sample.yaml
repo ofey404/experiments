@@ -1,0 +1,10 @@
+apiVersion: kubeflow.org/v1
+kind: Notebook
+metadata:
+  name: notebook-sample
+spec:
+  template:
+    spec:
+      containers:
+        - name: notebook-sample
+          image: kubeflownotebookswg/jupyter:v1.6.0-rc.0
