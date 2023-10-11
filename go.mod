@@ -16,8 +16,8 @@ require (
 	github.com/golang/mock v1.6.0
 	github.com/hashicorp/vault/api v1.8.3
 	github.com/joho/godotenv v1.5.1
-	github.com/kubeflow/common v0.4.3
-	github.com/kubeflow/training-operator v1.5.0
+	github.com/kubeflow/common v0.4.1
+	github.com/kubeflow/training-operator v1.4.0
 	github.com/lestrrat-go/jwx/v2 v2.0.12
 	github.com/mattn/go-sqlite3 v1.14.17
 	github.com/onsi/ginkgo/v2 v2.9.4
@@ -37,11 +37,10 @@ require (
 	go.uber.org/goleak v1.2.1
 	golang.org/x/time v0.3.0
 	gopkg.in/errgo.v2 v2.1.0
-	istio.io/api v0.0.0-20230908073555-ebb470951d3a
-	istio.io/client-go v1.17.5-0.20230908074255-7d2d589ad8dd
-	k8s.io/api v0.26.3
-	k8s.io/apimachinery v0.27.0-alpha.3
-	k8s.io/client-go v0.26.3
+	istio.io/client-go v1.14.6
+	k8s.io/api v0.24.0-alpha.3
+	k8s.io/apimachinery v0.24.0-alpha.3
+	k8s.io/client-go v0.24.0-alpha.3
 	nhooyr.io/websocket v1.8.7
 )
 
@@ -54,7 +53,7 @@ require (
 	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.2.0 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
-	github.com/evanphx/json-patch v5.6.0+incompatible // indirect
+	github.com/evanphx/json-patch v4.12.0+incompatible // indirect
 	github.com/evanphx/json-patch/v5 v5.6.0 // indirect
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
@@ -69,9 +68,9 @@ require (
 	github.com/gogo/status v1.1.1 // indirect
 	github.com/golang-jwt/jwt/v4 v4.5.0 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
-	github.com/google/gnostic v0.5.7-v3refs // indirect
 	github.com/google/gnostic-models v0.6.8 // indirect
 	github.com/google/uuid v1.3.1 // indirect
+	github.com/googleapis/gnostic v0.5.5 // indirect
 	github.com/gorilla/context v1.1.1 // indirect
 	github.com/gorilla/securecookie v1.1.1 // indirect
 	github.com/gorilla/sessions v1.2.1 // indirect
@@ -122,9 +121,8 @@ require (
 	google.golang.org/genproto/googleapis/api v0.0.0-20230530153820-e85fd2cbaebc // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20230530153820-e85fd2cbaebc // indirect
 	gopkg.in/cenkalti/backoff.v1 v1.1.0 // indirect
-	k8s.io/apiextensions-apiserver v0.26.1 // indirect
-	k8s.io/code-generator v0.28.2 // indirect
-	k8s.io/component-base v0.26.1 // indirect
+	k8s.io/apiextensions-apiserver v0.24.0-alpha.3 // indirect
+	k8s.io/component-base v0.24.0-alpha.3 // indirect
 	k8s.io/kube-openapi v0.0.0-20211115234752-e816edb12b65 // indirect
 )
 
@@ -231,7 +229,7 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	k8s.io/klog/v2 v2.100.1 // indirect
 	k8s.io/utils v0.0.0-20230406110748-d93618cff8a2 // indirect
-	sigs.k8s.io/controller-runtime v0.14.4
+	sigs.k8s.io/controller-runtime v0.11.2
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.3.0 // indirect
 	sigs.k8s.io/yaml v1.3.0 // indirect
