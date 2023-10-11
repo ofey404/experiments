@@ -22,7 +22,12 @@ kubectl apply -f gateway.yaml
 kubectl apply -f notebook-sample.yaml
 
 
-# use client
+#####################################################################
+# use dynamic client
+# See:
+# https://hackernoon.com/platforms-on-k8s-with-golang-watch-any-crd-0v2o3z1q
+#####################################################################
+
 # https://github.com/kubernetes/client-go/issues/1075
 # after all this fixes all issue, but downgrade client-go to 0.24
 
