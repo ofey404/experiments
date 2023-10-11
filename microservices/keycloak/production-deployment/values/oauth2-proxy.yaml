@@ -1,0 +1,99 @@
+# Oauth client configuration specifics
+config:
+  configFile: |-
+    email_domains = [ "*" ]
+    skip_auth_regex=["/auth/.*", "/oauth2/.*"]
+    skip_provider_button = true
+    redirect_url = "http://localhost/oauth2/callback"
+    skip_jwt_bearer_tokens = true
+    reverse_proxy = true
+
+alphaConfig:
+  enabled: true
+  configFile: |-
+    injectResponseHeaders:
+      - name: kubeflow-userid
+        values:
+        - claim: email
+    providers:
+    # ==== Keycloak configuration
+    - id: keycloak-oidc
+      clientID: myclient
+      clientSecret: "not needed for public client"
+      provider: oidc
+      loginURL: /auth/realms/myrealm/protocol/openid-connect/auth
+      scope: openid profile email
+      redeemURL: http://keycloak.default.svc.cluster.local/auth/realms/myrealm/protocol/openid-connect/token
+      oidcConfig:
+        audienceClaims:
+        - azp
+        emailClaim: email
+        insecureAllowUnverifiedEmail: true
+        issuerURL: http://localhost/auth/realms/myrealm
+        jwksURL: http://keycloak.default.svc.cluster.local/auth/realms/myrealm/protocol/openid-connect/certs
+        skipDiscovery: true
+        userIDClaim: email
+    upstreamConfig:
+      upstreams:
+      - id: static://200
+        path: /
+        static: true
+        staticCode: 200
+
+image:
+  repository: "quay.io/oauth2-proxy/oauth2-proxy"
+  tag: "v7.4.0"
+  pullPolicy: "IfNotPresent"
+
+# Optionally specify an array of imagePullSecrets.
+# Secrets must be manually created in the namespace.
+# ref: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
+# imagePullSecrets:
+  # - name: myRegistryKeySecretName
+
+# Set a custom containerPort if required.
+# This will default to 4180 if this value is not set and the httpScheme set to http
+# This will default to 4443 if this value is not set and the httpScheme set to https
+# containerPort: 4180
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 300Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 300Mi
+
+# [TopologySpreadConstraints](https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/) configuration.
+# Ref: https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#scheduling
+# topologySpreadConstraints: []
+
+# Affinity for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+# affinity: {}
+
+# Tolerations for pod assignment
+# Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+tolerations: []
+
+# Node labels for pod assignment
+# Ref: https://kubernetes.io/docs/user-guide/node-selection/
+nodeSelector: {}
+deploymentAnnotations: {}
+podAnnotations: {}
+podLabels: {}
+replicaCount: 1
+revisionHistoryLimit: 10
+
+## PodDisruptionBudget settings
+## ref: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
+
+# Configure Kubernetes security context for pod
+# Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+podSecurityContext: {}
+
+# whether to use http or https
+httpScheme: http

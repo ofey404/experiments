@@ -13,7 +13,7 @@ It has:
 
 Checklist:
 
-- [x] TLS/HTTPS
+- [ ] TLS/HTTPS
   - `edge` mode behind proxy
 - [x] Hostname
   - Behind Istio Gateway
@@ -24,3 +24,4 @@ Checklist:
   - PostgreSQL subchart with tuning, replication and backup
 - [ ] Keycloak as Cluster, more than 2 nodes
 - [x] IPV4 or V6 or Both
+- [ ] Prometheus monitoring

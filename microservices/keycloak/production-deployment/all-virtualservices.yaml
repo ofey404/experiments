@@ -1,0 +1,52 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: shared-gateway
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - '*'
+    port:
+      name: http
+      number: 80
+      protocol: HTTP
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: oauth2-proxy
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - default/shared-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /oauth2
+    route:
+    - destination:
+        port:
+          number: 80
+        host: oauth2-proxy.default.svc.cluster.local
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: keycloak
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - default/shared-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /auth
+    route:
+    - destination:
+        port:
+          number: 80
+        host: keycloak

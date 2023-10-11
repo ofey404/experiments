@@ -128,7 +128,9 @@ require (
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20230530153820-e85fd2cbaebc // indirect
 	gopkg.in/cenkalti/backoff.v1 v1.1.0 // indirect
 	k8s.io/apiextensions-apiserver v0.26.1 // indirect
+	k8s.io/code-generator v0.28.2 // indirect
 	k8s.io/component-base v0.26.1 // indirect
+	k8s.io/gengo v0.0.0-20220902162205-c0856e24416d // indirect
 )
 
 require (
