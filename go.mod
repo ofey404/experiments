@@ -38,6 +38,8 @@ require (
 	go.uber.org/goleak v1.2.1
 	golang.org/x/time v0.3.0
 	gopkg.in/errgo.v2 v2.1.0
+	istio.io/api v1.19.2-0.20231011000955-f3015ebb5bd4
+	istio.io/client-go v1.19.3
 	k8s.io/api v0.28.1
 	k8s.io/apimachinery v0.28.1
 	k8s.io/client-go v0.28.1
