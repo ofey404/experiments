@@ -36,4 +36,29 @@ func main() {
 		return
 	}
 	fmt.Printf("notebookApi.NotebookList = %+v\n", list)
+
+	// get
+	notebook := &notebookApi.Notebook{}
+	err = c.Get(context.TODO(), client.ObjectKey{
+		Name:      "notebook-sample",
+		Namespace: "default",
+	}, notebook)
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+	fmt.Printf("get notebook = %+v\n", notebook)
+
+	// delete
+	// err = c.Delete(context.TODO(), &notebookApi.Notebook{
+	// 	ObjectMeta: metav1.ObjectMeta{
+	// 		Name:      "notebook-sample",
+	// 		Namespace: "default",
+	// 	},
+	// })
+	// if err != nil {
+	// 	log.Fatal(err)
+	// 	return
+	// }
+	// fmt.Printf("Deleted notebook-sample\n")
 }
