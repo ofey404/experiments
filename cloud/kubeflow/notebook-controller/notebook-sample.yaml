@@ -3,6 +3,8 @@ kind: Notebook
 metadata:
   name: notebook-sample
 spec:
+  config:
+    subUrl: "/sample"
   template:
     spec:
       containers:
