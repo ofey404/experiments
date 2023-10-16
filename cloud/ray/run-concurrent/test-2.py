@@ -35,28 +35,8 @@ actor = AsyncActor.remote()
 async def async_get():
     # TypeError: 'async_generator' object is not iterable 
     r = actor.run_concurrent.remote()
-    out = await r
-    print("async_get out: ", out)
-    return out
+    await r
 
 
 # 模拟四个ray worker
-results = [async_get() for _ in range(4)]
-print("results: ", results)
-
-
-async def main(results):
-    out = await asyncio.gather(*results)
-    print("main out: ", out)
-    return out
-
-
-outputs = asyncio.run(main(results))
-
-
-# async def fun(outputs):
-#     async for output in outputs:
-#         print("output: ", output)
-
-
-# fun(outputs)
+asyncio.run(async_get())
