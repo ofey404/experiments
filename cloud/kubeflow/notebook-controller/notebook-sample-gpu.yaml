@@ -1,0 +1,17 @@
+apiVersion: kubeflow.org/v1
+kind: Notebook
+metadata:
+  name: notebook-sample
+spec:
+  config:
+    subUrl: "/sample"
+  template:
+    spec:
+      containers:
+        - name: notebook-sample
+          image: kubeflownotebookswg/jupyter-pytorch-cuda-full:v1.8.0-rc.2
+          resources:
+                limits:
+                  nvidia.com/gpu: 1 # requesting 1 GPU
+      nodeSelector:
+        nvidia.com/gpu.product: Tesla-T4 # selecting nodes with this label
