@@ -11,8 +11,9 @@ cd "$SCRIPT_DIR"
 
 # How to configure kind cluster to not start automatically after reboots? #2631
 # https://github.com/kubernetes-sigs/kind/issues/2631
-docker update --restart=no container-id
 
+kind create cluster -n my-cluster
+docker update --restart=no my-cluster-control-plane
 
 # after image is loaded, we should set:
 # imagePullPolicy: IfNotPresent
