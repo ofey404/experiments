@@ -1,0 +1,64 @@
+apiVersion: "kubeflow.org/v1"
+kind: "PyTorchJob"
+metadata:
+  name: "pytorchjob-example"
+spec:
+  runPolicy:
+    cleanPodPolicy: All
+    ttlSecondsAfterFinished: 0
+  pytorchReplicaSpecs:
+    Master:
+      replicas: 1
+      restartPolicy: OnFailure
+      template:
+        metadata:
+          annotations:
+            sidecar.istio.io/inject: "false"
+        spec:
+          containers:
+            - name: pytorch
+              image: docker.io/kubeflowkatib/pytorch-mnist:v1beta1-45c5727
+              command: ["/bin/sh","-c"]
+              args:
+              - cd /data && echo * && sleep 5000
+              # Comment out the below resources to use the CPU.
+              resources:
+                requests:
+                  cpu: 1
+                limits:
+                  cpu: 1
+              volumeMounts:
+                - name: data
+                  mountPath: /data
+          volumes:
+            - name: data
+              hostPath:
+                path: /data
+    Worker:
+      replicas: 1
+      restartPolicy: OnFailure
+      template:
+        metadata:
+          annotations:
+            sidecar.istio.io/inject: "false"
+        spec:
+          containers:
+            - name: pytorch
+              image: docker.io/kubeflowkatib/pytorch-mnist:v1beta1-45c5727
+              command:
+              - /bin/sh
+              - -c
+              args:
+              - cd /data && echo * && sleep 5000
+              resources:
+                requests:
+                  cpu: 1
+                limits:
+                  cpu: 1
+              volumeMounts:
+                - name: data
+                  mountPath: /data
+          volumes:
+            - name: data
+              hostPath:
+                path: /data

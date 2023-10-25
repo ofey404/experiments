@@ -9,9 +9,6 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-kind create cluster -n harbor
-docker update --restart=no harbor-control-plane
-
 helm repo add harbor https://helm.goharbor.io
 
 # check the chart
@@ -34,10 +31,7 @@ kubectl port-forward svc/harbor-portal 80:80
 # default password
 # admin
 # Harbor12345
-
-#####################################################################
-# NOT FINISHED YET
-# Harbor contains complicated TLS configuration.
-# 
-# https://ruzickap.github.io/k8s-knative-gitlab-harbor/part-04/
-#####################################################################
+#
+# Add this to docker config:
+# "insecure-registries" : ["core.harbor.domain"]
+# then restart daemon

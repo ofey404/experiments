@@ -1,0 +1,46 @@
+admin> db.system.users.find().explain()
+{
+  explainVersion: '2',
+  queryPlanner: {
+    namespace: 'admin.system.users',
+    indexFilterSet: false,
+    parsedQuery: {},
+    queryHash: 'E475932B',
+    planCacheKey: '6E9F2C57',
+    maxIndexedOrSolutionsReached: false,
+    maxIndexedAndSolutionsReached: false,
+    maxScansToExplodeReached: false,
+    winningPlan: {
+      queryPlan: {
+        stage: 'COLLSCAN',
+        planNodeId: 1,
+        filter: {},
+        direction: 'forward'
+      },
+      slotBasedPlan: {
+        slots: '$$RESULT=s4 env: { s1 = TimeZoneDatabase(Etc/GMT+4...America/Santa_Isabel) (timeZoneDB), s2 = Nothing (SEARCH_META), s3 = 1698056100728 (NOW) }',
+        stages: '[1] scan s4 s5 none none none none lowPriority [] @"ff9ed237-9c1f-4ae7-9b42-0012718e28e5" true false '
+      }
+    },
+    rejectedPlans: []
+  },
+  command: { find: 'system.users', filter: {}, '$db': 'admin' },
+  serverInfo: {
+    host: 'df7c5918339a',
+    port: 27017,
+    version: '7.0.2',
+    gitVersion: '02b3c655e1302209ef046da6ba3ef6749dd0b62a'
+  },
+  serverParameters: {
+    internalQueryFacetBufferSizeBytes: 104857600,
+    internalQueryFacetMaxOutputDocSizeBytes: 104857600,
+    internalLookupStageIntermediateDocumentMaxSizeBytes: 104857600,
+    internalDocumentSourceGroupMaxMemoryBytes: 104857600,
+    internalQueryMaxBlockingSortMemoryUsageBytes: 104857600,
+    internalQueryProhibitBlockingMergeOnMongoS: 0,
+    internalQueryMaxAddToSetBytes: 104857600,
+    internalDocumentSourceSetWindowFieldsMaxMemoryBytes: 104857600,
+    internalQueryFrameworkControl: 'trySbeEngine'
+  },
+  ok: 1
+}

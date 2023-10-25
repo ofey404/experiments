@@ -14,7 +14,7 @@ docker run -it --rm --name mastering-mongo \
            -p 27017:27017 \
            -e MONGO_INITDB_ROOT_USERNAME=root \
            -e MONGO_INITDB_ROOT_PASSWORD=password \
-           -v $(pwd)/data/db:/data/db \
+           -v /tmp/mastering-mongo/data/db:/data/db \
            mongo:7.0.2
 
 # The connection string
