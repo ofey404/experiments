@@ -5,4 +5,8 @@ this directory is my playground.
 
 Repo: https://github.com/kubernetes-sigs/kubebuilder
 
-The kubebuilder book: https://book.kubebuilder.io/introduction
+# projects/
+
+Those are example projects from the kubebuilder book.
+
+Book site: https://book.kubebuilder.io/introduction
