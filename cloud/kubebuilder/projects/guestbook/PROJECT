@@ -6,5 +6,15 @@ domain: my.domain
 layout:
 - go.kubebuilder.io/v4
 projectName: guestbook
-repo: github.com/ofey404/experiments
+repo: github.com/ofey404/experiments/cloud/kubebuilder/projects/guestbook
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: my.domain
+  group: webapp
+  kind: Guestbook
+  path: github.com/ofey404/experiments/cloud/kubebuilder/projects/guestbook/api/v1
+  version: v1
 version: "3"

@@ -21,15 +21,3 @@ kubebuilder completion bash
 # Add this to bashrc
 # kubebuilder autocompletion
 . <(kubebuilder completion bash)
-
-# 1. init project as a standalone go module
-mkdir -p ~/projects/guestbook
-cd ~/projects/guestbook
-kubebuilder init --domain my.domain --repo my.domain/guestbook
-
-# 2. init project as a subpackage of an existing module
-mkdir -p projects/guestbook
-cd projects/guestbook
-kubebuilder init --domain my.domain
-rm go.mod go.sum
-# Then modify the Dockerfile, point the root path to the existing go.mod
