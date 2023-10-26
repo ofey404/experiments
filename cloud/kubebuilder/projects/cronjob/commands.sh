@@ -33,4 +33,28 @@ make manifests
 # finally... Apply our test cronjob.
 kubectl apply -f examples/cronjob.yaml
 
+#####################################################################
+# Develop a Webhook
+#####################################################################
+
 kubebuilder create webhook --group batch --version v1 --kind CronJob --defaulting --programmatic-validation
+# also, just copy cronjob_webhook.go from
+# https://github.com/kubernetes-sigs/kubebuilder/blob/master/docs/book/src/cronjob-tutorial/testdata/project/api/v1/cronjob_webhook.go
+
+# Install cert-manager
+# https://book.kubebuilder.io/cronjob-tutorial/cert-manager
+# https://cert-manager.io/docs/installation/
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.1/cert-manager.yaml
+
+make docker-build IMG=kubebuilder-cronjob:v0.0.1
+kind load docker-image kubebuilder-cronjob:v0.0.1 --name jupyterhub
+
+# Then, uncomment the webhook manifest in config/crd/ and config/default
+
+make deploy IMG=kubebuilder-cronjob:v0.0.1
+
+# check the validation webhook is working correctly
+kubectl apply -f examples/cronjob-wrong-format.yaml
+# The CronJob "cronjob-example" is invalid: spec.schedule: Invalid value: "A cron expression with wrong format": Expected exactly 5 fields, found 6: A cron expression with wrong format
+
+make undeploy

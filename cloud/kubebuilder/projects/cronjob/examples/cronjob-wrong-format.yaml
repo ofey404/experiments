@@ -1,0 +1,22 @@
+apiVersion: batch.tutorial.kubebuilder.io/v1
+kind: CronJob
+metadata:
+  name: cronjob-example
+spec:
+  # Run every minute
+  schedule: "A cron expression with wrong format"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: myapp-container
+              image: busybox:1.28
+              command:
+                - '/bin/sh'
+                - '-c'
+                - |
+                  echo $(date)
+                  sleep 1
+
