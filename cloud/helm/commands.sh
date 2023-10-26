@@ -17,6 +17,7 @@ rm -rf helm-v3.11.1-linux-amd64.tar.gz linux-amd64/
 
 # add repo
 helm repo add bitnami https://charts.bitnami.com/bitnami
+# search things in the repo
 helm search repo bitnami
 
 helm repo update  
