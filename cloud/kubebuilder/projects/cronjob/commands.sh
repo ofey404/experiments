@@ -32,3 +32,5 @@ make manifests
 
 # finally... Apply our test cronjob.
 kubectl apply -f examples/cronjob.yaml
+
+kubebuilder create webhook --group batch --version v1 --kind CronJob --defaulting --programmatic-validation
