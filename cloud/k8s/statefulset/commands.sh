@@ -16,7 +16,7 @@ cd "$SCRIPT_DIR"
 # https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#stable-network-id
 
 kubectl apply -f ../../../snippets/network-tester.yaml
-kubectl apply -f all.yaml
+kubectl apply -f statefulset.yaml
 
 # enter network-tester
 curl web-0.nginx.default.svc.cluster.local	
