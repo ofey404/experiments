@@ -27,3 +27,11 @@ kubectl rollout restart deployment/istiod -n istio-system
 # dump and edit profile
 istioctl profile dump demo > istio-based-on-demo.yaml
 istioctl install -f istio-based-on-demo.yaml
+
+# dump the live profile
+istioctl profile dump
+
+# disable injection
+metadata:
+#     annotations:
+#       sidecar.istio.io/inject: "false"
