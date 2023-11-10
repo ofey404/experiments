@@ -25,11 +25,9 @@ kubectl port-forward svc/istio-ingressgateway -n istio-system 80:80
 kubectl rollout restart deployment/istiod -n istio-system
 
 # dump and edit profile
+istioctl profile dump
 istioctl profile dump demo > istio-based-on-demo.yaml
 istioctl install -f istio-based-on-demo.yaml
-
-# dump the live profile
-istioctl profile dump
 
 # disable injection
 metadata:

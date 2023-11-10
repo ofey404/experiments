@@ -30,3 +30,6 @@ helm pull kubeflow/kubeflow --version 1.5.1 --untar
 
 # install helm diff plugin
 helm plugin install https://github.com/databus23/helm-diff
+
+# print out the yaml
+helm template --debug {args}
