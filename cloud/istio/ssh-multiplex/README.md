@@ -4,8 +4,6 @@ This is the playground to use istio virtualservice to multiplex ssh connections.
 
 ## Idea 2 - Dynamically assign ports: Possible
 
-
-
 ## Idea 1 - Multiplex: Not possible
 
 > When you connect to a host via SSH, the hostname you use to connect is not included in the TCP packets themselves.

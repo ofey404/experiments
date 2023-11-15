@@ -1,0 +1,8 @@
+auth:
+  password: password
+  rootPassword: password
+  database: backend
+# https://docs.bitnami.com/kubernetes/infrastructure/mysql/configuration/customize-new-instance/
+startdbScripts:
+  set_gmt8.sql: |
+    set global time_zone = '+8:00';
