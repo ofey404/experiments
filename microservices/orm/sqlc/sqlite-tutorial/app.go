@@ -6,7 +6,7 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/ofey404/experiments/microservices/sqlc/sqlite/tutorial"
+	"github.com/ofey404/experiments/microservices/orm/sqlc/sqlite-tutorial/tutorial"
 
 	_ "embed"
 
@@ -37,7 +37,7 @@ func run() error {
 	if err != nil {
 		return err
 	}
-	log.Println(authors)
+	log.Printf("authors = %+v\n", authors)
 
 	// create an author
 	insertedAuthor, err := queries.CreateAuthor(ctx, tutorial.CreateAuthorParams{
@@ -47,7 +47,7 @@ func run() error {
 	if err != nil {
 		return err
 	}
-	log.Println(insertedAuthor)
+	log.Printf("insertedAuthor = %+v\n", insertedAuthor)
 
 	// get the author we just inserted
 	fetchedAuthor, err := queries.GetAuthor(ctx, insertedAuthor.ID)
@@ -56,7 +56,7 @@ func run() error {
 	}
 
 	// prints true
-	log.Println(reflect.DeepEqual(insertedAuthor, fetchedAuthor))
+	log.Printf("reflect.DeepEqual(insertedAuthor, fetchedAuthor) = %b\n", reflect.DeepEqual(insertedAuthor, fetchedAuthor))
 	return nil
 }
 
