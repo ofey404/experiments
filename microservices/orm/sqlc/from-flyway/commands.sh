@@ -12,7 +12,7 @@ cd "$SCRIPT_DIR"
 # V005.sql is the full schema dumped from a running postgresql instance.
 # It's the V005 schema version, managed by flyway.
 
-
 # SQLC: Getting started with PostgreSQL
 # https://docs.sqlc.dev/en/stable/tutorials/getting-started.html
 
+sqlc generate

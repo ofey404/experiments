@@ -5,6 +5,6 @@ sql:
     schema: "V005.sql"
     gen:
       go:
-        package: "tutorial"
-        out: "tutorial"
-        sql_package: "pgx/v5"
+        package: "modelv005"
+        out: "modelv005"
+#        sql_package: "pgx/v5"
