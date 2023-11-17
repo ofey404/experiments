@@ -9,4 +9,7 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-# https://github.com/sqlc-dev/sqlc
+# single-port ssh multiplex in kubernetes (Aborted)
+kubectl apply -f single-port-multiplex.yaml
+ssh linuxserver.io@ssh-multiplex-0.ssh-multiplex.default.svc.cluster.local -p 2222
+ssh linuxserver.io@localhost -p 31400

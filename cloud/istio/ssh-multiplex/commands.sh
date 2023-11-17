@@ -9,10 +9,9 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-#####################################################################
-# 1. test ssh server in docker
-#####################################################################
+# More in subdirectories
 
+# test ssh server in docker
 # https://hub.docker.com/r/linuxserver/openssh-server
 docker run -d \
   --name=openssh-server \
@@ -33,12 +32,3 @@ ssh linuxserver.io@localhost -p 2222
 # Welcome to OpenSSH Server
 # openssh-server:~$ 
 
-#####################################################################
-# 2. ssh multiplex in kubernetes
-#####################################################################
-
-kubectl apply -f single-port-multiplex.yaml
-
-ssh linuxserver.io@ssh-multiplex-0.ssh-multiplex.default.svc.cluster.local -p 2222
-
-ssh linuxserver.io@localhost -p 31400

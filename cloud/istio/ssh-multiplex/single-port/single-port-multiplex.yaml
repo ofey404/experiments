@@ -1,0 +1,159 @@
+# == A GPT-4 generated explaination of ssh port multiplexing ==
+#
+# Ah, I see what you're asking now. Yes, it is possible to achieve what you're
+# describing with a combination of Kubernetes and a service mesh like Istio.
+# Here's a brief overview of how you could set this up:
+#
+# 1. **Kubernetes**: You'll want to create a Kubernetes Service for each SSH
+#    server. This allows you to have a stable endpoint (IP and port) that other
+#    pods can use to connect to the SSH server, even though the underlying pod
+#    might change.
+#
+# 2. **Istio**: With Istio, you can create a VirtualService that routes traffic
+#    based on the SNI (Server Name Indication) in the TLS handshake. This allows
+#    you to route SSH traffic to different services based on the hostname that
+#    the client is trying to connect to, even though they are all connecting to
+#    the same IP and port.
+# 
+# Here's an example of what the Istio VirtualService might look like:
+# 
+# ```yaml
+# apiVersion: networking.istio.io/v1alpha3
+# kind: VirtualService
+# metadata:
+#   name: ssh-router
+# spec:
+#   hosts:
+#   - "*"
+#   gateways:
+#   - my-gateway
+#   tcp:
+#   - match:
+#     - port: 22
+#       sniHosts:
+#       - user1.example.com
+#     route:
+#     - destination:
+#         host: ssh-server-user1.default.svc.cluster.local
+#   - match:
+#     - port: 22
+#       sniHosts:
+#       - user2.example.com
+#     route:
+#     - destination:
+#         host: ssh-server-user2.default.svc.cluster.local
+# ```
+# 
+# This VirtualService routes SSH traffic to different services based on the SNI
+# in the TLS handshake. The `hosts` field is set to `"*"` to allow any hostname,
+# and the `sniHosts` field is used to match the hostname that the client is
+# trying to connect to.
+#
+# Remember, though, that SSH does not support SNI natively, so you would need to
+# wrap your SSH connections in TLS (for example, by using a tool like stunnel)
+# or use a protocol that supports SNI, like HTTPS.
+#
+# Also, keep in mind that while this setup allows you to multiplex multiple SSH
+# connections over the same IP and port, it doesn't prevent users from trying to
+# SSH into each other's pods. You would need to secure your SSH servers to
+# prevent unauthorized access, for example, by using password or public key
+# authentication and possibly additional security measures like two-factor
+# authentication.
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ssh-multiplex
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - default/notebook-gateway
+  tcp:
+  - match:
+    - port: 31400  # one of the default ports for istio-ingressgateway
+    route:
+    - destination:
+        host: ssh-multiplex-0.ssh-multiplex.default.svc.cluster.local
+        port:
+          number: 2222
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: ssh-multiplex
+spec:
+  host: "*.ssh-multiplex.default.svc.cluster.local"
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+
+---
+# apiVersion: networking.istio.io/v1alpha3
+# kind: ServiceEntry
+# metadata:
+#   name: ssh-multiplex
+# spec:
+#   hosts:
+#   - ssh-multiplex-0.ssh-multiplex.svc.cluster.local
+#   ports:
+#   - number: 2222
+#     name: ssh
+#     protocol: TCP
+#   location: MESH_INTERNAL
+#   resolution: DNS
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ssh-multiplex
+  labels:
+    app: ssh-multiplex
+spec:
+  ports:
+  - port: 2222
+    name: ssh
+  clusterIP: None  # A headless service
+  selector:
+    app: ssh-multiplex
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ssh-multiplex
+  labels:
+    app: ssh-multiplex
+spec:
+  selector:
+    matchLabels:
+      app: ssh-multiplex
+  replicas: 2
+  serviceName: "ssh-multiplex"
+  minReadySeconds: 10
+  template:
+    metadata:
+      labels:
+        app: ssh-multiplex
+      annotations:
+        sidecar.istio.io/inject: "false" # TODO
+    spec:
+      containers:
+      - name: openssh-server
+        image: lscr.io/linuxserver/openssh-server:9.3_p2-r0-ls136
+        ports:
+        - containerPort: 2222
+        env:
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        - name: TZ
+          value: "Etc/UTC"
+        - name: SUDO_ACCESS
+          value: "false"
+        - name: PASSWORD_ACCESS
+          value: "true"
+        - name: USER_PASSWORD
+          value: "password"
+        - name: USER_NAME
+          value: "linuxserver.io"
