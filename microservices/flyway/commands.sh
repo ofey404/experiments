@@ -20,7 +20,28 @@ docker run -it --rm \
            -v /tmp/postgres-flyway:/var/lib/postgresql/data \
            postgres:16
 
-# https://github.com/flyway/flyway
+# create database
+# flyway doesn't provide a flag like `--create-database`
+docker exec -it some-postgres psql -U postgres -c "CREATE DATABASE mydatabase"
+
 # https://hub.docker.com/r/flyway/flyway
-docker run --rm -v /path/to/sql/migrations:/flyway/sql flyway/flyway \
-    -url=jdbc:postgresql://host.docker.internal:5432/mydatabase -user=postgres -password=mysecretpassword migrate
+docker run --rm -v $(pwd)/db/migration:/flyway/sql flyway/flyway:10.0 \
+     -url=jdbc:postgresql://host.docker.internal:5432/mydatabase \
+     -user=postgres \
+     -password=mysecretpassword \
+     migrate
+
+# SQL are from https://github.com/timander/flyway-example
+
+#####################################################################
+# Advanced options
+#####################################################################
+
+# remove postgres data, and start over, migrate to v3
+sudo rm -rf /tmp/postgres-flyway
+
+docker run --rm -v $(pwd)/db/migration:/flyway/sql flyway/flyway:10.0 \
+     -url=jdbc:postgresql://host.docker.internal:5432/mydatabase \
+     -user=postgres \
+     -password=mysecretpassword \
+     migrate -target=3
