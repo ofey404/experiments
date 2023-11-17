@@ -24,6 +24,9 @@ docker run -it --rm \
 # flyway doesn't provide a flag like `--create-database`
 docker exec -it some-postgres psql -U postgres -c "CREATE DATABASE mydatabase"
 
+# connection
+PGPASSWORD=mysecretpassword psql -h localhost -U postgres -d mydatabase
+
 # https://hub.docker.com/r/flyway/flyway
 docker run --rm -v $(pwd)/db/migration:/flyway/sql flyway/flyway:10.0 \
      -url=jdbc:postgresql://host.docker.internal:5432/mydatabase \
@@ -45,3 +48,9 @@ docker run --rm -v $(pwd)/db/migration:/flyway/sql flyway/flyway:10.0 \
      -user=postgres \
      -password=mysecretpassword \
      migrate -target=3
+
+# dump the whole schema as V005.sql
+# -s: schema only
+docker run --rm -it -e PGPASSWORD=mysecretpassword \
+       postgres:16 \
+       bash -c "pg_dump -h host.docker.internal -U postgres -s -d mydatabase" > V005.sql
