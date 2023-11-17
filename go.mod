@@ -39,6 +39,8 @@ require (
 	go.uber.org/goleak v1.2.1
 	golang.org/x/time v0.3.0
 	gopkg.in/errgo.v2 v2.1.0
+	gorm.io/driver/sqlite v1.5.4
+	gorm.io/gorm v1.25.5
 	istio.io/api v1.19.2-0.20231011000955-f3015ebb5bd4
 	istio.io/client-go v1.19.3
 	k8s.io/api v0.28.1
@@ -77,6 +79,8 @@ require (
 	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.15.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/lestrrat-go/blackmagic v1.0.1 // indirect
 	github.com/lestrrat-go/httpcc v1.0.1 // indirect
