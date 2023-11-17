@@ -25,3 +25,14 @@ func (q *Queries) GetEmail(ctx context.Context, emailID int32) (Email, error) {
 	)
 	return i, err
 }
+
+const getSchemaVersion = `-- name: GetSchemaVersion :one
+SELECT max(version)::bigint FROM public.flyway_schema_history
+`
+
+func (q *Queries) GetSchemaVersion(ctx context.Context) (int64, error) {
+	row := q.db.QueryRowContext(ctx, getSchemaVersion)
+	var column_1 int64
+	err := row.Scan(&column_1)
+	return column_1, err
+}

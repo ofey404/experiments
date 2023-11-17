@@ -20,6 +20,7 @@ require (
 	github.com/kubeflow/common v0.4.6
 	github.com/kubeflow/training-operator v1.6.0
 	github.com/lestrrat-go/jwx/v2 v2.0.12
+	github.com/lib/pq v1.10.7
 	github.com/mattn/go-sqlite3 v1.14.17
 	github.com/onsi/ginkgo/v2 v2.11.0
 	github.com/onsi/gomega v1.27.10

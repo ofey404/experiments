@@ -14,5 +14,9 @@ cd "$SCRIPT_DIR"
 
 # SQLC: Getting started with PostgreSQL
 # https://docs.sqlc.dev/en/stable/tutorials/getting-started.html
-
 sqlc generate
+
+# This script demonstrates SQL generation, and flyway version retrieval.
+go run .
+# Successfully connected!
+# schema version: 5
