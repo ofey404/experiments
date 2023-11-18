@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 #include <string>
-
-extern size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* userp);
+#include "callback.h"
 
 TEST(WriteCallbackTest, AppendsDataToString) {
     std::string data = "Hello, world!";

@@ -16,3 +16,4 @@ target_link_libraries(my_curl my_curl_lib)
 
 add_executable(my_curl_test tests/callback_test.cpp)
 target_link_libraries(my_curl_test my_curl_lib GTest::GTest GTest::Main)
+target_include_directories(my_curl_test PRIVATE "${CMAKE_SOURCE_DIR}/src")
