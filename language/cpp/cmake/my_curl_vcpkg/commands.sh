@@ -35,3 +35,11 @@ vcpkg install gtest
 # Option 2: use vcpkg.json
 vcpkg install
 
+mkdir cmake-build-debug
+cd cmake-build-debug
+# point to vcpkg.cmake
+cmake -DCMAKE_BUILD_TYPE=Debug \
+      -DCMAKE_TOOLCHAIN_FILE=/home/ofey/vcpkg/scripts/buildsystems/vcpkg.cmake \
+      ..
+make
+

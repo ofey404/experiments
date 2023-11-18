@@ -5,9 +5,6 @@ set(CMAKE_CXX_STANDARD 14)
 # To solve the GTest issue: undefined reference to `typeinfo for testing::Test'
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti")
 
-# Add the line below to use vcpkg
-set(CMAKE_TOOLCHAIN_FILE "/home/ofey/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
-
 # Change find_package to use CONFIG mode for libraries installed with vcpkg
 find_package(CURL CONFIG REQUIRED)
 find_package(GTest CONFIG REQUIRED)
