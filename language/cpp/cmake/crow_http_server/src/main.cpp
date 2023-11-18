@@ -1,7 +1,17 @@
 #define CROW_MAIN
 #include <crow.h>
+#include <nlohmann/json.hpp>
 
-// The Crow library does not support automatic conversion from JSON to custom types directly.
+using json = nlohmann::json;
+
+// Define a Person structure
+struct Person {
+    std::string name;
+    int age;
+};
+
+// Define the to_json and from_json functions for Person
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Person, name, age)
 
 int main()
 {
@@ -37,6 +47,29 @@ int main()
                     res.write("Received message: " + message);
                     return res;
                 } catch (std::runtime_error& e) {
+                    // Log the error message
+                    CROW_LOG_ERROR << "Error: " << e.what();
+                    // Return a 400 Bad Request response
+                    return crow::response(400, "Bad Request: " + std::string(e.what()));
+                }
+            });
+
+    // The new /json_structured route
+    CROW_ROUTE(app, "/json_structured").methods(crow::HTTPMethod::Post)
+            ([](const crow::request& req) {
+                try {
+                    // Parse the JSON body into a Person object
+                    Person person = json::parse(req.body).get<Person>();
+                    person.age++; // increment the age
+
+                    // Convert the updated Person object back into JSON
+                    json res_body = person;
+
+                    // Respond with a 200 status code and the updated Person object
+                    crow::response res(200);
+                    res.write(res_body.dump());
+                    return res;
+                } catch (std::exception& e) {
                     // Log the error message
                     CROW_LOG_ERROR << "Error: " << e.what();
                     // Return a 400 Bad Request response
