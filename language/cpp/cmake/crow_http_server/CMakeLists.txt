@@ -18,3 +18,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE nlohmann_json::nlohmann_json)
 
 find_package(yaml-cpp CONFIG REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE yaml-cpp::yaml-cpp)
+
+find_package(Boost COMPONENTS program_options REQUIRED)
+target_link_libraries(${PROJECT_NAME} PRIVATE Boost::program_options)

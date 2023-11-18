@@ -9,9 +9,7 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-vcpkg install crow
-vcpkg install nlohmann-json
-vcpkg install yaml-cpp
+vcpkg install crow nlohmann-json yaml-cpp boost-program-options
 
 ./cmake-build-debug/crow_http_server
 curl localhost:8080

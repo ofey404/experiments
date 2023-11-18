@@ -4,6 +4,9 @@
 #include <yaml-cpp/yaml.h>
 #include <crow.h>
 #include <nlohmann/json.hpp>
+#include <boost/program_options.hpp>
+
+namespace po = boost::program_options;
 
 using json = nlohmann::json;
 
@@ -20,7 +23,7 @@ struct Config {
     int port;
 };
 
-Config load_config(const std::string &filename) {
+Config loadConfig(const std::string &filename) {
     YAML::Node config = YAML::LoadFile(filename);
     Config c;
 
@@ -98,14 +101,36 @@ void setupRoutes(crow::SimpleApp& app) {
 
 }
 
-int main()
-{
+std::string parseCommandLine(int argc, char* argv[]) {
+    std::string configFile = "config.yaml"; // default config file
+
+    po::options_description desc("Allowed options");
+    desc.add_options()
+            ("help", "produce help message")
+            ("config", po::value<std::string>(&configFile), "set config file path")
+            ;
+
+    po::variables_map vm;
+    po::store(po::parse_command_line(argc, argv, desc), vm);
+    po::notify(vm);
+
+    if (vm.count("help")) {
+        std::cout << desc << "\n";
+        exit(0);
+    }
+
+    return configFile;
+}
+
+int main(int argc, char* argv[]) {
+    std::string configFilePath = parseCommandLine(argc, argv);
+
     crow::SimpleApp app;
     setupRoutes(app);
 
     Config config;
     try {
-        config = load_config("config.yaml");
+        config = loadConfig(configFilePath);
     } catch (const std::exception &e) {
         std::cerr << "Failed to load config: " << e.what() << std::endl;
         return 1; // or handle error as appropriate
