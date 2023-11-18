@@ -9,8 +9,9 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-# manually instatll libcurl
+# manually install packages
 sudo apt-get install libcurl4-openssl-dev
+sudo apt-get install libgtest-dev
 
 # Or use clion
 mkdir cmake-build-debug

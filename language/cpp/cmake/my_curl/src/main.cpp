@@ -1,10 +1,7 @@
 #include <iostream>
 #include <curl/curl.h>
 
-size_t WriteCallback(void *contents, size_t size, size_t nmemb, std::string *userp) {
-    userp->append((char *) contents, size * nmemb);
-    return size * nmemb;
-}
+extern size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* userp);
 
 int main() {
     CURL *curl = curl_easy_init();
