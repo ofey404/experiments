@@ -1,7 +1,3 @@
-//
-// Created by ofey on 11/18/2023.
-//
-
 #ifndef MY_CURL_CALLBACK_H
 #define MY_CURL_CALLBACK_H
 

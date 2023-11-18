@@ -12,7 +12,7 @@ find_package(GTest REQUIRED)
 add_subdirectory(callback)
 
 add_executable(my_curl src/main.cpp)
-target_link_libraries(my_curl my_curl_lib)
+target_link_libraries(my_curl my_curl_lib ${CURL_LIBRARIES}) # Add CURL_LIBRARIES here
 
 add_executable(my_curl_test tests/callback_test.cpp)
 target_link_libraries(my_curl_test my_curl_lib GTest::GTest GTest::Main)
