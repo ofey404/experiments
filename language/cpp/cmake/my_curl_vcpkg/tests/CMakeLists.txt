@@ -3,4 +3,4 @@ set(TEST_FILES
 )
 
 add_executable(my_curl_test ${TEST_FILES})
-target_link_libraries(my_curl_test my_curl_lib GTest::GTest GTest::Main)
+target_link_libraries(my_curl_test my_curl_lib GTest::gtest GTest::gtest_main)

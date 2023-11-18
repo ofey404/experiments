@@ -5,8 +5,16 @@ set(CMAKE_CXX_STANDARD 14)
 # To solve the GTest issue: undefined reference to `typeinfo for testing::Test'
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti")
 
-find_package(CURL REQUIRED)
-find_package(GTest REQUIRED)
+# Add the line below to use vcpkg
+set(CMAKE_TOOLCHAIN_FILE "/home/ofey/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
+
+# Change find_package to use CONFIG mode for libraries installed with vcpkg
+find_package(CURL CONFIG REQUIRED)
+find_package(GTest CONFIG REQUIRED)
+
+# Link the libraries to your targets in the respective directories' CMakeLists.txt files
+# For example, in the CMakeLists.txt for your src directory, you may have a line like this:
+# target_link_libraries(MyTarget PRIVATE CURL::libcurl GTest::gtest GTest::gtest_main)
 
 # Add the directories so that their CMakeLists.txt files get processed
 add_subdirectory(callback)

@@ -354,3 +354,4 @@ cython_debug/
 
 # C++
 cmake-build-debug/
+vcpkg_installed/
