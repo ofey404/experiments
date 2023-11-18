@@ -9,6 +9,9 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
+# manually instatll libcurl
+sudo apt-get install libcurl4-openssl-dev
+
 # Or use clion
 mkdir cmake-build-debug
 cd cmake-build-debug
