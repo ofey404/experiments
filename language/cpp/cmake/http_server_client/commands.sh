@@ -14,3 +14,10 @@ cd "$SCRIPT_DIR"
 sudo apt-get install autoconf automake libtool m4 pkg-config autoconf-archive
 
 vcpkg install boost
+
+./cmake-build-debug/server
+./cmake-build-debug/client
+# HTTP/1.1 200 OK
+# Content-Length: 13
+#
+# Hello, World!
