@@ -9,6 +9,9 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
+# ofey404: old and bulky, requires seperate run.
+#          I prefer lsan & asan.
+
 sudo apt install valgrind
 
 valgrind --leak-check=yes ./cmake-build-debug/leaky
