@@ -1,8 +1,10 @@
 #include "Parser.h"
 #include <stdexcept>
 
-Parser::Parser(const std::string &input)
-        : input(input), pos(0) {}
+void Parser::setInput(const std::string& newInput) {
+    input = newInput;
+    pos = 0;
+}
 
 std::unique_ptr<Expr> Parser::parse() {
     auto result = parseExpr();

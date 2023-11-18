@@ -25,4 +25,7 @@ vcpkg install llvm
 
 make -C cmake-build-debug/
 ./cmake-build-debug/CalculatorFrontend
+# > 1+2
+# i32 3
+# > 2-1
 # i32 1

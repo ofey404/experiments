@@ -5,7 +5,8 @@
 
 class Parser {
 public:
-    Parser(const std::string &input);
+    Parser() : input(""), pos(0) {}
+    void setInput(const std::string& input);
     std::unique_ptr<Expr> parse();
 private:
     std::unique_ptr<Expr> parseExpr();
