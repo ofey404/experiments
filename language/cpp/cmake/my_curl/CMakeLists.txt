@@ -8,11 +8,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti")
 find_package(CURL REQUIRED)
 find_package(GTest REQUIRED)
 
-# Add the callback directory so that its CMakeLists.txt file gets processed
+# Add the directories so that their CMakeLists.txt files get processed
 add_subdirectory(callback)
-
-add_executable(my_curl src/main.cpp)
-target_link_libraries(my_curl my_curl_lib ${CURL_LIBRARIES}) # Add CURL_LIBRARIES here
-
-add_executable(my_curl_test tests/callback_test.cpp)
-target_link_libraries(my_curl_test my_curl_lib GTest::GTest GTest::Main)
+add_subdirectory(src)  # Add this line
+add_subdirectory(tests)  # And this line
