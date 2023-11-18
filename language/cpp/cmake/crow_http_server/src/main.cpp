@@ -13,10 +13,7 @@ struct Person {
 // Define the to_json and from_json functions for Person
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Person, name, age)
 
-int main()
-{
-    crow::SimpleApp app;
-
+void setupRoutes(crow::SimpleApp& app) {
     CROW_ROUTE(app, "/")
             ([](){
                 return "Hello from crow_http_server!\n";
@@ -76,6 +73,13 @@ int main()
                     return crow::response(400, "Bad Request: " + std::string(e.what()));
                 }
             });
+
+}
+
+int main()
+{
+    crow::SimpleApp app;
+    setupRoutes(app);
 
     app.port(8080).multithreaded().run();
 }
