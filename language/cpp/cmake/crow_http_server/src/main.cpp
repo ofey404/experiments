@@ -1,4 +1,7 @@
 #define CROW_MAIN
+#include <stdexcept>
+#include <iostream>
+#include <yaml-cpp/yaml.h>
 #include <crow.h>
 #include <nlohmann/json.hpp>
 
@@ -12,6 +15,25 @@ struct Person {
 
 // Define the to_json and from_json functions for Person
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Person, name, age)
+
+struct Config {
+    int port;
+};
+
+Config load_config(const std::string &filename) {
+    YAML::Node config = YAML::LoadFile(filename);
+    Config c;
+
+    if(config["Port"]) {
+        c.port = config["Port"].as<int>();
+    } else {
+        throw std::runtime_error("Missing 'Port' in config file");
+    }
+
+    // Add further validations as needed
+
+    return c;
+}
 
 void setupRoutes(crow::SimpleApp& app) {
     CROW_ROUTE(app, "/")
@@ -81,5 +103,13 @@ int main()
     crow::SimpleApp app;
     setupRoutes(app);
 
-    app.port(8080).multithreaded().run();
+    Config config;
+    try {
+        config = load_config("config.yaml");
+    } catch (const std::exception &e) {
+        std::cerr << "Failed to load config: " << e.what() << std::endl;
+        return 1; // or handle error as appropriate
+    }
+
+    app.port(config.port).multithreaded().run();
 }

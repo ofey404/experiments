@@ -11,6 +11,7 @@ cd "$SCRIPT_DIR"
 
 vcpkg install crow
 vcpkg install nlohmann-json
+vcpkg install yaml-cpp
 
 ./cmake-build-debug/crow_http_server
 curl localhost:8080
