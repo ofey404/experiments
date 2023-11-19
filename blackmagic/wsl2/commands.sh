@@ -9,9 +9,5 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-vcpkg integrate install
-# Applied user-wide integration for this vcpkg root.
-# CMake projects should use: "-DCMAKE_TOOLCHAIN_FILE=/home/ofey/vcpkg/scripts/buildsystems/vcpkg.cmake"
-
-make -C cmake-build-debug/
-./cmake-build-debug/main
+# to open edge from wsl
+export BROWSER='/mnt/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'
