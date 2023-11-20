@@ -4,6 +4,7 @@ package handler
 import (
 	"net/http"
 
+	Api "github.com/ofey404/experiments/microservices/go-zero/rpc-api-shared-service-context/internal/handler/Api"
 	"github.com/ofey404/experiments/microservices/go-zero/rpc-api-shared-service-context/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -15,12 +16,12 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			{
 				Method:  http.MethodPost,
 				Path:    "/getkey",
-				Handler: GetKeyApiHandler(serverCtx),
+				Handler: Api.GetKeyApiHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/setkey",
-				Handler: SetKeyApiHandler(serverCtx),
+				Handler: Api.SetKeyApiHandler(serverCtx),
 			},
 		},
 	)

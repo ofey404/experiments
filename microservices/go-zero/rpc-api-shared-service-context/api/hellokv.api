@@ -23,6 +23,10 @@ type (
 	}
 )
 
+@server (
+	group: Api
+)
+
 service hellokv-api {
 	// Handle get key from KV storage.
 	@handler GetKeyApiHandler
