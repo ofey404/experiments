@@ -24,12 +24,12 @@ type (
 )
 
 @server (
-	group: Api
+	group: api
 )
 
 service hellokv-api {
 	// Handle get key from KV storage.
-	@handler GetKeyApiHandler
+	@handler GetHandler
 	
 	/*
 	* Route doc (if needed)
@@ -37,7 +37,7 @@ service hellokv-api {
 	post /getkey(getKeyReq) returns(getKeyResp)
 	
 	// Handle set key.
-	@handler SetKeyApiHandler
+	@handler SetHandler
 	
 	/*
 	* Route doc (if needed)

@@ -41,7 +41,7 @@ func startApiServer(c config.Config, svcCtx *svc.ServiceContext) {
 
 	handler.RegisterHandlers(server, svcCtx)
 
-	fmt.Printf("Starting server at %s:%d...\n", c.Api.Host, c.Api.Port)
+	fmt.Printf("Starting HTTP server at %s:%d...\n", c.Api.Host, c.Api.Port)
 	server.Start()
 }
 

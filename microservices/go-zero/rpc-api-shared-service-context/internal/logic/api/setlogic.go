@@ -1,4 +1,4 @@
-package Api
+package api
 
 import (
 	"context"
@@ -9,22 +9,21 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type SetKeyApiLogic struct {
+type SetLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewSetKeyApiLogic(ctx context.Context, svcCtx *svc.ServiceContext) *SetKeyApiLogic {
-	return &SetKeyApiLogic{
+func NewSetLogic(ctx context.Context, svcCtx *svc.ServiceContext) *SetLogic {
+	return &SetLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *SetKeyApiLogic) SetKeyApi(req *types.SetKeyReq) error {
-	// todo: add your logic here and delete this line
-
+func (l *SetLogic) Set(req *types.SetKeyReq) error {
+	l.svcCtx.Kv[req.Key] = req.Value
 	return nil
 }

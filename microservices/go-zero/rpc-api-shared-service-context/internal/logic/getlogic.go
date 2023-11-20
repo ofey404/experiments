@@ -2,29 +2,32 @@ package logic
 
 import (
 	"context"
+	"github.com/ofey404/experiments/microservices/go-zero/rpc-api-shared-service-context/internal/logic/api"
+	"github.com/ofey404/experiments/microservices/go-zero/rpc-api-shared-service-context/internal/types"
 
 	"github.com/ofey404/experiments/microservices/go-zero/rpc-api-shared-service-context/hellokv"
 	"github.com/ofey404/experiments/microservices/go-zero/rpc-api-shared-service-context/internal/svc"
-
-	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type GetLogic struct {
-	ctx    context.Context
-	svcCtx *svc.ServiceContext
-	logx.Logger
+	*api.GetLogic
 }
 
 func NewGetLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetLogic {
 	return &GetLogic{
-		ctx:    ctx,
-		svcCtx: svcCtx,
-		Logger: logx.WithContext(ctx),
+		GetLogic: api.NewGetLogic(ctx, svcCtx),
 	}
 }
 
 func (l *GetLogic) Get(in *hellokv.GetRequest) (*hellokv.GetResponse, error) {
-	// todo: add your logic here and delete this line
+	resp, err := l.GetLogic.Get(&types.GetKeyReq{
+		Key: in.Key,
+	})
+	if err != nil {
+		return nil, err
+	}
 
-	return &hellokv.GetResponse{}, nil
+	return &hellokv.GetResponse{
+		Value: resp.Value,
+	}, nil
 }
