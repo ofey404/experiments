@@ -1,0 +1,12 @@
+version: "2"
+sql:
+  - engine: "postgresql"
+    # we use postgresql schema to generate code.
+    # As we write standard SQL, it should be supported by other databases.
+    queries: "./query.sql"
+    schema: "../schema/schema-postgresql.sql"
+    gen:
+      go:
+        package: "model"
+        out: "."
+#        sql_package: "pgx/v5"
