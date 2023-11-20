@@ -1,0 +1,8 @@
+{
+  "name": "my-curl",
+  "version-string": "0.0.1",
+  "dependencies": [
+    "curl",
+    "gtest"
+  ]
+}
