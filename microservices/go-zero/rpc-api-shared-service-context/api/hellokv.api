@@ -1,42 +1,42 @@
 syntax = "v1"
 
 info (
-    title: "Hello KV Service"
-    desc: "Template to cover the basic of go-zero - Building, testing and deploying microservices."
-    author: "Weiwen Chen"
-    email: "ofey206@gmail.com"
+	title: "Hello KV Service"
+	desc: "Template to cover the basic of go-zero - Building, testing and deploying microservices."
+	author: "Weiwen Chen"
+	email: "ofey206@gmail.com"
 )
 
 type (
-    getKeyReq {
-        Key string `json:"key"`
-    }
-    getKeyResp {
-        Value string `json:"value"`
-    }
+	getKeyReq {
+		Key string `json:"key"`
+	}
+	getKeyResp {
+		Value string `json:"value"`
+	}
 )
 
 type (
-    setKeyReq {
-        Key   string `json:"key"`
-        Value string `json:"value"`
-    }
+	setKeyReq {
+		Key   string `json:"key"`
+		Value string `json:"value"`
+	}
 )
 
 service hellokv-api {
-    // Handle get key from KV storage.
-    @handler GetKeyApiHandler
-
-/*
-* Route doc (if needed)
-*/
-    post /getkey(getKeyReq) returns(getKeyResp)
-
-    // Handle set key.
-    @handler SetKeyApiHandler
-
-/*
-* Route doc (if needed)
-*/
-    post /setkey(setKeyReq)
+	// Handle get key from KV storage.
+	@handler GetKeyApiHandler
+	
+	/*
+	* Route doc (if needed)
+	*/
+	post /getkey(getKeyReq) returns(getKeyResp)
+	
+	// Handle set key.
+	@handler SetKeyApiHandler
+	
+	/*
+	* Route doc (if needed)
+	*/
+	post /setkey(setKeyReq)
 }
