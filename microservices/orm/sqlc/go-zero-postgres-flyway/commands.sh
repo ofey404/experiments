@@ -9,7 +9,13 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-# We reuse postgres created from microservices/flyway/commands.sh
+# same configuration as microservices/flyway/commands.sh
+# except the persistence volume
+docker run -it --rm \
+           --name some-postgres \
+           -e POSTGRES_PASSWORD=mysecretpassword \
+           -p 5432:5432 \
+           postgres:16
 # create database
 docker exec -it some-postgres psql -U postgres -c "CREATE DATABASE hellokv"
 # create database schema
@@ -18,6 +24,10 @@ docker run --rm -v $(pwd)/model/db/migration:/flyway/sql flyway/flyway:10.0 \
      -user=postgres \
      -password=mysecretpassword \
      migrate
+
+#####################################################################
+# V1
+#####################################################################
 
 # dump schema
 docker run --rm -it -e PGPASSWORD=mysecretpassword \

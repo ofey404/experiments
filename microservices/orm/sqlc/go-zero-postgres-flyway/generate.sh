@@ -10,3 +10,8 @@ cd "$SERVICE_ROOT"
 
 echo "Generating API in $(pwd)"
 goctl api go -api desc/hellokv.api -dir .
+
+pushd model/modelv1
+  echo "Generating SQLC in $(pwd)"
+  sqlc generate
+popd
