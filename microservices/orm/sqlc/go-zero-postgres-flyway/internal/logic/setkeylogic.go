@@ -3,10 +3,12 @@ package logic
 import (
 	"context"
 	"database/sql"
-	"github.com/ofey404/experiments/microservices/orm/sqlc/go-zero-postgres-flyway/model/modelv1"
-
+	"errors"
+	"github.com/ofey404/experiments/microservices/orm/sqlc/go-zero-postgres-flyway/internal/config"
 	"github.com/ofey404/experiments/microservices/orm/sqlc/go-zero-postgres-flyway/internal/svc"
 	"github.com/ofey404/experiments/microservices/orm/sqlc/go-zero-postgres-flyway/internal/types"
+	"github.com/ofey404/experiments/microservices/orm/sqlc/go-zero-postgres-flyway/model/modelv1"
+	"github.com/ofey404/experiments/microservices/orm/sqlc/go-zero-postgres-flyway/model/modelv2"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -26,12 +28,24 @@ func NewSetKeyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *SetKeyLogi
 }
 
 func (l *SetKeyLogic) SetKey(req *types.SetKeyReq) error {
-	_, err := l.svcCtx.Model.Set(l.ctx, modelv1.SetParams{
-		Key:   req.Key,
-		Value: toNullString(req.Value),
-	})
-	if err != nil {
-		return err
+	if l.svcCtx.Config.SchemaVersion == config.SchemaVersionV1 {
+		_, err := l.svcCtx.ModelV1.Set(l.ctx, modelv1.SetParams{
+			Key:   req.Key,
+			Value: toNullString(req.Value),
+		})
+		if err != nil {
+			return err
+		}
+	} else if l.svcCtx.Config.SchemaVersion == config.SchemaVersionV2 {
+		_, err := l.svcCtx.ModelV2.Set(l.ctx, modelv2.SetParams{
+			Key:   req.Key,
+			Value: req.Value,
+		})
+		if err != nil {
+			return err
+		}
+	} else {
+		return errors.New("db schema version not supported")
 	}
 
 	return nil

@@ -15,3 +15,8 @@ pushd model/modelv1
   echo "Generating SQLC in $(pwd)"
   sqlc generate
 popd
+
+pushd model/modelv2
+  echo "Generating SQLC in $(pwd)"
+  sqlc generate
+popd
