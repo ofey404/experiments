@@ -14,10 +14,10 @@ go run -mod=mod entgo.io/ent/cmd/ent new User
 # edit schema, add field, then generate
 go generate ./ent
 
-# generate first migration file
-#
-# **Note**: Option 2: Create a migration generation script
-#           It's more complicated than this command line solution, but the output is no difference.
+#####################################################################
+# Option 1: Use the atlas migrate diff command
+# The output is consumed by the atlas migrate apply command.
+#####################################################################
 atlas migrate diff create_user \
   --dir "file://ent/migrate/migrations" \
   --to "ent://ent/schema" \
@@ -32,3 +32,19 @@ atlas migrate lint \
   --dev-url="docker://postgres/15/test?search_path=public" \
   --dir="file://ent/migrate/migrations" \
   --latest=1
+
+#####################################################################
+# Option 2: Create a migration generation script
+# This output could be used by flyway.
+#####################################################################
+
+# remove outputs
+rm ent/migrate/migrations/*
+
+touch ent/migrate/main.go
+
+# regenrate schema
+# //go:generate go run -mod=mod entgo.io/ent/cmd/ent generate --feature sql/versioned-migration ./schema
+go generate ./ent
+
+go run -mod=mod ent/migrate/main.go create_users
