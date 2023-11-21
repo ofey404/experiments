@@ -88,4 +88,21 @@ atlas schema inspect \
 # );
 
 
+#####################################################################
+# Create Your Second Edge
+#####################################################################
 
+go run .
+# 2023/11/21 11:04:17 user was created:  User(id=1, age=30, name=a8m)
+# 2023/11/21 11:04:17 user returned:  User(id=1, age=30, name=a8m)
+# 2023/11/21 11:04:17 car was created:  Car(id=1, model=Tesla, registered_at=Tue Nov 21 11:04:17 2023)
+# 2023/11/21 11:04:17 car was created:  Car(id=2, model=Ford, registered_at=Tue Nov 21 11:04:17 2023)
+# 2023/11/21 11:04:17 user was created:  User(id=2, age=30, name=a8m)
+# 2023/11/21 11:04:17 returned cars: [Car(id=1, model=Tesla, registered_at=Tue Nov 21 11:04:17 2023) Car(id=2, model=Ford, registered_at=Tue Nov 21 11:04:17 2023)]
+# 2023/11/21 11:04:17 Car(id=2, model=Ford, registered_at=Tue Nov 21 11:04:17 2023)
+# 2023/11/21 11:04:17 car "Tesla" owner: "a8m"
+# 2023/11/21 11:04:17 car "Ford" owner: "a8m"
+# 2023/11/21 11:04:17 The graph was created successfully
+# 2023/11/21 11:04:17 cars returned: [Car(id=3, model=Tesla, registered_at=Tue Nov 21 11:04:17 2023) Car(id=4, model=Mazda, registered_at=Tue Nov 21 11:04:17 2023)]
+# 2023/11/21 11:04:17 cars returned: [Car(id=3, model=Tesla, registered_at=Tue Nov 21 11:04:17 2023) Car(id=5, model=Ford, registered_at=Tue Nov 21 11:04:17 2023)]
+# 2023/11/21 11:04:17 groups returned: [Group(id=1, name=GitLab) Group(id=2, name=GitHub)]

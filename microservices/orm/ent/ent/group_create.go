@@ -10,6 +10,7 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/ofey404/experiments/microservices/orm/ent/ent/group"
+	"github.com/ofey404/experiments/microservices/orm/ent/ent/user"
 )
 
 // GroupCreate is the builder for creating a Group entity.
@@ -23,6 +24,21 @@ type GroupCreate struct {
 func (gc *GroupCreate) SetName(s string) *GroupCreate {
 	gc.mutation.SetName(s)
 	return gc
+}
+
+// AddUserIDs adds the "users" edge to the User entity by IDs.
+func (gc *GroupCreate) AddUserIDs(ids ...int) *GroupCreate {
+	gc.mutation.AddUserIDs(ids...)
+	return gc
+}
+
+// AddUsers adds the "users" edges to the User entity.
+func (gc *GroupCreate) AddUsers(u ...*User) *GroupCreate {
+	ids := make([]int, len(u))
+	for i := range u {
+		ids[i] = u[i].ID
+	}
+	return gc.AddUserIDs(ids...)
 }
 
 // Mutation returns the GroupMutation object of the builder.
@@ -96,6 +112,22 @@ func (gc *GroupCreate) createSpec() (*Group, *sqlgraph.CreateSpec) {
 	if value, ok := gc.mutation.Name(); ok {
 		_spec.SetField(group.FieldName, field.TypeString, value)
 		_node.Name = value
+	}
+	if nodes := gc.mutation.UsersIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2M,
+			Inverse: false,
+			Table:   group.UsersTable,
+			Columns: group.UsersPrimaryKey,
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: sqlgraph.NewFieldSpec(user.FieldID, field.TypeInt),
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
 }

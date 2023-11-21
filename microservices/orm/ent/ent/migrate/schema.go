@@ -52,14 +52,42 @@ var (
 		Columns:    UsersColumns,
 		PrimaryKey: []*schema.Column{UsersColumns[0]},
 	}
+	// GroupUsersColumns holds the columns for the "group_users" table.
+	GroupUsersColumns = []*schema.Column{
+		{Name: "group_id", Type: field.TypeInt},
+		{Name: "user_id", Type: field.TypeInt},
+	}
+	// GroupUsersTable holds the schema information for the "group_users" table.
+	GroupUsersTable = &schema.Table{
+		Name:       "group_users",
+		Columns:    GroupUsersColumns,
+		PrimaryKey: []*schema.Column{GroupUsersColumns[0], GroupUsersColumns[1]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "group_users_group_id",
+				Columns:    []*schema.Column{GroupUsersColumns[0]},
+				RefColumns: []*schema.Column{GroupsColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+			{
+				Symbol:     "group_users_user_id",
+				Columns:    []*schema.Column{GroupUsersColumns[1]},
+				RefColumns: []*schema.Column{UsersColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+		},
+	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		CarsTable,
 		GroupsTable,
 		UsersTable,
+		GroupUsersTable,
 	}
 )
 
 func init() {
 	CarsTable.ForeignKeys[0].RefTable = UsersTable
+	GroupUsersTable.ForeignKeys[0].RefTable = GroupsTable
+	GroupUsersTable.ForeignKeys[1].RefTable = UsersTable
 }
