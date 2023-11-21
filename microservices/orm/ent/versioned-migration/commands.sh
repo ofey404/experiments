@@ -53,3 +53,33 @@ docker run --name migration -it --rm -p 5432:5432 -e POSTGRES_PASSWORD=pass -e P
 # generate flyway migration script
 go run -mod=mod ent/migrate/main.go create_users
 
+# add fields to schema
+go generate ./ent
+go run -mod=mod ent/migrate/main.go user_add_name_age
+
+ls ent/migrate/migrations/
+# U20231121055737__create_users.sql  U20231121060516__user_add_name_age.sql  V20231121055737__create_users.sql  V20231121060516__user_add_name_age.sql  atlas.sum
+
+#####################################################################
+# Apply to postgresql
+#####################################################################
+
+# create database and schema
+docker run -it --rm \
+           --name some-postgres \
+           -e POSTGRES_PASSWORD=mysecretpassword \
+           -e POSTGRES_DB=test \
+           -p 5432:5432 \
+           postgres:16
+docker run --rm -v $(pwd)/ent/migrate/migrations:/flyway/sql flyway/flyway:10.0 \
+     -url=jdbc:postgresql://host.docker.internal:5432/test \
+     -user=postgres \
+     -password=mysecretpassword \
+     migrate
+
+# datasource:
+# postgres://postgres:mysecretpassword@localhost:5432/test?sslmode=disable
+
+go run .
+# 2023/11/21 14:18:55 user was created:  User(id=1, age=30, name=a8m)
+# 2023/11/21 14:18:55 user returned:  User(id=1, age=30, name=a8m)
