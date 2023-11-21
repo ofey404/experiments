@@ -47,4 +47,9 @@ touch ent/migrate/main.go
 # //go:generate go run -mod=mod entgo.io/ent/cmd/ent generate --feature sql/versioned-migration ./schema
 go generate ./ent
 
+# spin up a empty postgres
+docker run --name migration -it --rm -p 5432:5432 -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=migration postgres
+
+# generate flyway migration script
 go run -mod=mod ent/migrate/main.go create_users
+
