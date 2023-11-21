@@ -27,6 +27,34 @@ func (kpu *KVPairUpdate) Where(ps ...predicate.KVPair) *KVPairUpdate {
 	return kpu
 }
 
+// SetKey sets the "key" field.
+func (kpu *KVPairUpdate) SetKey(s string) *KVPairUpdate {
+	kpu.mutation.SetKey(s)
+	return kpu
+}
+
+// SetNillableKey sets the "key" field if the given value is not nil.
+func (kpu *KVPairUpdate) SetNillableKey(s *string) *KVPairUpdate {
+	if s != nil {
+		kpu.SetKey(*s)
+	}
+	return kpu
+}
+
+// SetValue sets the "value" field.
+func (kpu *KVPairUpdate) SetValue(s string) *KVPairUpdate {
+	kpu.mutation.SetValue(s)
+	return kpu
+}
+
+// SetNillableValue sets the "value" field if the given value is not nil.
+func (kpu *KVPairUpdate) SetNillableValue(s *string) *KVPairUpdate {
+	if s != nil {
+		kpu.SetValue(*s)
+	}
+	return kpu
+}
+
 // Mutation returns the KVPairMutation object of the builder.
 func (kpu *KVPairUpdate) Mutation() *KVPairMutation {
 	return kpu.mutation
@@ -68,6 +96,12 @@ func (kpu *KVPairUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
+	if value, ok := kpu.mutation.Key(); ok {
+		_spec.SetField(kvpair.FieldKey, field.TypeString, value)
+	}
+	if value, ok := kpu.mutation.Value(); ok {
+		_spec.SetField(kvpair.FieldValue, field.TypeString, value)
+	}
 	if n, err = sqlgraph.UpdateNodes(ctx, kpu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{kvpair.Label}
@@ -86,6 +120,34 @@ type KVPairUpdateOne struct {
 	fields   []string
 	hooks    []Hook
 	mutation *KVPairMutation
+}
+
+// SetKey sets the "key" field.
+func (kpuo *KVPairUpdateOne) SetKey(s string) *KVPairUpdateOne {
+	kpuo.mutation.SetKey(s)
+	return kpuo
+}
+
+// SetNillableKey sets the "key" field if the given value is not nil.
+func (kpuo *KVPairUpdateOne) SetNillableKey(s *string) *KVPairUpdateOne {
+	if s != nil {
+		kpuo.SetKey(*s)
+	}
+	return kpuo
+}
+
+// SetValue sets the "value" field.
+func (kpuo *KVPairUpdateOne) SetValue(s string) *KVPairUpdateOne {
+	kpuo.mutation.SetValue(s)
+	return kpuo
+}
+
+// SetNillableValue sets the "value" field if the given value is not nil.
+func (kpuo *KVPairUpdateOne) SetNillableValue(s *string) *KVPairUpdateOne {
+	if s != nil {
+		kpuo.SetValue(*s)
+	}
+	return kpuo
 }
 
 // Mutation returns the KVPairMutation object of the builder.
@@ -158,6 +220,12 @@ func (kpuo *KVPairUpdateOne) sqlSave(ctx context.Context) (_node *KVPair, err er
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := kpuo.mutation.Key(); ok {
+		_spec.SetField(kvpair.FieldKey, field.TypeString, value)
+	}
+	if value, ok := kpuo.mutation.Value(); ok {
+		_spec.SetField(kvpair.FieldValue, field.TypeString, value)
 	}
 	_node = &KVPair{config: kpuo.config}
 	_spec.Assign = _node.assignValues

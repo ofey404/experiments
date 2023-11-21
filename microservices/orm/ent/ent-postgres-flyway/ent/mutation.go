@@ -10,6 +10,7 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
+	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/ent/kvpair"
 	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/ent/predicate"
 )
 
@@ -31,6 +32,8 @@ type KVPairMutation struct {
 	op            Op
 	typ           string
 	id            *int
+	key           *string
+	value         *string
 	clearedFields map[string]struct{}
 	done          bool
 	oldValue      func(context.Context) (*KVPair, error)
@@ -135,6 +138,78 @@ func (m *KVPairMutation) IDs(ctx context.Context) ([]int, error) {
 	}
 }
 
+// SetKey sets the "key" field.
+func (m *KVPairMutation) SetKey(s string) {
+	m.key = &s
+}
+
+// Key returns the value of the "key" field in the mutation.
+func (m *KVPairMutation) Key() (r string, exists bool) {
+	v := m.key
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldKey returns the old "key" field's value of the KVPair entity.
+// If the KVPair object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *KVPairMutation) OldKey(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldKey is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldKey requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldKey: %w", err)
+	}
+	return oldValue.Key, nil
+}
+
+// ResetKey resets all changes to the "key" field.
+func (m *KVPairMutation) ResetKey() {
+	m.key = nil
+}
+
+// SetValue sets the "value" field.
+func (m *KVPairMutation) SetValue(s string) {
+	m.value = &s
+}
+
+// Value returns the value of the "value" field in the mutation.
+func (m *KVPairMutation) Value() (r string, exists bool) {
+	v := m.value
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldValue returns the old "value" field's value of the KVPair entity.
+// If the KVPair object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *KVPairMutation) OldValue(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldValue is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldValue requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldValue: %w", err)
+	}
+	return oldValue.Value, nil
+}
+
+// ResetValue resets all changes to the "value" field.
+func (m *KVPairMutation) ResetValue() {
+	m.value = nil
+}
+
 // Where appends a list predicates to the KVPairMutation builder.
 func (m *KVPairMutation) Where(ps ...predicate.KVPair) {
 	m.predicates = append(m.predicates, ps...)
@@ -169,7 +244,13 @@ func (m *KVPairMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *KVPairMutation) Fields() []string {
-	fields := make([]string, 0, 0)
+	fields := make([]string, 0, 2)
+	if m.key != nil {
+		fields = append(fields, kvpair.FieldKey)
+	}
+	if m.value != nil {
+		fields = append(fields, kvpair.FieldValue)
+	}
 	return fields
 }
 
@@ -177,6 +258,12 @@ func (m *KVPairMutation) Fields() []string {
 // return value indicates that this field was not set, or was not defined in the
 // schema.
 func (m *KVPairMutation) Field(name string) (ent.Value, bool) {
+	switch name {
+	case kvpair.FieldKey:
+		return m.Key()
+	case kvpair.FieldValue:
+		return m.Value()
+	}
 	return nil, false
 }
 
@@ -184,6 +271,12 @@ func (m *KVPairMutation) Field(name string) (ent.Value, bool) {
 // returned if the mutation operation is not UpdateOne, or the query to the
 // database failed.
 func (m *KVPairMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
+	switch name {
+	case kvpair.FieldKey:
+		return m.OldKey(ctx)
+	case kvpair.FieldValue:
+		return m.OldValue(ctx)
+	}
 	return nil, fmt.Errorf("unknown KVPair field %s", name)
 }
 
@@ -192,6 +285,20 @@ func (m *KVPairMutation) OldField(ctx context.Context, name string) (ent.Value, 
 // type.
 func (m *KVPairMutation) SetField(name string, value ent.Value) error {
 	switch name {
+	case kvpair.FieldKey:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetKey(v)
+		return nil
+	case kvpair.FieldValue:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetValue(v)
+		return nil
 	}
 	return fmt.Errorf("unknown KVPair field %s", name)
 }
@@ -213,6 +320,8 @@ func (m *KVPairMutation) AddedField(name string) (ent.Value, bool) {
 // the field is not defined in the schema, or if the type mismatched the field
 // type.
 func (m *KVPairMutation) AddField(name string, value ent.Value) error {
+	switch name {
+	}
 	return fmt.Errorf("unknown KVPair numeric field %s", name)
 }
 
@@ -238,6 +347,14 @@ func (m *KVPairMutation) ClearField(name string) error {
 // ResetField resets all changes in the mutation for the field with the given name.
 // It returns an error if the field is not defined in the schema.
 func (m *KVPairMutation) ResetField(name string) error {
+	switch name {
+	case kvpair.FieldKey:
+		m.ResetKey()
+		return nil
+	case kvpair.FieldValue:
+		m.ResetValue()
+		return nil
+	}
 	return fmt.Errorf("unknown KVPair field %s", name)
 }
 

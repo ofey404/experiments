@@ -11,6 +11,8 @@ var (
 	// KvPairsColumns holds the columns for the "kv_pairs" table.
 	KvPairsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "key", Type: field.TypeString, Unique: true},
+		{Name: "value", Type: field.TypeString},
 	}
 	// KvPairsTable holds the schema information for the "kv_pairs" table.
 	KvPairsTable = &schema.Table{

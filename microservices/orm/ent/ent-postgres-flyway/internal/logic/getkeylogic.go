@@ -2,6 +2,9 @@ package logic
 
 import (
 	"context"
+	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/ent"
+	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/ent/kvpair"
+	"github.com/pkg/errors"
 
 	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/internal/svc"
 	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/internal/types"
@@ -24,7 +27,18 @@ func NewGetKeyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetKeyLogi
 }
 
 func (l *GetKeyLogic) GetKey(req *types.GetKeyReq) (resp *types.GetKeyResp, err error) {
-	// todo: add your logic here and delete this line
+	kv, err := l.svcCtx.Client.KVPair.
+		Query().
+		Where(kvpair.Key(req.Key)).
+		Only(l.ctx)
+	if err != nil {
+		if ent.IsNotFound(err) {
+			return nil, errors.New("key not found")
+		}
+		return nil, err
+	}
 
-	return
+	return &types.GetKeyResp{
+		Value: kv.Value,
+	}, nil
 }

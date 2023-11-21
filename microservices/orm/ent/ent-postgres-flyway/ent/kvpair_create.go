@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -16,6 +17,18 @@ type KVPairCreate struct {
 	config
 	mutation *KVPairMutation
 	hooks    []Hook
+}
+
+// SetKey sets the "key" field.
+func (kpc *KVPairCreate) SetKey(s string) *KVPairCreate {
+	kpc.mutation.SetKey(s)
+	return kpc
+}
+
+// SetValue sets the "value" field.
+func (kpc *KVPairCreate) SetValue(s string) *KVPairCreate {
+	kpc.mutation.SetValue(s)
+	return kpc
 }
 
 // Mutation returns the KVPairMutation object of the builder.
@@ -52,6 +65,12 @@ func (kpc *KVPairCreate) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (kpc *KVPairCreate) check() error {
+	if _, ok := kpc.mutation.Key(); !ok {
+		return &ValidationError{Name: "key", err: errors.New(`ent: missing required field "KVPair.key"`)}
+	}
+	if _, ok := kpc.mutation.Value(); !ok {
+		return &ValidationError{Name: "value", err: errors.New(`ent: missing required field "KVPair.value"`)}
+	}
 	return nil
 }
 
@@ -78,6 +97,14 @@ func (kpc *KVPairCreate) createSpec() (*KVPair, *sqlgraph.CreateSpec) {
 		_node = &KVPair{config: kpc.config}
 		_spec = sqlgraph.NewCreateSpec(kvpair.Table, sqlgraph.NewFieldSpec(kvpair.FieldID, field.TypeInt))
 	)
+	if value, ok := kpc.mutation.Key(); ok {
+		_spec.SetField(kvpair.FieldKey, field.TypeString, value)
+		_node.Key = value
+	}
+	if value, ok := kpc.mutation.Value(); ok {
+		_spec.SetField(kvpair.FieldValue, field.TypeString, value)
+		_node.Value = value
+	}
 	return _node, _spec
 }
 

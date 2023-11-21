@@ -1,3 +1,7 @@
 Name: hellokv-api
 Host: 0.0.0.0
 Port: 8888
+
+Db:
+  Driver: "postgres"
+  Source: "postgres://postgres:mysecretpassword@localhost:5432/hellokv?sslmode=disable"

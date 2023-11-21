@@ -13,9 +13,13 @@ import (
 
 // KVPair is the model entity for the KVPair schema.
 type KVPair struct {
-	config
+	config `json:"-"`
 	// ID of the ent.
-	ID           int `json:"id,omitempty"`
+	ID int `json:"id,omitempty"`
+	// Key holds the value of the "key" field.
+	Key string `json:"key,omitempty"`
+	// Value holds the value of the "value" field.
+	Value        string `json:"value,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -26,6 +30,8 @@ func (*KVPair) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case kvpair.FieldID:
 			values[i] = new(sql.NullInt64)
+		case kvpair.FieldKey, kvpair.FieldValue:
+			values[i] = new(sql.NullString)
 		default:
 			values[i] = new(sql.UnknownType)
 		}
@@ -47,6 +53,18 @@ func (kp *KVPair) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			kp.ID = int(value.Int64)
+		case kvpair.FieldKey:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field key", values[i])
+			} else if value.Valid {
+				kp.Key = value.String
+			}
+		case kvpair.FieldValue:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field value", values[i])
+			} else if value.Valid {
+				kp.Value = value.String
+			}
 		default:
 			kp.selectValues.Set(columns[i], values[i])
 		}
@@ -54,9 +72,9 @@ func (kp *KVPair) assignValues(columns []string, values []any) error {
 	return nil
 }
 
-// Value returns the ent.Value that was dynamically selected and assigned to the KVPair.
+// GetValue returns the ent.Value that was dynamically selected and assigned to the KVPair.
 // This includes values selected through modifiers, order, etc.
-func (kp *KVPair) Value(name string) (ent.Value, error) {
+func (kp *KVPair) GetValue(name string) (ent.Value, error) {
 	return kp.selectValues.Get(name)
 }
 
@@ -82,7 +100,12 @@ func (kp *KVPair) Unwrap() *KVPair {
 func (kp *KVPair) String() string {
 	var builder strings.Builder
 	builder.WriteString("KVPair(")
-	builder.WriteString(fmt.Sprintf("id=%v", kp.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", kp.ID))
+	builder.WriteString("key=")
+	builder.WriteString(kp.Key)
+	builder.WriteString(", ")
+	builder.WriteString("value=")
+	builder.WriteString(kp.Value)
 	builder.WriteByte(')')
 	return builder.String()
 }

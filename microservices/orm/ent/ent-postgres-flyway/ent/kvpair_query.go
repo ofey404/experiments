@@ -257,6 +257,18 @@ func (kpq *KVPairQuery) Clone() *KVPairQuery {
 
 // GroupBy is used to group vertices by one or more fields/columns.
 // It is often used with aggregate functions, like: count, max, mean, min, sum.
+//
+// Example:
+//
+//	var v []struct {
+//		Key string `json:"key,omitempty"`
+//		Count int `json:"count,omitempty"`
+//	}
+//
+//	client.KVPair.Query().
+//		GroupBy(kvpair.FieldKey).
+//		Aggregate(ent.Count()).
+//		Scan(ctx, &v)
 func (kpq *KVPairQuery) GroupBy(field string, fields ...string) *KVPairGroupBy {
 	kpq.ctx.Fields = append([]string{field}, fields...)
 	grbuild := &KVPairGroupBy{build: kpq}
@@ -268,6 +280,16 @@ func (kpq *KVPairQuery) GroupBy(field string, fields ...string) *KVPairGroupBy {
 
 // Select allows the selection one or more fields/columns for the given query,
 // instead of selecting all fields in the entity.
+//
+// Example:
+//
+//	var v []struct {
+//		Key string `json:"key,omitempty"`
+//	}
+//
+//	client.KVPair.Query().
+//		Select(kvpair.FieldKey).
+//		Scan(ctx, &v)
 func (kpq *KVPairQuery) Select(fields ...string) *KVPairSelect {
 	kpq.ctx.Fields = append(kpq.ctx.Fields, fields...)
 	sbuild := &KVPairSelect{KVPairQuery: kpq}

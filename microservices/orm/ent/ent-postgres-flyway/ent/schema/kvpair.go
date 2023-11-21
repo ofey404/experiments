@@ -1,6 +1,9 @@
 package schema
 
-import "entgo.io/ent"
+import (
+	"entgo.io/ent"
+	"entgo.io/ent/schema/field"
+)
 
 // KVPair holds the schema definition for the KVPair entity.
 type KVPair struct {
@@ -9,7 +12,10 @@ type KVPair struct {
 
 // Fields of the KVPair.
 func (KVPair) Fields() []ent.Field {
-	return nil
+	return []ent.Field{
+		field.String("key").Unique(),
+		field.String("value"),
+	}
 }
 
 // Edges of the KVPair.
