@@ -1,5 +1,11 @@
 # support multiple sql db
 
+TL; DR:
+
+Not possible to use the pure Standard SQL to support multiple SQL DBs.
+
+## Inspiration
+
 > Gorm specifically is a very minimally viable ORM. It's definitely better than it
 > used to be, but it's still pretty terrible for anything with any real
 > complexity. ORMs in general should be avoided unless you know for sure your
