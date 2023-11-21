@@ -45,3 +45,47 @@ go run .
 # 2023/11/21 10:41:31 Car(id=2, model=Ford, registered_at=Tue Nov 21 10:41:31 2023)
 # 2023/11/21 10:41:31 car "Tesla" owner: "a8m"
 # 2023/11/21 10:41:31 car "Ford" owner: "a8m"
+
+#####################################################################
+# Visualize the Schema
+#####################################################################
+
+# install atlas
+curl -sSf https://atlasgo.sh | sh
+atlas version
+# atlas version v0.15.1-6bd8a65-canary
+# https://github.com/ariga/atlas/releases/latest
+
+# -w would open in browser
+atlas schema inspect \
+  -u "ent://ent/schema" \
+  --dev-url "sqlite://file?mode=memory&_fk=1" \
+  -w
+
+# Generate SQL Schema
+atlas schema inspect \
+  -u "ent://ent/schema" \
+  --dev-url "sqlite://file?mode=memory&_fk=1" \
+  --format '{{ sql . "  " }}'
+# -- Create "cars" table
+# CREATE TABLE `cars` (
+#   `id` integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+#   `model` text NOT NULL,
+#   `registered_at` datetime NOT NULL,
+#   `user_cars` integer NULL,
+#   CONSTRAINT `cars_users_cars` FOREIGN KEY (`user_cars`) REFERENCES `users` (`id`) ON DELETE SET NULL
+# );
+# -- Create "groups" table
+# CREATE TABLE `groups` (
+#   `id` integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+#   `name` text NOT NULL
+# );
+# -- Create "users" table
+# CREATE TABLE `users` (
+#   `id` integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+#   `age` integer NOT NULL,
+#   `name` text NOT NULL DEFAULT ('unknown')
+# );
+
+
+
