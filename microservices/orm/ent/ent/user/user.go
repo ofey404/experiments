@@ -4,6 +4,7 @@ package user
 
 import (
 	"entgo.io/ent/dialect/sql"
+	"entgo.io/ent/dialect/sql/sqlgraph"
 )
 
 const (
@@ -15,8 +16,17 @@ const (
 	FieldAge = "age"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
+	// EdgeCars holds the string denoting the cars edge name in mutations.
+	EdgeCars = "cars"
 	// Table holds the table name of the user in the database.
 	Table = "users"
+	// CarsTable is the table that holds the cars relation/edge.
+	CarsTable = "cars"
+	// CarsInverseTable is the table name for the Car entity.
+	// It exists in this package in order to avoid circular dependency with the "car" package.
+	CarsInverseTable = "cars"
+	// CarsColumn is the table column denoting the cars relation/edge.
+	CarsColumn = "user_cars"
 )
 
 // Columns holds all SQL columns for user fields.
@@ -59,4 +69,25 @@ func ByAge(opts ...sql.OrderTermOption) OrderOption {
 // ByName orders the results by the name field.
 func ByName(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldName, opts...).ToFunc()
+}
+
+// ByCarsCount orders the results by cars count.
+func ByCarsCount(opts ...sql.OrderTermOption) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborsCount(s, newCarsStep(), opts...)
+	}
+}
+
+// ByCars orders the results by cars terms.
+func ByCars(term sql.OrderTerm, terms ...sql.OrderTerm) OrderOption {
+	return func(s *sql.Selector) {
+		sqlgraph.OrderByNeighborTerms(s, newCarsStep(), append([]sql.OrderTerm{term}, terms...)...)
+	}
+}
+func newCarsStep() *sqlgraph.Step {
+	return sqlgraph.NewStep(
+		sqlgraph.From(Table, FieldID),
+		sqlgraph.To(CarsInverseTable, FieldID),
+		sqlgraph.Edge(sqlgraph.O2M, false, CarsTable, CarsColumn),
+	)
 }

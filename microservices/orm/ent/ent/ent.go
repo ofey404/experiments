@@ -12,6 +12,8 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
+	"github.com/ofey404/experiments/microservices/orm/ent/ent/car"
+	"github.com/ofey404/experiments/microservices/orm/ent/ent/group"
 	"github.com/ofey404/experiments/microservices/orm/ent/ent/user"
 )
 
@@ -73,7 +75,9 @@ var (
 func checkColumn(table, column string) error {
 	initCheck.Do(func() {
 		columnCheck = sql.NewColumnCheck(map[string]func(string) bool{
-			user.Table: user.ValidColumn,
+			car.Table:   car.ValidColumn,
+			group.Table: group.ValidColumn,
+			user.Table:  user.ValidColumn,
 		})
 	})
 	return columnCheck(table, column)
