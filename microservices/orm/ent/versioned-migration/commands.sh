@@ -81,5 +81,6 @@ docker run --rm -v $(pwd)/ent/migrate/migrations:/flyway/sql flyway/flyway:10.0 
 # postgres://postgres:mysecretpassword@localhost:5432/test?sslmode=disable
 
 go run .
+# Latest schema version: 20231121060516
 # 2023/11/21 14:18:55 user was created:  User(id=1, age=30, name=a8m)
 # 2023/11/21 14:18:55 user returned:  User(id=1, age=30, name=a8m)

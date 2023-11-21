@@ -2,7 +2,9 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
+	"github.com/ofey404/experiments/microservices/flyway/helper"
 	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/ent"
 	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/ent/user"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -12,19 +14,50 @@ import (
 )
 
 func main() {
-	client, err := ent.Open("postgres", "postgres://postgres:mysecretpassword@localhost:5432/test?sslmode=disable")
+	dataSource := "postgres://postgres:mysecretpassword@localhost:5432/test?sslmode=disable"
+
+	client, err := ent.Open("postgres", dataSource)
 	if err != nil {
 		log.Fatalf("failed opening connection to sqlite: %v", err)
 	}
 
 	defer client.Close()
 
+	checkSchemaVersion(dataSource)
+
+	// run options
 	ctx := context.Background()
 	_, err = CreateUser(ctx, client)
 	logx.Must(err)
 
 	_, err = QueryUser(ctx, client)
 	logx.Must(err)
+}
+
+func checkSchemaVersion(dataSource string) {
+	db, err := sql.Open("postgres", dataSource)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	// Check that the database connection is good
+	err = db.Ping()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Get the latest schema version
+	version, err := helper.GetLatestSchema(db, helper.GetLatestSchemaOpts{DBType: helper.Postgres})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("Latest schema version:", version)
+
+	if version != "20231121060516" {
+		log.Fatalf("expected version 20231121060516, get %s", version)
+	}
 }
 
 func CreateUser(ctx context.Context, client *ent.Client) (*ent.User, error) {
