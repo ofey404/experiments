@@ -2,6 +2,7 @@ package schema
 
 import (
 	"entgo.io/ent"
+	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
 )
 
@@ -20,5 +21,14 @@ func (Car) Fields() []ent.Field {
 
 // Edges of the Car.
 func (Car) Edges() []ent.Edge {
-	return nil
+	return []ent.Edge{
+		// Create an inverse-edge called "owner" of type `User`
+		// and reference it to the "cars" edge (in User schema)
+		// explicitly using the `Ref` method.
+		edge.From("owner", User.Type).
+			Ref("cars").
+			// setting the edge to unique, ensure
+			// that a car can have only one owner.
+			Unique(),
+	}
 }

@@ -37,6 +37,9 @@ func main() {
 
 	err = QueryCars(ctx, user)
 	logx.Must(err)
+
+	err = QueryCarUsers(ctx, user)
+	logx.Must(err)
 }
 
 func CreateUser(ctx context.Context, client *ent.Client) (*ent.User, error) {
@@ -118,5 +121,21 @@ func QueryCars(ctx context.Context, a8m *ent.User) error {
 		return fmt.Errorf("failed querying user cars: %w", err)
 	}
 	log.Println(ford)
+	return nil
+}
+
+func QueryCarUsers(ctx context.Context, a8m *ent.User) error {
+	cars, err := a8m.QueryCars().All(ctx)
+	if err != nil {
+		return fmt.Errorf("failed querying user cars: %w", err)
+	}
+	// Query the inverse edge.
+	for _, c := range cars {
+		owner, err := c.QueryOwner().Only(ctx)
+		if err != nil {
+			return fmt.Errorf("failed querying car %q owner: %w", c.Model, err)
+		}
+		log.Printf("car %q owner: %q\n", c.Model, owner.Name)
+	}
 	return nil
 }
