@@ -20,5 +20,9 @@ cd "$SERVICE_ROOT"
 echo "Generating schema in $(pwd)/ent"
 go generate ./ent
 
-echo "Generating schema migration in $(pwd)/ent/migrate"
+echo "Generating schema migration in $(pwd)/ent/migrate/migrations"
+echo "Migration name $1"
 go run -mod=mod ent/migrate/main.go "$1"
+
+echo "Migration file:"
+ls "$(pwd)/ent/migrate/migrations" | grep "$1.sql"

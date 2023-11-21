@@ -19,9 +19,15 @@ import (
 func main() {
 	ctx := context.Background()
 	// Create a local migration directory able to understand Flyway migration file format for replay.
-	dir, err := sqltool.NewFlywayDir("ent/migrate/migrations")
+	const migrationDirectory = "ent/migrate/migrations"
+	dir, err := sqltool.NewFlywayDir(migrationDirectory)
 	if err != nil {
-		log.Fatalf("failed creating atlas migration directory: %v", err)
+		if strings.Contains(err.Error(), "no such file or directory") {
+			os.Mkdir(migrationDirectory, 0755)
+			// continue
+		} else {
+			log.Fatalf("failed creating atlas migration directory: %v", err)
+		}
 	}
 	// Migrate diff options.
 	opts := []schema.MigrateOption{
@@ -35,12 +41,10 @@ func main() {
 	// Generate migrations using Atlas support for Postgres (note the Ent dialect option passed above).
 	err = migrate.NamedDiff(ctx, "postgres://postgres:pass@localhost:5432/migration?sslmode=disable", os.Args[1], opts...)
 	if err != nil {
-		if strings.Contains(err.Error(), "connection refused") {
-			log.Println(`require a local postgres server running on port 5432.
+		log.Println(`require a local postgres server running on port 5432.
 to start a postgres server using docker, run:
   docker run --name migration -it --rm -p 5432:5432 -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=migration postgres
 `)
-		}
 		log.Fatalf("failed generating migration file: %v", err)
 	}
 }

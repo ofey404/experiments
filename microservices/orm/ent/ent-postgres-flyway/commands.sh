@@ -11,6 +11,15 @@ cd "$SCRIPT_DIR"
 
 go run -mod=mod entgo.io/ent/cmd/ent new User
 
-# edit schema, add field, then generate
-go generate ./ent
+# generate service code
+./generate.sh
 
+# edit schema, add field, then generate code
+./schema_migration.sh create_schema
+# Generating schema in /home/ofey/cloud-workspace/experiments/microservices/orm/ent/ent-postgres-flyway/ent
+#
+# Generating schema migration in /home/ofey/cloud-workspace/experiments/microservices/orm/ent/ent-postgres-flyway/ent/migrate/migrations
+# Migration name create_schema
+# Migration file:
+# U20231121070457__create_schema.sql
+# V20231121070457__create_schema.sql
