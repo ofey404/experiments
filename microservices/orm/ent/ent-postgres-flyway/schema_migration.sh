@@ -15,14 +15,37 @@ if [ -z "${1:-}" ]; then
   exit 1
 fi
 
-cd "$SERVICE_ROOT"
-
 echo "Generating schema in $(pwd)/ent"
 go generate ./ent
 
-echo "Generating schema migration in $(pwd)/ent/migrate/migrations"
+MIGRATION_SQL_PATH=$(pwd)/ent/migrate/migrations
+echo "Generating schema migration in $MIGRATION_SQL_PATH"
 echo "Migration name $1"
 go run -mod=mod ent/migrate/main.go "$1"
 
+# Extract the highest timestamp of version file.
+# Files: V20231121055737__create_users.sql  V20231121060516__user_add_name_age.sql
+# Print: 20231121060516
+get_highest_version() {
+  local highest_version_file
+  highest_version_file=$(find "$MIGRATION_SQL_PATH" -name "*.sql" -printf "%f\n" | sort -V | tail -n 1)
+
+  # Get the {} part => V{20231121055737}__create_users.sql
+  timestamp=$(echo "$highest_version_file" | cut -d'_' -f 1 | cut -c 2-)
+
+  echo "$timestamp"
+}
+
+VERSION=$(get_highest_version)
+
 echo "Migration file:"
-ls "$(pwd)/ent/migrate/migrations" | grep "$1.sql"
+ls "$MIGRATION_SQL_PATH" | grep "$VERSION"
+
+echo "Version: $VERSION, written to ent/version.go"
+cat <<EOF > ent/version.go
+package ent
+
+const (
+	FlywaySchemaVersion = "$VERSION"
+)
+EOF
