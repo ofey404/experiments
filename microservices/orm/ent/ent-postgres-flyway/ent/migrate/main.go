@@ -8,10 +8,11 @@ import (
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql/schema"
 	_ "github.com/lib/pq"
+
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/ent/migrate"
 	"log"
 	"os"
-	"strings"
 )
 
 var schemaList = []struct {
@@ -21,7 +22,7 @@ var schemaList = []struct {
 	OnConnError string
 }{
 	{
-		Directory: "ent/migrate/migrations",
+		Directory: "ent/migrate/migrations/postgresql",
 		Opts: []schema.MigrateOption{
 			schema.WithMigrationMode(schema.ModeReplay), // provide migration mode
 			schema.WithDialect(dialect.Postgres),        // Ent dialect to use
@@ -32,6 +33,18 @@ to start a postgres server using docker, run:
   docker run --name migration -it --rm -p 5432:5432 -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=migration postgres
 `,
 	},
+	{
+		Directory: "ent/migrate/migrations/mysql",
+		Opts: []schema.MigrateOption{
+			schema.WithMigrationMode(schema.ModeReplay), // provide migration mode
+			schema.WithDialect(dialect.MySQL),           // Ent dialect to use
+		},
+		Url: "mysql://root:mysecretpassword@localhost:3306/hellokv",
+		OnConnError: `require a local mysql server running on port 3306.
+to start a mysql server using docker, run:
+	docker run --name migration-mysql -it --rm -p 3306:3306 -e MYSQL_DATABASE=hellokv -e MYSQL_ROOT_PASSWORD=mysecretpassword mysql:8
+`,
+	},
 }
 
 func main() {
@@ -40,12 +53,7 @@ func main() {
 		// Create a local migration directory able to understand Flyway migration file format for replay.
 		dir, err := sqltool.NewFlywayDir(s.Directory)
 		if err != nil {
-			if strings.Contains(err.Error(), "no such file or directory") {
-				os.Mkdir(s.Directory, 0755)
-				// continue
-			} else {
-				log.Fatalf("failed creating atlas migration directory: %v", err)
-			}
+			log.Fatalf("failed creating atlas migration directory: %v", err)
 		}
 		if len(os.Args) != 2 {
 			log.Fatalln("migration name is required. Use: 'go run -mod=mod ent/migrate/main.go <name>'")
