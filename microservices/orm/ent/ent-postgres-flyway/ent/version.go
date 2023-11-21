@@ -1,5 +1,5 @@
 package ent
 
 const (
-	FlywaySchemaVersion = "20231121081226"
+	FlywaySchemaVersion = "20231121084921"
 )

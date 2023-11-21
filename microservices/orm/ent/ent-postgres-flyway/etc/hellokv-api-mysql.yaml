@@ -1,0 +1,7 @@
+Name: hellokv-api
+Host: 0.0.0.0
+Port: 8888
+
+Db:
+  Driver: "mysql"
+  Source: "root:mysecretpassword@(localhost:3306)/hellokv"

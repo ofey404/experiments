@@ -18,9 +18,8 @@ fi
 echo "Generating schema in $(pwd)/ent"
 go generate ./ent
 
-MIGRATION_SQL_PATH=$(pwd)/ent/migrate/migrations
+MIGRATION_SQL_PATH=$(pwd)/ent/migrate/migrations/postgresql
 echo "Generating schema migration in $MIGRATION_SQL_PATH"
-echo "Migration name $1"
 go run -mod=mod ent/migrate/main.go "$1"
 
 # Extract the highest timestamp of version file.
@@ -37,14 +36,6 @@ get_highest_version() {
 }
 
 VERSION=$(get_highest_version)
-
-
-if [ -z "$(ls "$MIGRATION_SQL_PATH" | grep "__$1.sql")" ]
-then
-  echo "!! No new migration generated !!"
-else
-  echo "Generated new migration."
-fi
 
 echo "Latest version $VERSION, files:"
 ls "$MIGRATION_SQL_PATH" | grep "$VERSION"

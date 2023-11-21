@@ -35,7 +35,7 @@ docker run -it --rm \
            -e POSTGRES_DB=hellokv \
            -p 5432:5432 \
            postgres:16
-docker run --rm -v $(pwd)/ent/migrate/migrations:/flyway/sql flyway/flyway:10.0 \
+docker run --rm -v $(pwd)/ent/migrate/migrations/postgresql:/flyway/sql flyway/flyway:10.0 \
      -url=jdbc:postgresql://host.docker.internal:5432/hellokv \
      -user=postgres \
      -password=mysecretpassword \
@@ -48,8 +48,25 @@ go run . -f etc/hellokv-api.yaml
 #####################################################################
 # test commands
 #####################################################################
+curl -v localhost:8888/setkey -H "Content-Type: application/json" \
+-d '{ "key": "myKey", "value": "myValue" }'
+
 curl -v localhost:8888/getkey -H "Content-Type: application/json" \
 -d '{ "key": "myKey" }'
 
-curl -v localhost:8888/setkey -H "Content-Type: application/json" \
--d '{ "key": "myKey", "value": "myValue" }'
+#####################################################################
+# use mysql backend
+#####################################################################
+
+# spin up a mysql
+docker run --name migration-mysql -it --rm -p 3306:3306 -e MYSQL_DATABASE=hellokv -e MYSQL_ROOT_PASSWORD=mysecretpassword mysql:8
+
+docker run --rm -v $(pwd)/ent/migrate/migrations/mysql:/flyway/sql flyway/flyway:10.0 \
+     -url=jdbc:mysql://host.docker.internal:3306/hellokv \
+     -user=root \
+     -password=mysecretpassword \
+     migrate
+
+go run . -f etc/hellokv-api-mysql.yaml
+# Using database driver mysql, source mysql://root:mysecretpassword@(localhost:3306)/hellokv...
+# Starting server at 0.0.0.0:8888...
