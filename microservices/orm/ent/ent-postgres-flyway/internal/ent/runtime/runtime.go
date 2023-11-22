@@ -2,7 +2,7 @@
 
 package runtime
 
-// The schema-stitching logic is generated in github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/ent/runtime.go
+// The schema-stitching logic is generated in github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/internal/ent/runtime.go
 
 const (
 	Version = "v0.12.5"                                         // Version of ent codegen.

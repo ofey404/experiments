@@ -10,8 +10,8 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/ent/kvpair"
-	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/ent/predicate"
+	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/internal/ent/kvpair"
+	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/internal/ent/predicate"
 )
 
 const (

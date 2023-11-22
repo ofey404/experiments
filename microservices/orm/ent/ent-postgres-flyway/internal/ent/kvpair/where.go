@@ -4,7 +4,7 @@ package kvpair
 
 import (
 	"entgo.io/ent/dialect/sql"
-	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/ent/predicate"
+	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/internal/ent/predicate"
 )
 
 // ID filters vertices based on their ID field.

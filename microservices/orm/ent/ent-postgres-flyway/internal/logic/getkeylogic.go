@@ -2,8 +2,8 @@ package logic
 
 import (
 	"context"
-	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/ent"
-	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/ent/kvpair"
+	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/internal/ent"
+	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/internal/ent/kvpair"
 	"github.com/pkg/errors"
 
 	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/internal/svc"

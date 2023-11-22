@@ -8,7 +8,7 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/ent/kvpair"
+	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/internal/ent/kvpair"
 )
 
 // KVPair is the model entity for the KVPair schema.

@@ -9,12 +9,12 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/ent/migrate"
+	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/internal/ent/migrate"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
-	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/ent/kvpair"
+	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/internal/ent/kvpair"
 )
 
 // Client is the client that holds all ent builders.

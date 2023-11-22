@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/ent"
+	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/internal/ent"
 )
 
 // The KVPairFunc type is an adapter to allow the use of ordinary

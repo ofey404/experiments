@@ -10,7 +10,7 @@ import (
 	_ "github.com/lib/pq"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/ent/migrate"
+	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/internal/ent/migrate"
 	"log"
 	"os"
 )
@@ -22,7 +22,7 @@ var schemaList = []struct {
 	OnConnError string
 }{
 	{
-		Directory: "ent/migrate/migrations/postgresql",
+		Directory: "internal/ent/migrate/migrations/postgresql",
 		Opts: []schema.MigrateOption{
 			schema.WithMigrationMode(schema.ModeReplay), // provide migration mode
 			schema.WithDialect(dialect.Postgres),        // Ent dialect to use
@@ -34,7 +34,7 @@ to start a postgres server using docker, run:
 `,
 	},
 	{
-		Directory: "ent/migrate/migrations/mysql",
+		Directory: "internal/ent/migrate/migrations/mysql",
 		Opts: []schema.MigrateOption{
 			schema.WithMigrationMode(schema.ModeReplay), // provide migration mode
 			schema.WithDialect(dialect.MySQL),           // Ent dialect to use

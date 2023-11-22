@@ -9,16 +9,16 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-go run -mod=mod entgo.io/ent/cmd/ent new User
+go run -mod=mod entgo.io/ent/cmd/ent new User --target internal/ent/schema
 
 # generate service code
 ./generate.sh
 
 # edit schema, add field, then generate code
-./schema_migration.sh create_schema
-# Generating schema in /home/ofey/cloud-workspace/experiments/microservices/orm/ent/ent-postgres-flyway/ent
+./migrate_schema.sh create_schema
+# Generating schema in /home/ofey/cloud-workspace/experiments/microservices/orm/ent/ent-postgres-flyway/internal/ent
 #
-# Generating schema migration in /home/ofey/cloud-workspace/experiments/microservices/orm/ent/ent-postgres-flyway/ent/migrate/migrations
+# Generating schema migration in /home/ofey/cloud-workspace/experiments/microservices/orm/ent/ent-postgres-flyway/internal/ent/migrate/migrations
 # Migration name create_schema
 # Migration file:
 # U20231121070457__create_schema.sql

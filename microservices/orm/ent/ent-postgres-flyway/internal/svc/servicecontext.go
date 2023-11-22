@@ -1,8 +1,8 @@
 package svc
 
 import (
-	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/ent"
 	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/internal/config"
+	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/internal/ent"
 	"github.com/zeromicro/go-zero/core/logx"
 
 	_ "github.com/go-sql-driver/mysql"

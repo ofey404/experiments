@@ -16,11 +16,11 @@ if [ -z "${1:-}" ]; then
 fi
 
 echo "Generating schema in $(pwd)/ent"
-go generate ./ent
+go generate ./internal/ent
 
-MIGRATION_SQL_PATH=$(pwd)/ent/migrate/migrations/postgresql
+MIGRATION_SQL_PATH=$(pwd)/internal/ent/migrate/migrations/postgresql
 echo "Generating schema migration in $MIGRATION_SQL_PATH"
-go run -mod=mod ent/migrate/main.go "$1"
+go run -mod=mod internal/ent/migrate/main.go "$1"
 
 # Extract the highest timestamp of version file.
 # Files: V20231121055737__create_users.sql  V20231121060516__user_add_name_age.sql

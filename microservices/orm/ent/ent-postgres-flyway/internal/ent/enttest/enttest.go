@@ -5,12 +5,12 @@ package enttest
 import (
 	"context"
 
-	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/ent"
+	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/internal/ent"
 	// required by schema hooks.
-	_ "github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/ent/runtime"
+	_ "github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/internal/ent/runtime"
 
 	"entgo.io/ent/dialect/sql/schema"
-	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/ent/migrate"
+	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/internal/ent/migrate"
 )
 
 type (
