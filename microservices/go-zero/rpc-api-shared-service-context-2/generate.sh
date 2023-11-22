@@ -9,7 +9,7 @@ SERVICE_ROOT=$SCRIPT_DIR
 cd "$SERVICE_ROOT"
 
 goctl api go -api api/hellokv.api -dir .
-goctl rpc protoc rpc/pb/hellokv.proto \
-  --go_out="$(pwd)/rpc" \
-  --go-grpc_out="$(pwd)/rpc" \
-  --zrpc_out="$(pwd)/rpc"
+goctl rpc protoc pb/hellokv.proto \
+  --go_out="$(pwd)/internal" \
+  --go-grpc_out="$(pwd)/internal" \
+  --zrpc_out="$(pwd)"
