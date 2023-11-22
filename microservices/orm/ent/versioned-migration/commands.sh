@@ -9,18 +9,18 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-go run -mod=mod entgo.io/ent/cmd/ent new User
+go run -mod=mod entgo.io/ent/cmd/ent new User --target internal/ent/schema
 
 # edit schema, add field, then generate
-go generate ./ent
+go generate ./internal/ent
 
 #####################################################################
 # Option 1: Use the atlas migrate diff command
 # The output is consumed by the atlas migrate apply command.
 #####################################################################
 atlas migrate diff create_user \
-  --dir "file://ent/migrate/migrations" \
-  --to "ent://ent/schema" \
+  --dir "file://internal/ent/migrate/migrations" \
+  --to "ent://internal/ent/schema" \
   --dev-url "docker://postgres/15/test?search_path=public"
 
 cat ent/migrate/migrations/20231121033810_create_user.sql

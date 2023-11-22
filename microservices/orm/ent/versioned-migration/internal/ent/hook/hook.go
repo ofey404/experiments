@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/ent"
+	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/internal/ent"
 )
 
 // The UserFunc type is an adapter to allow the use of ordinary

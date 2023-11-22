@@ -9,12 +9,12 @@ import (
 	"log"
 	"reflect"
 
-	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/ent/migrate"
+	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/internal/ent/migrate"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
-	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/ent/user"
+	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/internal/ent/user"
 )
 
 // Client is the client that holds all ent builders.

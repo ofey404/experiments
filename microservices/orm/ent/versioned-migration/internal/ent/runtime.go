@@ -3,8 +3,8 @@
 package ent
 
 import (
-	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/ent/schema"
-	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/ent/user"
+	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/internal/ent/schema"
+	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/internal/ent/user"
 )
 
 // The init function reads all schema descriptors with runtime code

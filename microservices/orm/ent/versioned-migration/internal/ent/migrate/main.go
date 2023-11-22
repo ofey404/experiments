@@ -8,7 +8,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/ent/migrate"
+	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/internal/ent/migrate"
 
 	"ariga.io/atlas/sql/sqltool"
 	"entgo.io/ent/dialect"

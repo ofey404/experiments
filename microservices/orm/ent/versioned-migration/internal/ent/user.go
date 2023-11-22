@@ -8,7 +8,7 @@ import (
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/ent/user"
+	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/internal/ent/user"
 )
 
 // User is the model entity for the User schema.

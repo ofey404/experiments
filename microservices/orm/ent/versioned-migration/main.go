@@ -5,8 +5,8 @@ import (
 	"database/sql"
 	"fmt"
 	"github.com/ofey404/experiments/microservices/flyway/helper"
-	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/ent"
-	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/ent/user"
+	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/internal/ent"
+	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/internal/ent/user"
 	"github.com/zeromicro/go-zero/core/logx"
 	"log"
 

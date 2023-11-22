@@ -5,12 +5,12 @@ package enttest
 import (
 	"context"
 
-	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/ent"
+	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/internal/ent"
 	// required by schema hooks.
-	_ "github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/ent/runtime"
+	_ "github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/internal/ent/runtime"
 
 	"entgo.io/ent/dialect/sql/schema"
-	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/ent/migrate"
+	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/internal/ent/migrate"
 )
 
 type (
