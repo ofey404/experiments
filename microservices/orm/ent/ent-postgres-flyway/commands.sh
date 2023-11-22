@@ -35,7 +35,7 @@ docker run -it --rm \
            -e POSTGRES_DB=hellokv \
            -p 5432:5432 \
            postgres:16
-docker run --rm -v $(pwd)/ent/migrate/migrations/postgresql:/flyway/sql flyway/flyway:10.0 \
+docker run --rm -v $(pwd)/internal/ent/migrate/migrations/postgresql:/flyway/sql flyway/flyway:10.0 \
      -url=jdbc:postgresql://host.docker.internal:5432/hellokv \
      -user=postgres \
      -password=mysecretpassword \
@@ -61,7 +61,7 @@ curl -v localhost:8888/getkey -H "Content-Type: application/json" \
 # spin up a mysql
 docker run --name migration-mysql -it --rm -p 3306:3306 -e MYSQL_DATABASE=hellokv -e MYSQL_ROOT_PASSWORD=mysecretpassword mysql:8
 
-docker run --rm -v $(pwd)/ent/migrate/migrations/mysql:/flyway/sql flyway/flyway:10.0 \
+docker run --rm -v $(pwd)/internal/ent/migrate/migrations/mysql:/flyway/sql flyway/flyway:10.0 \
      -url=jdbc:mysql://host.docker.internal:3306/hellokv \
      -user=root \
      -password=mysecretpassword \

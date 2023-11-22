@@ -41,7 +41,7 @@ echo "Latest version $VERSION, files:"
 ls "$MIGRATION_SQL_PATH" | grep "$VERSION"
 
 echo "Write version $VERSION to ent/version.go"
-cat <<EOF > ent/version.go
+cat <<EOF > internal/ent/version.go
 package ent
 
 const (

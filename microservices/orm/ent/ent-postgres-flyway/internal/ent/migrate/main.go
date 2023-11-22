@@ -30,7 +30,7 @@ var schemaList = []struct {
 		Url: "postgres://postgres:pass@localhost:5432/migration?sslmode=disable",
 		OnConnError: `require a local postgres server running on port 5432.
 to start a postgres server using docker, run:
-  docker run --name migration -it --rm -p 5432:5432 -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=migration postgres
+  docker run --name migration-postgres -it --rm -p 5432:5432 -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=migration postgres
 `,
 	},
 	{
@@ -39,10 +39,10 @@ to start a postgres server using docker, run:
 			schema.WithMigrationMode(schema.ModeReplay), // provide migration mode
 			schema.WithDialect(dialect.MySQL),           // Ent dialect to use
 		},
-		Url: "mysql://root:mysecretpassword@localhost:3306/hellokv",
+		Url: "mysql://root:mysecretpassword@localhost:3306/migration",
 		OnConnError: `require a local mysql server running on port 3306.
 to start a mysql server using docker, run:
-	docker run --name migration-mysql -it --rm -p 3306:3306 -e MYSQL_DATABASE=hellokv -e MYSQL_ROOT_PASSWORD=mysecretpassword mysql:8
+	docker run --name migration-mysql -it --rm -p 3306:3306 -e MYSQL_DATABASE=migration -e MYSQL_ROOT_PASSWORD=mysecretpassword mysql:8
 `,
 	},
 }
