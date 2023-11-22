@@ -54,10 +54,10 @@ docker run --name migration -it --rm -p 5432:5432 -e POSTGRES_PASSWORD=pass -e P
 go run -mod=mod internal/ent/migrate/main.go create_users
 
 # add fields to schema
-go generate ./ent
-go run -mod=mod ent/migrate/main.go user_add_name_age
+go generate ./internal/ent
+go run -mod=mod internal/ent/migrate/main.go user_add_name_age
 
-ls ent/migrate/migrations/
+ls internal/ent/migrate/migrations/
 # U20231121055737__create_users.sql  U20231121060516__user_add_name_age.sql  V20231121055737__create_users.sql  V20231121060516__user_add_name_age.sql  atlas.sum
 
 #####################################################################

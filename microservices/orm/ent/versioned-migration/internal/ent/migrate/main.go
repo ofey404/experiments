@@ -19,7 +19,7 @@ import (
 func main() {
 	ctx := context.Background()
 	// Create a local migration directory able to understand Flyway migration file format for replay.
-	dir, err := sqltool.NewFlywayDir("ent/migrate/migrations")
+	dir, err := sqltool.NewFlywayDir("internal/ent/migrate/migrations")
 	if err != nil {
 		log.Fatalf("failed creating atlas migration directory: %v", err)
 	}
