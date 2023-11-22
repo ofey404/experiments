@@ -28,11 +28,22 @@ func main() {
 
 	svcCtx := svc.NewServiceContext(c)
 
+	serverDown := make(chan string)
 	if c.Api != nil {
-		startApiServer(c, svcCtx)
-	} else if c.Rpc != nil {
-		startRpcServer(c, svcCtx)
+		go func() {
+			startApiServer(c, svcCtx)
+			serverDown <- "API"
+		}()
 	}
+	if c.Rpc != nil {
+		go func() {
+			startRpcServer(c, svcCtx)
+			serverDown <- "RPC"
+		}()
+	}
+
+	serverType := <-serverDown
+	fmt.Printf("received %s server shutdown, process exit\n", serverType)
 }
 
 func startApiServer(c config.Config, svcCtx *svc.ServiceContext) {

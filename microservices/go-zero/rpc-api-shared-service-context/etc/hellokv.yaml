@@ -1,6 +1,9 @@
+Api:
+  Name: hellokv-api
+  Host: 0.0.0.0
+  Port: 8888
+  Mode: dev
 Rpc:
   Name: hellokv.rpc
   ListenOn: 0.0.0.0:8080
   Mode: dev
-
-

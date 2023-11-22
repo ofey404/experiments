@@ -23,7 +23,7 @@ curl -v localhost:8888/getkey -H "Content-Type: application/json" \
 # {"value":"myValue"}
 
 # Serve gRPC
-go run . -f etc/hellokv.yaml
+go run . -f etc/hellokv-rpc.yaml
 # Starting rpc server at 0.0.0.0:8080...
 
 # gRPC test
@@ -39,3 +39,5 @@ hellokv.Hellokv.Get
 
 grpcurl -plaintext localhost:8080 list
 
+# Serve both
+go run . -f etc/hellokv.yaml
