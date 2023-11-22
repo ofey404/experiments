@@ -10,10 +10,10 @@ cd "$SCRIPT_DIR"
 ##############################################
 
 # https://entgo.io/docs/getting-started/
-go run -mod=mod entgo.io/ent/cmd/ent new User
+go run -mod=mod entgo.io/ent/cmd/ent new User --target internal/ent/schema
 
 # edit schema, add field, then generate
-go generate ./ent
+go generate ./internal/ent
 
 # manage the first entity
 go run .
@@ -21,9 +21,9 @@ go run .
 # 2023/11/21 10:26:33 user returned:  User(id=1, age=30, name=a8m)
 
 # Add Your First Edge (Relation)
-go run -mod=mod entgo.io/ent/cmd/ent new Car Group
+go run -mod=mod entgo.io/ent/cmd/ent new Car Group --target internal/ent/schema
 
-go generate ./ent
+go generate ./internal/ent
 
 go run .
 # 2023/11/21 10:33:22 user was created:  User(id=1, age=30, name=a8m)
@@ -58,13 +58,13 @@ atlas version
 
 # -w would open in browser
 atlas schema inspect \
-  -u "ent://ent/schema" \
+  -u "ent://internal/ent/schema" \
   --dev-url "sqlite://file?mode=memory&_fk=1" \
   -w
 
 # Generate SQL Schema
 atlas schema inspect \
-  -u "ent://ent/schema" \
+  -u "ent://internal/ent/schema" \
   --dev-url "sqlite://file?mode=memory&_fk=1" \
   --format '{{ sql . "  " }}'
 # -- Create "cars" table

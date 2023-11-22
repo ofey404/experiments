@@ -11,4 +11,4 @@ cd "$SCRIPT_DIR"
 
 redis-cli
 
-
+docker run --name some-redis -it --rm -p 6379:6379 redis:7.2.3
