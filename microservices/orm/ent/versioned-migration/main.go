@@ -4,11 +4,12 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"log"
+
 	"github.com/ofey404/experiments/microservices/flyway/helper"
 	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/internal/ent"
 	"github.com/ofey404/experiments/microservices/orm/ent/versioned-migration/internal/ent/user"
 	"github.com/zeromicro/go-zero/core/logx"
-	"log"
 
 	_ "github.com/lib/pq"
 )

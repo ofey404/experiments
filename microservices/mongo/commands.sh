@@ -36,3 +36,10 @@ docker run -it --rm --name mastering-mongo \
 
 # The connection string
 mongosh mongodb://root:password@localhost:27017
+
+# A volatile instance
+docker run -it --rm --name mastering-mongo \
+           -p 27017:27017 \
+           -e MONGO_INITDB_ROOT_USERNAME=root \
+           -e MONGO_INITDB_ROOT_PASSWORD=password \
+           mongo:7.0.2
