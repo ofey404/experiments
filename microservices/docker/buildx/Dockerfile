@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM --platform=$BUILDPLATFORM golang:1.17-buster as builder
+FROM --platform=$BUILDPLATFORM golang:1.20-buster as builder
 
 WORKDIR /src
 COPY . .
