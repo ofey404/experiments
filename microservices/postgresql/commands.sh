@@ -14,8 +14,9 @@ docker run -it --rm \
            --name some-postgres \
            -e POSTGRES_PASSWORD=mysecretpassword \
            -p 5432:5432 \
-           -v /tmp/postgres-example:/var/lib/postgresql/data \
            postgres:16
+# to persist the data:
+#    -v /tmp/postgres-example:/var/lib/postgresql/data
 
 # connect to it
 PGPASSWORD=mysecretpassword psql -h localhost -U postgres

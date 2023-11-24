@@ -26,7 +26,7 @@ helm install bitnami/mysql --generate-name
 helm search hub wordpress
 
 # download chart from hub
-helm pull kubeflow/kubeflow --version 1.5.1 --untar
+helm pull kubeflow/kubeflow --version 2.5.1 --untar
 
 # install helm diff plugin
 helm plugin install https://github.com/databus23/helm-diff
