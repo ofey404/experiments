@@ -1,7 +1,7 @@
 {
   "type": "excalidraw",
   "version": 2,
-  "source": "https://excalidraw.com",
+  "source": "https://excalidraw-jetbrains-plugin",
   "elements": [
     {
       "type": "ellipse",
@@ -1198,6 +1198,5 @@
   "appState": {
     "gridSize": null,
     "viewBackgroundColor": "#ffffff"
-  },
-  "files": {}
+  }
 }

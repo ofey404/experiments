@@ -38,7 +38,7 @@
 // Related Topics Linked List Recursion
 // 👍 20101 👎 369
 
-package linked_list
+package solution
 
 type ListNode struct {
 	Val  int
