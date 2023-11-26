@@ -15,7 +15,6 @@ func (h *MaxHeap) Push(val int) {
 
 	// float the val from bottom
 	this := len(h.data) - 1
-	// TODO: maximum heap => general purpose heap
 	for h.less(h.data[parent(this)], h.data[this]) {
 		h.swap(this, parent(this))
 		this = parent(this)
@@ -37,6 +36,13 @@ func (h *MaxHeap) Pop() (val int, empty bool) {
 		h.reconcile(0)
 	}
 	return val, false
+}
+
+func (h *MaxHeap) Top() (val int, empty bool) {
+	if len(h.data) == 0 {
+		return 0, true
+	}
+	return h.data[0], false
 }
 
 func (h *MaxHeap) Size() int {
