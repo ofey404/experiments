@@ -7,10 +7,10 @@ cd "$SCRIPT_DIR"
 
 # filter {serial number}-{solution name}.go by unique serial number
 
-echo "Problems finished in 1 week:"
+echo "Problems updated in 1 week:"
 find . -name '*.go' -mtime -7 | sed -E 's/.*\/([0-9]+)-.*\.go/\1/' | sort -u | wc -l
 
-echo "Problems finished in 1 month:"
+echo "Problems updated in 1 month:"
 find . -name '*.go' -mtime -30 | sed -E 's/.*\/([0-9]+)-.*\.go/\1/' | sort -u | wc -l
 
 echo "All problems solved:"
