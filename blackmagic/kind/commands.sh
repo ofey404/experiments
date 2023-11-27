@@ -15,6 +15,20 @@ cd "$SCRIPT_DIR"
 kind create cluster -n my-cluster
 docker update --restart=no my-cluster-control-plane
 
+#####################################################################
+# Configure Cluster
+#####################################################################
+
+# create cluster with custom config
+kind create cluster -n my-cluster --config kind-config.yaml
+
+# get cluster info
+docker inspect my-cluster-control-plane
+
+#####################################################################
+# Load Image
+#####################################################################
+
 # after image is loaded, we should set:
 # imagePullPolicy: IfNotPresent
 # 
