@@ -1,3 +1,5 @@
+//go:build ignore
+
 //You are given an integer array nums sorted in non-decreasing order.
 //
 // Build and return an integer array result with the same length as nums such

@@ -1,0 +1,11 @@
+[$!{q.frontendQuestionId}]${q.title}
+
+//go:build ignore
+
+${q.content}
+
+// $!vt.date()
+
+package solution
+
+${q.code}

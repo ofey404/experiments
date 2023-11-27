@@ -1,3 +1,5 @@
+//go:build ignore
+
 //Given a string s and an integer k, reverse the first k characters for every 2
 //k characters counting from the start of the string.
 //
