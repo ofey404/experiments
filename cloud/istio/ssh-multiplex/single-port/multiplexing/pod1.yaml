@@ -5,7 +5,7 @@ metadata:
   labels:
     app: ssh-multiplex
   annotations:
-    sidecar.istio.io/inject: "false" # TODO
+    sidecar.istio.io/inject: "false"
 spec:
   containers:
   - name: openssh-server
@@ -27,6 +27,11 @@ spec:
       value: "password"
     - name: USER_NAME
       value: "username"
+  - name: tcp-tunnel-over-http
+    image: jpillora/chisel:1.9.1
+    args: ["server", "--port", "8080", "--proxy", "tcp://localhost:2222"]
+    ports:
+    - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
@@ -36,9 +41,8 @@ metadata:
     app: ssh-multiplex
 spec:
   ports:
-  - port: 2222
-    name: ssh
-  clusterIP: None  # A headless service
+  - port: 8080
+    name: http
   selector:
     app: ssh-multiplex
 ---
@@ -48,12 +52,12 @@ metadata:
   name: ssh-multiplex
 spec:
   hosts:
-  - "*"
+  - "pod1.server.chisel.com"
   gateways:
   - default/ssh-multiplex-gateway
-  tcp:
+  http:
   - route:
     - destination:
         host: ssh-multiplex.default.svc.cluster.local
         port:
-          number: 2222
+          number: 8080

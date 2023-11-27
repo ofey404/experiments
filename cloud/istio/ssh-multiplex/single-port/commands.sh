@@ -82,3 +82,58 @@ chisel server --port 8888 --proxy tcp://localhost:31400
 
 ssh -o ProxyCommand='chisel client localhost:8888 stdio:%h:%p' username@localhost -p 31400
 # Welcome to OpenSSH Server
+
+#####################################################################
+# use docker image to achieve the same thing
+docker run --rm -it jpillora/chisel:1.9.1 --help
+
+docker run -p 8888:8888 --rm -it jpillora/chisel:1.9.1 server --port 8888 --proxy tcp://host.docker.internal:31400
+ssh -o ProxyCommand='chisel client localhost:8888 stdio:%h:%p' username@host.docker.internal -p 31400
+# Welcome to OpenSSH Server
+
+#####################################################################
+# Reprouce it in the cluster
+
+kubectl delete -f 1-ssh-to-pod.yaml 
+
+kubectl apply -f 3-chisel.yaml 
+
+kubectl port-forward svc/istio-ingressgateway -n istio-system 80:80
+ssh -o ProxyCommand='chisel client localhost:80 stdio:%h:%p' username@localhost -p 2222
+# Welcome to OpenSSH Server
+
+kubectl delete -f 3-chisel.yaml 
+
+#####################################################################
+# Step 4: real ssh multipliexing
+#####################################################################
+
+# Add hostname to /etc/hosts, istio need this to multiplex ssh connection
+sudo vim /etc/hosts
+# 127.0.0.1 pod1.server.chisel.com
+# 127.0.0.1 pod2.server.chisel.com
+
+kubectl apply -f multiplexing/gateway.yaml 
+kubectl apply -f multiplexing/pod1.yaml 
+
+#####################################################################
+# pod1.server.chisel.com => pod1
+
+ssh -o ProxyCommand='chisel client pod1.server.chisel.com:80 stdio:%h:%p' username@localhost -p 2222
+# Welcome to OpenSSH Server
+# ssh-multiplex:~$ 
+
+#####################################################################
+# pod2.server.chisel.com can't access pod1
+ssh -o ProxyCommand='chisel client pod2.server.chisel.com:80 stdio:%h:%p' username@localhost -p 2222
+# 2023/11/27 14:03:45 client: Connecting to ws://pod2.server.chisel.com:80
+# 2023/11/27 14:03:45 client: Connection error: websocket: bad handshake
+# 2023/11/27 14:03:45 client: Retrying in 100ms...
+
+#####################################################################
+# pod2.server.chisel.com => pod2
+kubectl apply -f multiplexing/pod2.yaml 
+
+ssh -o ProxyCommand='chisel client pod2.server.chisel.com:80 stdio:%h:%p' username@localhost -p 2222
+# Welcome to OpenSSH Server
+# ssh-multiplex-2:~$ 
