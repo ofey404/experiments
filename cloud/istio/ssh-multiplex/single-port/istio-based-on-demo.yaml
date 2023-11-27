@@ -38,17 +38,6 @@ spec:
           - name: tls
             port: 15443
             targetPort: 15443
-          # Port range opened for SSH
-          # In real application they should be opened for specific IP ranges
-          - name: ssh-9000
-            port: 9000
-            targetPort: 9000
-          - name: ssh-9001
-            port: 9001
-            targetPort: 9001
-          - name: ssh-9002
-            port: 9002
-            targetPort: 9002
       name: istio-ingressgateway
     istiodRemote:
       enabled: false
