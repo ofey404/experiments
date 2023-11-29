@@ -59,3 +59,16 @@ kubectl rollout resume deployment/python-deployment
 
 # force trigger a new rollout
 kubectl rollout restart deployment/python-deployment
+
+#####################################################################
+# rollback to previous version
+#####################################################################
+
+# ordinary rollout has no history
+kubectl rollout history deployment/python-deployment
+# deployment.apps/python-deployment 
+# REVISION  CHANGE-CAUSE
+# 2         <none>
+# 4         <none>
+# 5         <none>
+# 6         <none>
