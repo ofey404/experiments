@@ -17,7 +17,7 @@ data:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: prometheus-grafana-pod
+  name: grafana-sidecar
 spec:
   containers:
   - name: prometheus

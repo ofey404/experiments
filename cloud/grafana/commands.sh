@@ -11,3 +11,8 @@ cd "$SCRIPT_DIR"
 
 kind create cluster -n sidecar-playground
 docker update --restart=no sidecar-playground-control-plane
+
+kubectl apply -f grafana-sidecar.yaml
+
+kubectl port-forward pod/grafana-sidecar 3000:3000
+# username & password are both admin
