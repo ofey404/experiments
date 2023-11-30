@@ -13,6 +13,7 @@ cd "$SCRIPT_DIR"
 docker run -it --rm \
            --name some-postgres \
            -e POSTGRES_PASSWORD=mysecretpassword \
+           -e POSTGRES_DB=postgres \
            -p 5432:5432 \
            postgres:16
 # to persist the data:
