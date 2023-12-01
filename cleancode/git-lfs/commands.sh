@@ -13,3 +13,6 @@ cd "$SCRIPT_DIR"
 # https://docs.github.com/en/repositories/working-with-files/managing-large-files/installing-git-large-file-storage
 
 sudo apt install git-lfs
+
+mkdir -p /tmp/git-lfs
+cd /tmp/git-lfs

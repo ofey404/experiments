@@ -16,7 +16,7 @@ docker update --restart=no sidecar-playground-control-plane
 # https://github.com/grafana/loki
 helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
-helm install --values values/loki.yaml loki grafana/loki --version 5.39.0
+helm install --values loki.yaml loki grafana/loki --version 5.39.0
 
 # if you want to check the content
 helm pull grafana/loki --version 5.39.0 --untar
