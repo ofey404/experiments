@@ -14,8 +14,6 @@ istioctl proxy-config log istio-ingressgateway-79bb75ddbb-xpqw6.istio-system --l
 
 # deploy to cluster
 istioctl install --set profile=demo -y
-
-# enable injection for namespace
 kubectl label namespace default istio-injection=enabled
 
 # port forward to localhost

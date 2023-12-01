@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: simple-log-generator-user1
+spec:
+  containers:
+    - name: myapp-container
+      image: busybox:1.28
+      command:
+      - '/bin/sh'
+      - '-c'
+      - |
+        while true; do echo $(date); sleep 1; done
+    - name: promtail
+      image: grafana/promtail:latest
+      command: [ "/bin/sh", "-c" ]
+      args:
+      - |
+        cat <<EOF > /etc/promtail/config.yml
+        server:
+          http_listen_port: 0
+        positions:
+          filename: /tmp/positions.yaml
+        clients:
+          - url: http://loki:3100/loki/api/v1/push
+            tenant_id: user1
+        scrape_configs:
+        - job_name: pod-logs
+          static_configs:
+          - targets:
+             - localhost
+            labels:
+              __path__: "/var/log/containers/simple-log-generator-user1_*_myapp-container-*.log"
+              user: user1
+              pod_name: simple-log-generator-user1
+              container_name: myapp-container
+        EOF
+        /usr/bin/promtail -config.file /etc/promtail/config.yml
+      volumeMounts:
+      - name: varlog
+        mountPath: /var/log
+      - name: varlibdockercontainers
+        mountPath: /var/lib/docker/containers
+        readOnly: true
+  volumes:
+  - name: varlog
+    hostPath:
+      path: /var/log
+  - name: varlibdockercontainers
+    hostPath:
+      path: /var/lib/docker/containers

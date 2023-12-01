@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: grafana-user2
+  labels:
+    app: grafana-user2
+spec:
+  containers:
+  - name: grafana
+    image: grafana/grafana:10.2.2-ubuntu
+    ports:
+      - containerPort: 3000
+    volumeMounts:
+      - name: grafana-config-volume
+        mountPath: /etc/grafana/provisioning/datasources
+  volumes:
+    - name: grafana-config-volume
+      configMap:
+        name: grafana-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana-user2
+spec:
+  ports:
+  - port: 3000
+    targetPort: 3000
+    name: http
+  selector:
+    app: grafana-user2
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: grafana-add-org-id-header-user2
+  namespace: default
+spec:
+  workloadSelector:
+    labels:
+      app: grafana-user2
+  configPatches:
+  - applyTo: HTTP_FILTER
+    match:
+      context: SIDECAR_OUTBOUND
+      listener:
+        filterChain:
+          filter:
+            name: envoy.filters.network.http_connection_manager
+            subFilter:
+              name: envoy.filters.http.router
+    patch:
+      operation: INSERT_BEFORE
+      value: # lua filter specification
+       name: envoy.filters.http.lua
+       typed_config:
+          "@type": "type.googleapis.com/envoy.extensions.filters.http.lua.v3.Lua"
+          defaultSourceCode:
+            inlineString: |
+              function envoy_on_request(request_handle)
+                  request_handle:headers():add("X-Scope-OrgID", "user2")
+              end
