@@ -1,4 +1,4 @@
-# grafana-loki-rbac
+# grafana-prometheus-multi-tanency
 
 There are some solutions built by other engineers: https://github.com/k8spin/prometheus-multi-tenant-proxy
 
