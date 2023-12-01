@@ -1,0 +1,11 @@
+datasources:
+ datasources.yaml:
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      access: proxy
+      orgId: 1
+      url: http://prometheus-server  # from chart prometheus-community/prometheus --version 25.8.0
+      isDefault: true
+      editable: true
