@@ -9,6 +9,13 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
+# This experiment is a predecessor of ../multi-tenant-proxy/
+#
+# Diagram in this repo says we can use `relabel_configs:` to add 
+# a label to any metrics, which would be easy to filter.
+# https://github.com/ssbostan/prometheus-multi-tenant-proxy-server
+
+
 # Installation
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 

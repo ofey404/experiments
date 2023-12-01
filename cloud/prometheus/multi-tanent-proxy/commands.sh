@@ -13,6 +13,10 @@ cd "$SCRIPT_DIR"
 #
 # A nice guy implements similar logic in this repo:
 # https://github.com/ikethecoder/prom-multi-tenant-proxy/tree/dev
+#
+# Diagram in this repo says we can use `relabel_configs:` to add 
+# a label to any metrics, which would be easy to filter.
+# https://github.com/ssbostan/prometheus-multi-tenant-proxy-server
 
 # TODO: raw query to prometheus /query endpoint
 
