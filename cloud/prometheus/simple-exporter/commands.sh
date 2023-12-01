@@ -23,3 +23,8 @@ helm install grafana grafana/grafana --values grafana.yaml --version 7.0.11
 kubectl port-forward svc/grafana 80:80
 # password is generated
 kubectl get secret --namespace default grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+
+# we could add the following panels:
+#
+# https://grafana.com/grafana/dashboards/1860-node-exporter-full/
+# https://grafana.com/grafana/dashboards/15760-kubernetes-views-pods/
