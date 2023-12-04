@@ -9,5 +9,10 @@ datasources:
       url: http://prometheus-server  # from chart prometheus-community/prometheus --version 25.8.0
       isDefault: true
       editable: true
-
+    - name: Loki
+      type: loki
+      access: proxy
+      orgId: 1
+      url: http://loki:3100
+      editable: true
 adminPassword: admin

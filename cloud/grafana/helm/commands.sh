@@ -15,8 +15,7 @@ helm install grafana grafana/grafana --version 7.0.11
 helm pull grafana/grafana --version 7.0.11 --untar
 rm -rf grafana/
 
+# grafana.yaml sets the admin password as `admin`
 helm install grafana grafana/grafana --values grafana.yaml --version 7.0.11
 
 kubectl port-forward svc/grafana 80:80
-# password is generated
-kubectl get secret --namespace default grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
