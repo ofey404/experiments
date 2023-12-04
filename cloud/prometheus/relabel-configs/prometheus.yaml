@@ -1,0 +1,9 @@
+# enable label in kube_pod_labels
+#
+# [*] may severely impact performance,
+# DO NOT USE IN PRODUCTION
+kube-state-metrics:
+  metricLabelsAllowlist:
+    - deployments=[*]
+    - pods=[*]
+    - namespaces=[*]

@@ -16,8 +16,11 @@ cd "$SCRIPT_DIR"
 # https://github.com/ssbostan/prometheus-multi-tenant-proxy-server
 
 #####################################################################
-# 1. follow ../commands.sh
+# set relabel_configs
 #####################################################################
+
+kind create cluster -n prometheus-relabel-configs
+docker update --restart=no prometheus-relabel-configs-control-plane
 
 # Installation
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
@@ -26,24 +29,15 @@ helm repo add prometheus-community https://prometheus-community.github.io/helm-c
 helm pull prometheus-community/prometheus --version 25.8.0 --untar
 rm -rf prometheus/
 
-helm install prometheus prometheus-community/prometheus --version 25.8.0
+helm install prometheus prometheus-community/prometheus --version 25.8.0 --values prometheus.yaml
 kubectl port-forward svc/prometheus-server 80:80
 
-helm install grafana grafana/grafana --values grafana.yaml --version 7.0.11
-kubectl port-forward svc/grafana 80:80
-# password is generated
-kubectl get secret --namespace default grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
-
-# we could add the following panels:
-#
-# https://grafana.com/grafana/dashboards/1860-node-exporter-full/
-# https://grafana.com/grafana/dashboards/15760-kubernetes-views-pods/
+kubectl apply -f pod-with-user1-label.yaml 
 
 #####################################################################
-# 2. set relabel_configs
+# Conclusion:
+#  - relabel_configs is not for adding a label to any metrics.
+#  - it's not quite compatible with existing components like kube-state-metrics and node-exporter.
+# So, it's not quite useful for our purpose.
 #####################################################################
-
-
-
-
 
