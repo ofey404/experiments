@@ -16,3 +16,13 @@ datasources:
       url: http://loki:3100
       editable: true
 adminPassword: admin
+
+grafana.ini:
+  # # Only allow anonymous authentication
+  # auth:
+  #   disable_login_form: true
+  auth.anonymous:
+    enabled: true
+    org_name: Main Org.
+    org_role: Viewer
+    hide_version: true
