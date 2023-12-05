@@ -26,3 +26,5 @@ grafana.ini:
     org_name: Main Org.
     org_role: Viewer
     hide_version: true
+  log:
+    level: debug
