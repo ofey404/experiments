@@ -22,6 +22,11 @@ docker run --rm nicolaka/netshoot:v0.9 curl http://host.docker.internal:8000
 # </body>
 # </html>
 # 100  1360  100  1360    0     0  38908      0 --:--:-- --:--:-- --:--:-- 40000
-
+# 
 # output of http.server:
 # 127.0.0.1 - - [17/Nov/2023 15:18:06] "GET / HTTP/1.1" 200 -
+
+#####################################################################
+# use host network
+# --network="host" is not fully compatible with WSL2
+#####################################################################
