@@ -11,3 +11,6 @@ cd "$SCRIPT_DIR"
 
 # https://course.fast.ai/
 
+# book
+# https://github.com/fastai/fastbook
+
