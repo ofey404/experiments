@@ -55,3 +55,13 @@ A third party provider: [Software Licensing and Distribution API - Keygen](https
 
 A golang library with elliptic curve algorithm: [GitHub - hyperboloide/lk: Simple licensing library for golang.](https://github.com/hyperboloide/lk)
 
+---
+
+[ecdh package - crypto/ecdh - Go Packages](https://pkg.go.dev/crypto/ecdh)
+
+
+## Knowledges
+
+[A (Relatively Easy To Understand) Primer on Elliptic Curve Cryptography](https://blog.cloudflare.com/a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography/)
+
+
