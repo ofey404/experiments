@@ -3,31 +3,44 @@ package main
 import (
 	"crypto/ecdsa"
 	"crypto/x509"
+	_ "embed"
+	"encoding/json"
 	"encoding/pem"
 	"flag"
 	"fmt"
+	"github.com/ofey404/experiments/microservices/license/easyecdsa"
 	"github.com/zeromicro/go-zero/core/logx"
 	"os"
 )
 
-var publicKeyPath = flag.String("public-key", "public_key.pem", "public key path")
+// WARNING: this is not a secure way to store a private key in production.
+//
+//go:embed public_key.pem
+var keyBytes []byte
+
+var licensePath = flag.String("license", "license.json", "license key path")
 
 func main() {
 	flag.Parse()
+	pubkey := loadPublicKey()
+	licenseData, err := os.ReadFile(*licensePath)
+	logx.Must(err)
 
-	fmt.Println("loading public key from path:", *publicKeyPath)
-	publicKey := loadPublicKey(*publicKeyPath)
-	fmt.Println("Public key:", publicKey)
+	var license easyecdsa.License
+	err = json.Unmarshal(licenseData, &license)
+	logx.Must(err)
+
+	data, err := license.Verify(pubkey)
+	if err != nil {
+		fmt.Printf("verify license failed: %v\n", err)
+		os.Exit(1)
+	}
+	fmt.Printf("license data: %v\n", data)
 }
 
-func loadPublicKey(publicKeyPath string) *ecdsa.PublicKey {
-	// Read the public key file
-	keyBytes, err := os.ReadFile(publicKeyPath)
-	logx.Must(err)
-
+func loadPublicKey() *ecdsa.PublicKey {
 	// Decode the PEM block containing the public key
 	pemBlock, _ := pem.Decode(keyBytes)
-	logx.Must(err)
 
 	// Parse the DER encoded public key
 	pubInterface, err := x509.ParsePKIXPublicKey(pemBlock.Bytes)

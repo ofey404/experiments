@@ -3,21 +3,39 @@ package main
 import (
 	"crypto/ecdsa"
 	"crypto/x509"
+	"encoding/json"
 	"encoding/pem"
 	"flag"
 	"fmt"
+	"github.com/ofey404/experiments/microservices/license/easyecdsa"
 	"github.com/zeromicro/go-zero/core/logx"
 	"os"
+	"time"
 )
 
 var privateKeyPath = flag.String("private-key", "private_key.pem", "private key path")
+var outputPath = flag.String("o", "license.json", "license key path")
 
 func main() {
 	flag.Parse()
 
 	fmt.Println("loading private key from path:", *privateKeyPath)
 	privateKey := loadPrivateKey(*privateKeyPath)
-	fmt.Println("Private key:", privateKey)
+
+	license := easyecdsa.NewLicense(privateKey, easyecdsa.LicenseData{
+		Email: "test@example.com",
+		End:   time.Now().Add(time.Hour * 24 * 365), // 1 year
+	})
+
+	// Convert the Person object to JSON
+	jsonData, err := json.MarshalIndent(license, "", "    ")
+	logx.Must(err)
+
+	// Write the JSON data to a file
+	err = os.WriteFile(*outputPath, jsonData, 0644)
+	logx.Must(err)
+
+	fmt.Printf("license dumped into %s\n", *outputPath)
 }
 
 func loadPrivateKey(privateKeyPath string) *ecdsa.PrivateKey {
