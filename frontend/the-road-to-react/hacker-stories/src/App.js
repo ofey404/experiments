@@ -44,19 +44,27 @@ function App() {
         <label htmlFor='search'>Search: </label>
         <input id='search' type='text' />
         <hr />
-        {list.map(function (item) {
-          return (
-            <div key={item.objectID}>
-              <span>
-                <a href={item.url}>{item.title}</a>
-              </span>
-              <span>{item.author}</span>
-              <span>{item.points}</span>
-              <span>{item.num_comments}</span>
-            </div>
-          );
-        })}
+        <List />
       </div>
+    </div>
+  );
+}
+
+function List() {
+  return (
+    <div>
+      {list.map(function (item) {
+        return (
+          <div key={item.objectID}>
+            <span>
+              <a href={item.url}>{item.title}</a>
+            </span>
+            <span>{item.author}</span>
+            <span>{item.points}</span>
+            <span>{item.num_comments}</span>
+          </div>
+        );
+      })}
     </div>
   );
 }
