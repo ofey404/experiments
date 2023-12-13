@@ -15,3 +15,5 @@ cd "$SCRIPT_DIR"
 pip install -r requirements.txt
 python -c "import sqlalchemy; print(sqlalchemy.__version__)"
 # 2.0.19
+
+# More to see ./tutorial.ipynb

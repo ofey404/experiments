@@ -9,5 +9,4 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-docker run -it --rm -p 80:80 -v $(pwd):/etc/nginx/conf.d --name nginx-backend-proxy nginx /bin/bash
-docker run -it --rm -p 80:80 -v $(pwd):/etc/nginx/conf.d --name nginx-backend-proxy nginx
+docker run -it --rm -p 80:80 -v $(pwd)/default.conf:/etc/nginx/conf.d/default.conf --name nginx-backend-proxy nginx
