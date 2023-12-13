@@ -21,3 +21,8 @@ docker run -it --rm \
 
 # connect to it
 PGPASSWORD=mysecretpassword psql -h localhost -U postgres
+
+# This is a checklist, about postgres pub-sub and
+# other techniques which is useful in migration:
+#
+# https://knock.app/blog/zero-downtime-postgres-upgrades
