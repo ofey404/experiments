@@ -63,7 +63,7 @@ const App = () => {
   );
 };
 
-const Search = (props) => {
+const Search = ({search, onSearch}) => {
   return (
     <div>
       <label htmlFor="search">Search: </label>
@@ -72,17 +72,17 @@ const Search = (props) => {
       <input
         id="search"
         type="text"
-        value={props.search}
-        onChange={props.onSearch}
+        value={search}
+        onChange={onSearch}
       />
     </div>
   );
 };
 
-const List = (props) => {
+const List = ({list}) => {
   return (
     <div>
-      {props.list.map(function (item) {
+      {list.map(function (item) {
         return (
           <div key={item.objectID}>
             <span>
