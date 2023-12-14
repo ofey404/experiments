@@ -4,12 +4,6 @@ import './App.css';
 
 const App = () => {
   const title = 'React';
-  const [searchTerm, setSearchTerm] = React.useState('');
-
-  const handleChange = event => {
-    console.log(event.target.value);
-    setSearchTerm(event.target.value)
-  }
 
   const stories = [
     {
@@ -30,6 +24,10 @@ const App = () => {
     },
   ];
 
+  const handleSearch = event => {
+      console.log(event.target.value)
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -48,16 +46,33 @@ const App = () => {
       </header>
       <div>
         <h1>My Hacker Stories</h1>
-        <label htmlFor='search'>Search: </label>
-        <input id='search' type='text' onChange={handleChange} />
-        <p>
-          Searching for <strong>{searchTerm}</strong>.
-        </p>
+
+        <Search onSearch={handleSearch}/>
         <hr />
         <List list={stories} />
       </div>
     </div>
   );
+}
+
+const Search = props => {
+    const [searchTerm, setSearchTerm] = React.useState('');
+
+    const handleChange = event => {
+        setSearchTerm(event.target.value)
+        props.onSearch(event)
+    }
+
+  return (
+      <div>
+          <label htmlFor='search'>Search: </label>
+          <input id='search' type='text' onChange={handleChange} />
+          <p>
+              Searching for <strong>{searchTerm}</strong>.
+          </p>
+          <hr />
+      </div>
+  )
 }
 
 const List = props => {
