@@ -25,14 +25,14 @@ const App = () => {
   ];
 
   const [searchTerm, setSearchTerm] = React.useState('');
-  const handleSearch = event => {
-      console.log(event.target.value)
-      setSearchTerm(event.target.value)
-  }
+  const handleSearch = (event) => {
+    console.log(event.target.value);
+    setSearchTerm(event.target.value);
+  };
 
-  const searchedStories = stories.filter(story => {
-    return story.title.toLowerCase().includes(searchTerm.toLowerCase())
-  })
+  const searchedStories = stories.filter((story) => {
+    return story.title.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
   return (
     <div className="App">
@@ -53,7 +53,7 @@ const App = () => {
       <div>
         <h1>My Hacker Stories</h1>
 
-        <Search search={searchTerm} onSearch={handleSearch}/>
+        <Search search={searchTerm} onSearch={handleSearch} />
 
         <hr />
 
@@ -61,20 +61,25 @@ const App = () => {
       </div>
     </div>
   );
-}
+};
 
-const Search = props => {
+const Search = (props) => {
   return (
-      <div>
-          <label htmlFor='search'>Search: </label>
+    <div>
+      <label htmlFor="search">Search: </label>
 
-         {/* value={props.search} makes it a React controlled object */}
-          <input id='search' type='text' value={props.search} onChange={props.onSearch} />
-      </div>
-  )
-}
+      {/* value={props.search} makes it a React controlled object */}
+      <input
+        id="search"
+        type="text"
+        value={props.search}
+        onChange={props.onSearch}
+      />
+    </div>
+  );
+};
 
-const List = props => {
+const List = (props) => {
   return (
     <div>
       {props.list.map(function (item) {
@@ -91,6 +96,6 @@ const List = props => {
       })}
     </div>
   );
-}
+};
 
 export default App;
