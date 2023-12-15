@@ -2,6 +2,18 @@ import logo from './logo.svg';
 import React from 'react';
 import './App.css';
 
+const useSemiPersistentState = (key, initialState) => {
+  const [searchTerm, setSearchTerm] = React.useState(
+    localStorage.getItem(key) || initialState
+  );
+
+  // track dependencies and trigger side effect.
+  React.useEffect(() => {
+    localStorage.setItem(key, searchTerm);
+  }, [searchTerm, key]);
+  return [searchTerm, setSearchTerm];
+};
+
 const App = () => {
   const title = 'React';
 
@@ -24,14 +36,7 @@ const App = () => {
     },
   ];
 
-  const [searchTerm, setSearchTerm] = React.useState(
-      localStorage.getItem('search') || ''
-  );
-
-  // track dependencies and trigger side effect.
-  React.useEffect(() => {
-    localStorage.setItem('search', searchTerm);
-  }, [searchTerm]);
+  const [searchTerm, setSearchTerm] = useSemiPersistentState('search', '');
 
   const handleSearch = (event) => {
     console.log(event.target.value);
