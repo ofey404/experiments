@@ -64,7 +64,7 @@ const App = () => {
 
   const [searchTerm, setSearchTerm] = useSemiPersistentState('search', '');
   // get stories from API
-  React.useEffect(() => {
+  const handleFetchStories = React.useCallback(() => {
     if (!searchTerm) return;
 
     dispatchStories({ type: 'STORIES_FETCH_INIT' });
@@ -81,6 +81,10 @@ const App = () => {
         dispatchStories({ type: 'STORIES_FETCH_FAILURE' })(err.toString())
       );
   }, [searchTerm]);
+
+  React.useEffect(() => {
+    handleFetchStories();
+  }, [handleFetchStories]);
 
   const handleSearch = (event) => {
     console.log(event.target.value);
