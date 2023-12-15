@@ -41,12 +41,35 @@ const getAsyncStories = () =>
   });
 
 const storiesReducer = (state, action) => {
-  if (action.type === 'SET_STORIES') {
-    return action.payload;
-  } else if (action.type === 'REMOVE_STORY') {
-    return state.filter((story) => action.payload.objectID !== story.objectID);
-  } else {
-    throw new Error();
+  switch (action.type) {
+    case 'STORIES_FETCH_INIT':
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+      };
+    case 'STORIES_FETCH_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        data: action.payload,
+      };
+    case 'STORIES_FETCH_FAILURE':
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+      };
+    case 'REMOVE_STORY':
+      return {
+        ...state,
+        data: state.data.filter(
+            story => action.payload.objectID !== story.objectID
+        ),
+      };
+    default:
+      throw new Error();
   }
 };
 
@@ -54,26 +77,28 @@ const App = () => {
   const title = 'React';
 
   // asynchronously fetch stories from API
-  const [stories, dispatchStories] = React.useReducer(storiesReducer, []);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [isError, setIsError] = React.useState('');
+  const [stories, dispatchStories] = React.useReducer(storiesReducer, {
+    data: [],
+    isLoading: false,
+    isError: false,
+  });
 
   // scroll to bottom of page, make it easier to see new stories
   React.useEffect(() => window.scrollTo(0, document.body.scrollHeight));
 
   // get stories from API
   React.useEffect(() => {
-    setIsLoading(true);
+    dispatchStories({ type: 'STORIES_FETCH_INIT' });
 
     getAsyncStories()
       .then((result) => {
         dispatchStories({
-          type: 'SET_STORIES',
+          type: 'STORIES_FETCH_SUCCESS',
           payload: result.data.stories,
         });
-        setIsLoading(false);
       })
-      .catch((err) => setIsError(err.toString()));
+      .catch((err) => dispatchStories({ type: 'STORIES_FETCH_FAILURE' })
+(err.toString()));
   }, []);
 
   const [searchTerm, setSearchTerm] = useSemiPersistentState('search', '');
@@ -84,7 +109,7 @@ const App = () => {
     setSearchTerm(event.target.value);
   };
 
-  const searchedStories = stories.filter((story) => {
+  const searchedStories = stories.data.filter((story) => {
     return story.title.toLowerCase().includes(searchTerm.toLowerCase());
   });
   const handleRemoveStory = (item) => {
@@ -124,12 +149,12 @@ const App = () => {
 
         <hr />
 
-        {isLoading ? (
+        {stories.isLoading ? (
           <p>Loading ...</p>
         ) : (
           <List list={searchedStories} onRemoveItem={handleRemoveStory} />
         )}
-        {isError !== '' && <p>Something went wrong, error: {isError}</p>}
+        {stories.isError !== '' && <p>Something went wrong...</p>}
       </div>
     </div>
   );
