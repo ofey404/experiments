@@ -33,10 +33,25 @@ const initialStories = [
   },
 ];
 
+const getAsyncStories = () =>
+    new Promise(resolve => {
+        // mimic a timeout
+        setTimeout(
+            () => resolve({ data: { stories: initialStories } }),
+            2000
+        );
+    })
+
 const App = () => {
   const title = 'React';
 
-  const [stories, setStories] = React.useState(initialStories);
+  // asynchronously fetch stories from API
+  const [stories, setStories] = React.useState([]);
+  React.useEffect(() => {
+      getAsyncStories().then(result => {
+        setStories(result.data.stories);
+      })
+  }, [])
 
   const [searchTerm, setSearchTerm] = useSemiPersistentState('search', '');
 
