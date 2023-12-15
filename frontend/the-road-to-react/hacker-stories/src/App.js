@@ -46,7 +46,7 @@ const App = () => {
   // asynchronously fetch stories from API
   const [stories, setStories] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [error, setError] = React.useState('');
+  const [isError, setIsError] = React.useState('');
 
   // scroll to bottom of page, make it easier to see new stories
   React.useEffect(() => window.scrollTo(0, document.body.scrollHeight));
@@ -60,7 +60,7 @@ const App = () => {
         setStories(result.data.stories);
         setIsLoading(false);
       })
-      .catch((err) => setError(err.toString()));
+      .catch((err) => setIsError(err.toString()));
   }, []);
 
   const [searchTerm, setSearchTerm] = useSemiPersistentState('search', '');
@@ -116,7 +116,7 @@ const App = () => {
         ) : (
           <List list={searchedStories} onRemoveItem={handleRemoveStory} />
         )}
-        {error !== '' && <p>Something went wrong, error: {error}</p>}
+        {isError !== '' && <p>Something went wrong, error: {isError}</p>}
       </div>
     </div>
   );
