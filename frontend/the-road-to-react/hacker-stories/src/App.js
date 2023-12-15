@@ -67,7 +67,12 @@ const App = () => {
       <div>
         <h1>My Hacker Stories</h1>
 
-        <Search search={searchTerm} onSearch={handleSearch} />
+        <InputWithLabel
+            id="search"
+            label="Search:"
+            value={searchTerm}
+            onChange={handleSearch}
+        />
 
         <hr />
 
@@ -77,20 +82,19 @@ const App = () => {
   );
 };
 
-const Search = ({ search, onSearch }) => {
+const InputWithLabel = ({ id, label, value, type='text', onChange }) => {
   return (
-    <div>
-      <label htmlFor="search">Search: </label>
-
-      {/* value={props.search} makes it a React controlled object */}
-      <input id="search" type="text" value={search} onChange={onSearch} />
-    </div>
+      <>
+        <label htmlFor={id}>{label}</label>
+        &nbsp;
+        <input id={id} type={type} value={value} onChange={onChange} />
+      </>
   );
-};
+}
 
 const List = ({ list }) => {
   return (
-    <div>
+    <>
       {list.map(function (item) {
         return (
           <div key={item.objectID}>
@@ -103,7 +107,7 @@ const List = ({ list }) => {
           </div>
         );
       })}
-    </div>
+    </>
   );
 };
 
