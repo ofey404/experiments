@@ -14,27 +14,29 @@ const useSemiPersistentState = (key, initialState) => {
   return [searchTerm, setSearchTerm];
 };
 
+const initialStories = [
+  {
+    title: 'React',
+    url: 'https://reactjs.org/',
+    author: 'Jordan Walke',
+    num_comments: 3,
+    points: 4,
+    objectID: 0,
+  },
+  {
+    title: 'Redux',
+    url: 'https://redux.js.org/',
+    author: 'Dan Abramov, Andrew Clark',
+    num_comments: 2,
+    points: 5,
+    objectID: 1,
+  },
+];
+
 const App = () => {
   const title = 'React';
 
-  const stories = [
-    {
-      title: 'React',
-      url: 'https://reactjs.org/',
-      author: 'Jordan Walke',
-      num_comments: 3,
-      points: 4,
-      objectID: 0,
-    },
-    {
-      title: 'Redux',
-      url: 'https://redux.js.org/',
-      author: 'Dan Abramov, Andrew Clark',
-      num_comments: 2,
-      points: 5,
-      objectID: 1,
-    },
-  ];
+  const [stories, setStories] = React.useState(initialStories);
 
   const [searchTerm, setSearchTerm] = useSemiPersistentState('search', '');
 
@@ -47,6 +49,12 @@ const App = () => {
   const searchedStories = stories.filter((story) => {
     return story.title.toLowerCase().includes(searchTerm.toLowerCase());
   });
+  const handleRemoveStory = (item) => {
+    const newStories = stories.filter(
+      (story) => item.objectID !== story.objectID
+    );
+    setStories(newStories);
+  };
 
   return (
     <div className="App">
@@ -68,47 +76,74 @@ const App = () => {
         <h1>My Hacker Stories</h1>
 
         <InputWithLabel
-            id="search"
-            value={searchTerm}
-            onChange={handleSearch}
+          id="search"
+          value={searchTerm}
+          onChange={handleSearch}
+          autoFocus
         >
           <strong>Search:</strong>
         </InputWithLabel>
 
         <hr />
 
-        <List list={searchedStories} />
+        <List list={searchedStories} onRemoveItem={handleRemoveStory} />
       </div>
     </div>
   );
 };
 
-const InputWithLabel = ({ id, value, type='text', onChange, children, }) => {
-  return (
-      <>
-        <label htmlFor={id}>{children}</label>
-        &nbsp;
-        <input id={id} type={type} value={value} onChange={onChange} />
-      </>
-  );
-}
-
-const List = ({ list }) => {
+const InputWithLabel = ({
+  id,
+  value,
+  type = 'text',
+  onChange,
+  children,
+  autoFocus,
+}) => {
   return (
     <>
-      {list.map(function (item) {
-        return (
-          <div key={item.objectID}>
-            <span>
-              <a href={item.url}>{item.title}</a>
-            </span>
-            <span> {item.author}</span>
-            <span> {item.points}</span>
-            <span> {item.num_comments}</span>
-          </div>
-        );
-      })}
+      <label htmlFor={id}>{children}</label>
+      &nbsp;
+      <input
+        id={id}
+        autoFocus={autoFocus}
+        type={type}
+        value={value}
+        onChange={onChange}
+      />
     </>
+  );
+};
+
+const List = ({ list, onRemoveItem }) => {
+  return (
+    <>
+      {list.map((item) => (
+        <Item key={item.objectID} item={item} onRemoveItem={onRemoveItem} />
+      ))}
+    </>
+  );
+};
+
+const Item = ({ item, onRemoveItem }) => {
+  return (
+    <div key={item.objectID}>
+      <span>
+        <a href={item.url}>{item.title}</a>
+      </span>
+      &nbsp;
+      <span>{item.author}</span>
+      &nbsp;
+      <span>{item.points}</span>
+      &nbsp;
+      <span>{item.num_comments}</span>
+      &nbsp;
+      <span>
+        <button type="button" onClick={() => onRemoveItem(item)}>
+          Dismiss
+        </button>
+      </span>
+    </div>
   );
 };
 
