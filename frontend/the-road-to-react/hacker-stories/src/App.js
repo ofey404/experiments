@@ -34,24 +34,34 @@ const initialStories = [
 ];
 
 const getAsyncStories = () =>
-    new Promise(resolve => {
-        // mimic a timeout
-        setTimeout(
-            () => resolve({ data: { stories: initialStories } }),
-            2000
-        );
-    })
+  new Promise((resolve) => {
+    // throw new Error('Error thrown in getAsyncStories()');
+    // mimic a timeout
+    setTimeout(() => resolve({ data: { stories: initialStories } }), 500);
+  });
 
 const App = () => {
   const title = 'React';
 
   // asynchronously fetch stories from API
   const [stories, setStories] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [error, setError] = React.useState('');
+
+  // scroll to bottom of page, make it easier to see new stories
+  React.useEffect(() => window.scrollTo(0, document.body.scrollHeight));
+
+  // get stories from API
   React.useEffect(() => {
-      getAsyncStories().then(result => {
+    setIsLoading(true);
+
+    getAsyncStories()
+      .then((result) => {
         setStories(result.data.stories);
+        setIsLoading(false);
       })
-  }, [])
+      .catch((err) => setError(err.toString()));
+  }, []);
 
   const [searchTerm, setSearchTerm] = useSemiPersistentState('search', '');
 
@@ -96,12 +106,17 @@ const App = () => {
           onChange={handleSearch}
           autoFocus
         >
-          <strong>Search:</strong>
+          <strong>Filter:</strong>
         </InputWithLabel>
 
         <hr />
 
-        <List list={searchedStories} onRemoveItem={handleRemoveStory} />
+        {isLoading ? (
+          <p>Loading ...</p>
+        ) : (
+          <List list={searchedStories} onRemoveItem={handleRemoveStory} />
+        )}
+        {error !== '' && <p>Something went wrong, error: {error}</p>}
       </div>
     </div>
   );
