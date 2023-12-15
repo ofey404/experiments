@@ -24,9 +24,18 @@ const App = () => {
     },
   ];
 
-  const [searchTerm, setSearchTerm] = React.useState('');
+  const [searchTerm, setSearchTerm] = React.useState(
+      localStorage.getItem('search') || ''
+  );
+
+  // track dependencies and trigger side effect.
+  React.useEffect(() => {
+    localStorage.setItem('search', searchTerm);
+  }, [searchTerm]);
+
   const handleSearch = (event) => {
     console.log(event.target.value);
+
     setSearchTerm(event.target.value);
   };
 
@@ -63,23 +72,18 @@ const App = () => {
   );
 };
 
-const Search = ({search, onSearch}) => {
+const Search = ({ search, onSearch }) => {
   return (
     <div>
       <label htmlFor="search">Search: </label>
 
       {/* value={props.search} makes it a React controlled object */}
-      <input
-        id="search"
-        type="text"
-        value={search}
-        onChange={onSearch}
-      />
+      <input id="search" type="text" value={search} onChange={onSearch} />
     </div>
   );
 };
 
-const List = ({list}) => {
+const List = ({ list }) => {
   return (
     <div>
       {list.map(function (item) {
