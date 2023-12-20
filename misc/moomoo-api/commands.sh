@@ -10,4 +10,21 @@ cd "$SCRIPT_DIR"
 ##############################################
 
 # https://openapi.moomoo.com/moomoo-api-doc/intro/intro.html
+# 
+# 1. Start moomoo OpenD on localhost port 11111
 
+# 2. Optional: Install TA-Lib, https://ta-lib.org/
+cd /tmp
+wget http://prdownloads.sourceforge.net/ta-lib/ta-lib-0.4.0-src.tar.gz
+tar -xzf ta-lib-0.4.0-src.tar.gz
+
+./configure
+make
+sudo make install
+
+# Then the python wrapper could be installed
+pip install -r requirements.txt
+# Installing collected packages: TA-Lib, simplejson, PyCryptodome, protobuf, moomoo-api
+
+python gettingstarted.py
+# (0, 100, [])
