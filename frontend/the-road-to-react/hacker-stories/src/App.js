@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import React from 'react';
 import axios from 'axios';
-import './App.css';
+import styles from './App.module.css';
 
 const useSemiPersistentState = (key, initialState) => {
   const [searchTerm, setSearchTerm] = React.useState(
@@ -101,8 +101,9 @@ const App = () => {
 
   return (
     <div className="App">
-      <div className="container">
-        <h1 className="headline-primary">My Hacker Stories</h1>
+      {/* css module's benefit: mismatch would become javascript errors */}
+      <div className={styles.container}>
+        <h1 className={styles.headlinePrimary}>My Hacker Stories</h1>
 
         <SearchForm
           searchTerm={searchTerm}
@@ -132,7 +133,7 @@ const InputWithLabel = ({
 }) => {
   return (
     <>
-      <label htmlFor={id} className="label">
+      <label htmlFor={id} className={styles.label}>
         {children}
       </label>
       &nbsp;
@@ -142,7 +143,7 @@ const InputWithLabel = ({
         type={type}
         value={value}
         onChange={onChange}
-        className="input"
+        className={styles.input}
       />
     </>
   );
@@ -160,7 +161,7 @@ const List = ({ list, onRemoveItem }) => {
 
 const Item = ({ item, onRemoveItem }) => {
   return (
-    <div className="item" key={item.objectID}>
+    <div className={styles.item} key={item.objectID}>
       <span style={{ width: '40%' }}>
         <a href={item.url}>{item.title}</a>
       </span>
@@ -173,7 +174,7 @@ const Item = ({ item, onRemoveItem }) => {
       &nbsp;
       <span style={{ width: '10%' }}>
         <button
-          className="button button_small"
+          className={`${styles.button} ${styles.buttonSmall}`}
           type="button"
           onClick={() => onRemoveItem(item)}
         >
@@ -185,7 +186,7 @@ const Item = ({ item, onRemoveItem }) => {
 };
 
 const SearchForm = ({ searchTerm, onSearchInput, onSearchSubmit }) => (
-  <form onSubmit={onSearchSubmit} className="search-form">
+  <form onSubmit={onSearchSubmit} className={styles.searchForm}>
     <InputWithLabel
       id="search"
       value={searchTerm}
@@ -196,7 +197,7 @@ const SearchForm = ({ searchTerm, onSearchInput, onSearchSubmit }) => (
     </InputWithLabel>
     <button
       type="submit"
-      className="button button_large"
+      className={`${styles.button} ${styles.buttonLarge}`}
       disabled={!searchTerm}
     >
       Submit
