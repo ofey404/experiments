@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import React from 'react';
+import axios from 'axios';
 import './App.css';
 
 const useSemiPersistentState = (key, initialState) => {
@@ -73,20 +74,18 @@ const App = () => {
   };
 
   // get stories from API
-  const handleFetchStories = React.useCallback(() => {
+  const handleFetchStories = React.useCallback(async () => {
     dispatchStories({ type: 'STORIES_FETCH_INIT' });
 
-    fetch(url)
-      .then((response) => response.json())
-      .then((result) => {
-        dispatchStories({
-          type: 'STORIES_FETCH_SUCCESS',
-          payload: result.hits,
-        });
-      })
-      .catch((err) =>
-        dispatchStories({ type: 'STORIES_FETCH_FAILURE' })(err.toString())
-      );
+    try {
+      const result = await axios.get(url);
+      dispatchStories({
+        type: 'STORIES_FETCH_SUCCESS',
+        payload: result.data.hits,
+      });
+    } catch (err) {
+      dispatchStories({ type: 'STORIES_FETCH_FAILURE' })(err.toString());
+    }
   }, [url]);
 
   React.useEffect(() => {
