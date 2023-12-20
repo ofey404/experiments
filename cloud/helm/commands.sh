@@ -33,3 +33,11 @@ helm plugin install https://github.com/databus23/helm-diff
 
 # print out the yaml
 helm template --debug {args}
+
+# rollback to previous version
+
+
+helm history <RELEASE> [REVISION] [flags]
+helm rollback <RELEASE> [REVISION] [flags]
+32
+

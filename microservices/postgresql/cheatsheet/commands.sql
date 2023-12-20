@@ -2,6 +2,9 @@
 -- Don't run. This file is a note for commands.
 -----------------------------------------------
 
+-- create database
+CREATE DATABASE database_name;
+
 -- list database
 \l
 
