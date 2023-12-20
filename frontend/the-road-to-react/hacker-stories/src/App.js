@@ -132,7 +132,9 @@ const InputWithLabel = ({
 }) => {
   return (
     <>
-      <label htmlFor={id}>{children}</label>
+      <label htmlFor={id} className="label">
+        {children}
+      </label>
       &nbsp;
       <input
         id={id}
@@ -140,6 +142,7 @@ const InputWithLabel = ({
         type={type}
         value={value}
         onChange={onChange}
+        className="input"
       />
     </>
   );
@@ -157,19 +160,23 @@ const List = ({ list, onRemoveItem }) => {
 
 const Item = ({ item, onRemoveItem }) => {
   return (
-    <div key={item.objectID}>
-      <span>
+    <div className="item" key={item.objectID}>
+      <span style={{ width: '40%' }}>
         <a href={item.url}>{item.title}</a>
       </span>
       &nbsp;
-      <span>{item.author}</span>
+      <span style={{ width: '30%' }}>{item.author}</span>
       &nbsp;
-      <span>{item.points}</span>
+      <span style={{ width: '10%' }}>{item.points}</span>
       &nbsp;
-      <span>{item.num_comments}</span>
+      <span style={{ width: '10%' }}>{item.num_comments}</span>
       &nbsp;
-      <span>
-        <button type="button" onClick={() => onRemoveItem(item)}>
+      <span style={{ width: '10%' }}>
+        <button
+          className="button button_small"
+          type="button"
+          onClick={() => onRemoveItem(item)}
+        >
           Dismiss
         </button>
       </span>
@@ -178,7 +185,7 @@ const Item = ({ item, onRemoveItem }) => {
 };
 
 const SearchForm = ({ searchTerm, onSearchInput, onSearchSubmit }) => (
-  <form onSubmit={onSearchSubmit}>
+  <form onSubmit={onSearchSubmit} className="search-form">
     <InputWithLabel
       id="search"
       value={searchTerm}
@@ -187,7 +194,11 @@ const SearchForm = ({ searchTerm, onSearchInput, onSearchSubmit }) => (
     >
       <strong>Filter:</strong>
     </InputWithLabel>
-    <button type="submit" disabled={!searchTerm}>
+    <button
+      type="submit"
+      className="button button_large"
+      disabled={!searchTerm}
+    >
       Submit
     </button>
   </form>
