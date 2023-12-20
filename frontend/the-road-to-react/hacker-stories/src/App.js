@@ -63,13 +63,20 @@ const App = () => {
   React.useEffect(() => window.scrollTo(0, document.body.scrollHeight));
 
   const [searchTerm, setSearchTerm] = useSemiPersistentState('search', '');
+  const [url, setUrl] = React.useState(`${API_ENDPOINT}${searchTerm}`);
+
+  const handleSearchInput = (event) => {
+    setSearchTerm(event.target.value);
+  };
+  const handleSearchSubmit = () => {
+    setUrl(`${API_ENDPOINT}${searchTerm}`);
+  };
+
   // get stories from API
   const handleFetchStories = React.useCallback(() => {
-    if (!searchTerm) return;
-
     dispatchStories({ type: 'STORIES_FETCH_INIT' });
 
-    fetch(`${API_ENDPOINT}${searchTerm}`)
+    fetch(url)
       .then((response) => response.json())
       .then((result) => {
         dispatchStories({
@@ -80,17 +87,11 @@ const App = () => {
       .catch((err) =>
         dispatchStories({ type: 'STORIES_FETCH_FAILURE' })(err.toString())
       );
-  }, [searchTerm]);
+  }, [url]);
 
   React.useEffect(() => {
     handleFetchStories();
   }, [handleFetchStories]);
-
-  const handleSearch = (event) => {
-    console.log(event.target.value);
-
-    setSearchTerm(event.target.value);
-  };
 
   const handleRemoveStory = (item) => {
     dispatchStories({
@@ -121,11 +122,18 @@ const App = () => {
         <InputWithLabel
           id="search"
           value={searchTerm}
-          onChange={handleSearch}
+          onChange={handleSearchInput}
           autoFocus
         >
           <strong>Filter:</strong>
         </InputWithLabel>
+        <button
+          type="button"
+          disabled={!searchTerm}
+          onClick={handleSearchSubmit}
+        >
+          Submit
+        </button>
 
         <hr />
 
