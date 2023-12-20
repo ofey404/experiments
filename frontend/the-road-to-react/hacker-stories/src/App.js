@@ -60,9 +60,6 @@ const App = () => {
     isError: false,
   });
 
-  // scroll to bottom of page, make it easier to see new stories
-  React.useEffect(() => window.scrollTo(0, document.body.scrollHeight));
-
   const [searchTerm, setSearchTerm] = useSemiPersistentState('search', '');
   const [url, setUrl] = React.useState(`${API_ENDPOINT}${searchTerm}`);
 
@@ -104,22 +101,8 @@ const App = () => {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React, Hello {title}
-        </a>
-      </header>
-      <div>
-        <h1>My Hacker Stories</h1>
+      <div className="container">
+        <h1 className="headline-primary">My Hacker Stories</h1>
 
         <SearchForm
           searchTerm={searchTerm}
@@ -194,26 +177,20 @@ const Item = ({ item, onRemoveItem }) => {
   );
 };
 
-const SearchForm = (
-  {
-    searchTerm,
-    onSearchInput,
-    onSearchSubmit,
-  }
-) => (
-        <form onSubmit={onSearchSubmit}>
-          <InputWithLabel
-            id="search"
-            value={searchTerm}
-            onChange={onSearchInput}
-            autoFocus
-          >
-            <strong>Filter:</strong>
-          </InputWithLabel>
-          <button type="submit" disabled={!searchTerm}>
-            Submit
-          </button>
-        </form>
-)
+const SearchForm = ({ searchTerm, onSearchInput, onSearchSubmit }) => (
+  <form onSubmit={onSearchSubmit}>
+    <InputWithLabel
+      id="search"
+      value={searchTerm}
+      onChange={onSearchInput}
+      autoFocus
+    >
+      <strong>Filter:</strong>
+    </InputWithLabel>
+    <button type="submit" disabled={!searchTerm}>
+      Submit
+    </button>
+  </form>
+);
 
 export default App;
