@@ -2,10 +2,12 @@ package logic
 
 import (
 	"context"
+	"fmt"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/internal/ent"
 	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/internal/svc"
 	"github.com/ofey404/experiments/microservices/orm/ent/ent-postgres-flyway/internal/types"
+	"github.com/ofey404/experiments/utils"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -15,10 +17,8 @@ func newMockServiceContext(t *testing.T) *svc.ServiceContext {
 	// https://github.com/ent/ent/issues/217
 	ast := assert.New(t)
 
-	// CAUTION: There could be only 1 connection to the in-memory sqlite at the same time.
-	// 			So that during svcCtx.Client.Close(), we can clean up the sqlite data.
-	//          Otherwise, there would be dirty data across the test.
-	client, err := ent.Open("sqlite3", "file:ent?mode=memory&cache=shared&_fk=1")
+	// randomize the database name to avoid conflict between tests.
+	client, err := ent.Open("sqlite3", fmt.Sprintf("file:%s?mode=memory&cache=shared&_fk=1", utils.RandomString(10)))
 	ast.Nil(err)
 
 	// create schema
@@ -30,11 +30,11 @@ func newMockServiceContext(t *testing.T) *svc.ServiceContext {
 }
 
 func newMockGetLogic(t *testing.T, exp ...func(*svc.ServiceContext)) func(req *types.GetKeyReq) (resp *types.GetKeyResp, err error) {
+	svcCtx := newMockServiceContext(t)
+	for _, e := range exp {
+		e(svcCtx)
+	}
 	return func(req *types.GetKeyReq) (resp *types.GetKeyResp, err error) {
-		svcCtx := newMockServiceContext(t)
-		for _, e := range exp {
-			e(svcCtx)
-		}
 		resp, err = NewGetKeyLogic(context.Background(), svcCtx).GetKey(req)
 
 		// close the client, to clean up the sqlite data
