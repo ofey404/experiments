@@ -62,7 +62,7 @@ docker run --pull always $DESTINATION_REQUIRES_LOGIN
 # Using K8s job 
 #####################################################################
 
-cat <<EOF2 > builder.yaml
+cat <<EOF > builder.yaml
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -76,14 +76,17 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - |
-              cat <<EOF > /workspace/Dockerfile
-              FROM alpine
-              ENTRYPOINT echo "created from kaniko, in k8s"
-              EOF
-              cat <<EOF >> /kaniko/.docker/config.json
-$(cat config.json | sed 's/^/              /')
-              EOF
+              echo \$DOCKERFILE > /workspace/Dockerfile
+              echo \$CONFIG_JSON > /kaniko/.docker/config.json
 
+          envs:
+            - name: DOCKERFILE
+              value: |
+                FROM alpine
+                ENTRYPOINT echo "created from kaniko, in k8s"
+            - name: CONFIG_JSON
+              value: |
+$(cat config.json | sed 's/^/                /')
           volumeMounts:
             - name: dockerfile-volume
               mountPath: /workspace
@@ -110,7 +113,7 @@ $(cat config.json | sed 's/^/              /')
           emptyDir: {}
       restartPolicy: Never
   backoffLimit: 3
-EOF2
+EOF
 
 docker run --pull always $DESTINATION_REQUIRES_LOGIN
 # created from kaniko, in k8s
