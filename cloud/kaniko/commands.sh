@@ -57,3 +57,60 @@ docker run \
 
 docker run --pull always $DESTINATION_REQUIRES_LOGIN
 # created from kaniko
+
+#####################################################################
+# Using K8s job 
+#####################################################################
+
+cat <<EOF2 > builder.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: image-builder
+spec:
+  template:
+    spec:
+      initContainers:
+        - name: dockerfile-creator
+          image: busybox
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              cat <<EOF > /workspace/Dockerfile
+              FROM alpine
+              ENTRYPOINT echo "created from kaniko, in k8s"
+              EOF
+              cat <<EOF >> /kaniko/.docker/config.json
+$(cat config.json | sed 's/^/              /')
+              EOF
+
+          volumeMounts:
+            - name: dockerfile-volume
+              mountPath: /workspace
+            - name: credential-volume
+              mountPath: /kaniko/.docker
+
+      containers:
+        - name: builder
+          image: gcr.io/kaniko-project/executor:v1.19.1
+          args:
+            - --dockerfile=Dockerfile
+            - --destination=$DESTINATION_REQUIRES_LOGIN
+          volumeMounts:
+            - name: dockerfile-volume
+              mountPath: /workspace
+            - name: credential-volume
+              mountPath: /kaniko/.docker/config.json
+              subPath: config.json
+
+      volumes:
+        - name: dockerfile-volume
+          emptyDir: {}
+        - name: credential-volume
+          emptyDir: {}
+      restartPolicy: Never
+  backoffLimit: 3
+EOF2
+
+docker run --pull always $DESTINATION_REQUIRES_LOGIN
+# created from kaniko, in k8s
