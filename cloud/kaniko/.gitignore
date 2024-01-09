@@ -2,3 +2,4 @@ env.sh
 config.json
 configmap.yaml
 builder.yaml
+secret.yaml

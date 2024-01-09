@@ -1,0 +1,3 @@
+# We have to escape golang template syntax in helm like this, otherwise .PodName and .Namespace
+# would be rendered in helm template phase, and cause error.
+MyConfigWithGolangTemplateSyntax: {{`https://my-domain?namespace={{.Namespace}}&pod={{.PodName}}`}}

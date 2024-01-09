@@ -33,7 +33,7 @@ tar -cf - Dockerfile | gzip -9 | docker run \
   --destination=$DESTINATION_NOLOGIN
 # INFO[0003] Pushing image to ...
 
-docker run --pull always $DESTINATION_NOLOGIN
+docker run --pull always -it --rm $DESTINATION_NOLOGIN
 # created from kaniko
 
 #####################################################################
@@ -55,7 +55,7 @@ docker run \
        gcr.io/kaniko-project/executor:v1.19.1 \
        --dockerfile=Dockerfile --destination=$DESTINATION_REQUIRES_LOGIN
 
-docker run --pull always $DESTINATION_REQUIRES_LOGIN
+docker run --pull always -it --rm $DESTINATION_REQUIRES_LOGIN
 # created from kaniko
 
 #####################################################################
@@ -112,5 +112,5 @@ $(cat config.json | sed 's/^/              /')
   backoffLimit: 3
 EOF2
 
-docker run --pull always $DESTINATION_REQUIRES_LOGIN
+docker run --pull always -it --rm $DESTINATION_REQUIRES_LOGIN
 # created from kaniko, in k8s
