@@ -84,3 +84,13 @@ go run .
 # Latest schema version: 20231121060516
 # 2023/11/21 14:18:55 user was created:  User(id=1, age=30, name=a8m)
 # 2023/11/21 14:18:55 user returned:  User(id=1, age=30, name=a8m)
+
+#####################################################################
+# to solve ent checksum mismatch
+#####################################################################
+
+# https://entgo.io/blog/2022/05/09/versioned-migrations-sum-file/
+#
+# In order to get the atlas.sum file back in sync with the migration 
+# directory, we can once again use the Atlas CLI:
+go run -mod=mod ariga.io/atlas/cmd/atlas migrate hash --force
