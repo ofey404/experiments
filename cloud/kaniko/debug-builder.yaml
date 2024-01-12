@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kaniko-builder-debug-pod
+spec:
+  containers:
+    - name: builder
+      # image: gcr.io/kaniko-project/executor:debug
+      # In CN:
+      image: gcr.dockerproxy.com/kaniko-project/executor:debug
+      # https://stackoverflow.com/questions/56747223/kaniko-sh-sleep-not-found
+      command: ["/busybox/sleep", "3600"]
