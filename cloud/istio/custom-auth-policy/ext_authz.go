@@ -1,41 +1,56 @@
 package main
 
 import (
-	"context"
-	"flag"
 	"fmt"
-	auth "github.com/envoyproxy/go-control-plane/envoy/service/auth/v3"
-	"google.golang.org/grpc/reflection"
-
-	"github.com/zeromicro/go-zero/core/conf"
-	"github.com/zeromicro/go-zero/zrpc"
-	"google.golang.org/grpc"
+	"github.com/zeromicro/go-zero/core/logx"
+	"io"
+	"log"
+	"net/http"
 )
 
-type AuthorizationServer struct{}
+type AuthServer struct{}
 
-func (a *AuthorizationServer) Check(ctx context.Context, req *auth.CheckRequest) (*auth.CheckResponse, error) {
-	return nil, nil
+func NewAuthServer() *AuthServer {
+	return &AuthServer{}
 }
 
-var confPath = flag.String("f", "config.yaml", "the config file")
+const (
+	checkHeader    = "x-ext-authz"
+	allowedValue   = "allow"
+	resultHeader   = "x-ext-authz-check-result"
+	receivedHeader = "x-ext-authz-check-received"
+	overrideHeader = "x-ext-authz-additional-header-override"
+	resultAllowed  = "allowed"
+	resultDenied   = "denied"
+)
 
-// https://github.com/salrashid123/envoy_external_authz/blob/master/authz_server/grpc_server.go
+var denyBody = fmt.Sprintf("denied by ext_authz for not found header `%s: %s` in the request", checkHeader, allowedValue)
+
+func (s *AuthServer) ServeHTTP(response http.ResponseWriter, request *http.Request) {
+	body, err := io.ReadAll(request.Body)
+	if err != nil {
+		log.Printf("[HTTP] read body failed: %v", err)
+	}
+	l := fmt.Sprintf("%s %s%s, headers: %v, body: [%s]\n", request.Method, request.Host, request.URL, request.Header, body)
+	if allowedValue == request.Header.Get(checkHeader) {
+		log.Printf("[HTTP][allowed]: %s", l)
+		response.Header().Set(resultHeader, resultAllowed)
+		response.Header().Set(overrideHeader, request.Header.Get(overrideHeader))
+		response.Header().Set(receivedHeader, l)
+		response.WriteHeader(http.StatusOK)
+	} else {
+		log.Printf("[HTTP][denied]: %s", l)
+		response.Header().Set(resultHeader, resultDenied)
+		response.Header().Set(overrideHeader, request.Header.Get(overrideHeader))
+		response.Header().Set(receivedHeader, l)
+		response.WriteHeader(http.StatusForbidden)
+		_, _ = response.Write([]byte(denyBody))
+	}
+}
+
+// https://github.com/istio/istio/blob/56314992f1174196e1e74a5339eff1f443f517cd/samples/extauthz/cmd/extauthz/main.go#L260-L280
 func main() {
-	flag.Parse()
-	c := &Config{}
-	conf.MustLoad(*confPath, c, conf.UseEnv())
-
-	s := zrpc.MustNewServer(
-		c.RpcServerConf,
-		func(s *grpc.Server) {
-			auth.RegisterAuthorizationServer(s, &AuthorizationServer{})
-
-			// enable reflection
-			reflection.Register(s)
-		},
-	)
-
-	fmt.Printf("Starting rpc server at %s, mode %s...\n", c.ListenOn, c.Mode)
-	s.Start()
+	s := NewAuthServer()
+	fmt.Println("Starting server on port 8000")
+	logx.Must(http.ListenAndServe(":8000", s))
 }
