@@ -6,6 +6,7 @@ spec:
   selector:
     matchLabels:
       app: request-visualizer
+      # istio: ingressgateway
   action: CUSTOM
   provider:
     # The provider name must match the extension provider defined in the mesh config.
@@ -13,6 +14,5 @@ spec:
     name: sample-ext-authz-http
   rules:
     # The rules specify when to trigger the external authorizer.
-    - to:
-        - operation:
-            paths: ["/"]
+    - {}
+    # add an empty rule `{}` if you want it be triggered for every request

@@ -67,3 +67,7 @@ curl -v -H 'x-ext-authz: allow' localhost:8000
 # In request-visualizer log:
 #
 # x-ext-authz: allow
+
+# visit subpath, would forward to the same subpath of authz server
+curl -v -H 'x-ext-authz: allow' localhost:8000/aa/bb
+# 2024/01/19 08:04:16 [HTTP][allowed]: GET localhost:8000/aa/bb, ...
