@@ -22,3 +22,12 @@ docker update --restart=no istio-custom-auth-policy-control-plane
 # 
 # There is an example: Envoy External Authorization server (envoy.ext_authz) with OPA HelloWorld
 # https://github.com/salrashid123/envoy_external_authz
+
+go run .
+# Starting rpc server at 0.0.0.0:8000, mode dev...
+
+grpcurl -plaintext localhost:8000 list
+# envoy.service.auth.v3.Authorization
+# grpc.health.v1.Health
+# grpc.reflection.v1.ServerReflection
+# grpc.reflection.v1alpha.ServerReflection
