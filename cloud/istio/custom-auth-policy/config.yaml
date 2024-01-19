@@ -1,0 +1,3 @@
+Name: ext_authz.rpc
+ListenOn: 0.0.0.0:8000
+Mode: dev
