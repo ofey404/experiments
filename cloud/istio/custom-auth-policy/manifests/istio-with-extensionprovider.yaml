@@ -62,7 +62,7 @@ spec:
       envoyExtAuthzHttp:
         service: "ext-authz.default.svc.cluster.local"
         port: "8000"
-        includeRequestHeadersInCheck: ["x-ext-authz"] # headers sent to the ext-authz checker in the check request.
+        includeRequestHeadersInCheck: ["x-ext-authz", "Cookie"] # headers sent to the ext-authz checker in the check request.
         headersToUpstreamOnAllow: ["x-ext-authz-check-result"] # headers sent to backend application when request is allowed.
     - envoyOtelAls:
         port: 4317
