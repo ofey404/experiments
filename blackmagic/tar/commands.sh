@@ -9,7 +9,8 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-# unzip commands
-tar -xvzf documents.tar.gz
+# untar commands
+tar -xvf  file.tar
+tar -xvzf file.tar.gz
 tar -xvjf file.tar.bz2
 tar -xvJf file.tar.xz

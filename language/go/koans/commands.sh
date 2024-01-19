@@ -9,8 +9,4 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-# local directory => remote
-rsync -avz /path/to/local/directory user@remote:/path/to/remote/directory
-
-# remote to local
-rsync -avz user@remote:/path/to/remote/directory /path/to/local/directory
+# https://github.com/cdarwin/go-koans
