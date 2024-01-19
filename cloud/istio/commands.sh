@@ -28,6 +28,6 @@ istioctl profile dump demo > istio-based-on-demo.yaml
 istioctl install -f istio-based-on-demo.yaml
 
 # disable injection
-metadata:
+# metadata:
 #     annotations:
 #       sidecar.istio.io/inject: "false"

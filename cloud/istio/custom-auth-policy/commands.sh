@@ -40,5 +40,30 @@ curl -v -H 'x-ext-authz: allow' localhost:8000
 
 ./build.sh
 # => => naming to docker.io/library/ext_authz_example:latest
-
 kind load docker-image docker.io/library/ext_authz_example:latest -n istio-custom-auth-policy
+
+# install istio
+istioctl install -f manifests/istio-with-extensionprovider.yaml
+kubectl label namespace default istio-injection=enabled
+
+# create authz
+kubectl apply -f manifests/ext-authz.yaml
+
+# auth policy
+kubectl apply -f ../../../snippets/request-visualizer.yaml
+kubectl apply -f manifests/custom-auth-policy.yaml
+
+# visit
+kubectl port-forward svc/istio-ingressgateway 8000:80 -n istio-system
+
+# repeat it again
+curl localhost:8000
+# denied by ext_authz for not found header `x-ext-authz: allow` in the request
+
+curl -v -H 'x-ext-authz: allow' localhost:8000
+# < HTTP/1.1 200 OK
+# GET request for /
+
+# In request-visualizer log:
+#
+# x-ext-authz: allow

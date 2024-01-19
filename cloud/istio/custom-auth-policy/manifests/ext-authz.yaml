@@ -41,6 +41,13 @@ spec:
     metadata:
       labels:
         app: ext-authz
+
+      # The reason why we disable Istio sidecar injection here:
+      #
+      # Auth request might be denied by can't visit itself,
+      # which will cause a loop.
+      annotations:
+        sidecar.istio.io/inject: "false"
     spec:
       containers:
       - image: docker.io/library/ext_authz_example:latest
