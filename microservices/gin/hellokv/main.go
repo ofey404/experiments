@@ -12,10 +12,10 @@ func main() {
 	svcCtx := NewServiceContext()
 
 	router.POST("/set",
-		NewHandler[SetRequest, EmptyResponse](svcCtx, NewSetLogic),
+		NewJSONHandler(svcCtx, NewSetLogic),
 	)
 	router.POST("/get",
-		NewHandler[GetRequest, GetResponse](svcCtx, NewGetLogic),
+		NewJSONHandler(svcCtx, NewGetLogic),
 	)
 
 	err := router.Run()

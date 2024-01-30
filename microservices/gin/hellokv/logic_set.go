@@ -1,9 +1,21 @@
 package main
 
-func NewSetLogic(svcCtx *ServiceContext) func(SetRequest) (EmptyResponse, error) {
-	return func(req SetRequest) (EmptyResponse, error) {
-		svcCtx.KV[req.Key] = req.Value
+import "context"
 
-		return EmptyResponse{}, nil
+type SetLogic struct {
+	ctx    context.Context
+	svcCtx *ServiceContext
+}
+
+func NewSetLogic(ctx context.Context, svcCtx *ServiceContext) Logic[SetRequest, EmptyResponse] {
+	return &SetLogic{
+		ctx:    ctx,
+		svcCtx: svcCtx,
 	}
+}
+
+func (l SetLogic) Handle(req SetRequest) (EmptyResponse, error) {
+	l.svcCtx.KV[req.Key] = req.Value
+
+	return EmptyResponse{}, nil
 }

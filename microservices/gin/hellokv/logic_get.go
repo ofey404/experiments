@@ -1,14 +1,27 @@
 package main
 
-import "fmt"
+import (
+	"context"
+	"fmt"
+)
 
-func NewGetLogic(svcCtx *ServiceContext) func(GetRequest) (GetResponse, error) {
-	return func(req GetRequest) (GetResponse, error) {
-		v, ok := svcCtx.KV[req.Key]
-		if !ok {
-			return GetResponse{}, fmt.Errorf("key not found")
-		}
+type GetLogic struct {
+	ctx    context.Context
+	svcCtx *ServiceContext
+}
 
-		return GetResponse{Value: v}, nil
+func NewGetLogic(ctx context.Context, svcCtx *ServiceContext) Logic[GetRequest, GetResponse] {
+	return &GetLogic{
+		ctx:    ctx,
+		svcCtx: svcCtx,
 	}
+}
+
+func (l GetLogic) Handle(req GetRequest) (GetResponse, error) {
+	v, ok := l.svcCtx.KV[req.Key]
+	if !ok {
+		return GetResponse{}, fmt.Errorf("key not found")
+	}
+
+	return GetResponse{Value: v}, nil
 }
