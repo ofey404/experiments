@@ -54,7 +54,7 @@ func main() {
 				return err
 			}
 
-			fmt.Printf("%s\n", buf)
+			fmt.Printf("## Buffer:\n%s\n", buf)
 
 			//convert jwk in bytes and return a new key
 			jwkey, err := jwk.ParseKey([]byte(jwkStr))
@@ -68,7 +68,14 @@ func main() {
 				return err
 			}
 
-			fmt.Println(string(signed[:]))
+			signedString := string(signed[:])
+			fmt.Printf("## Signed key\n%s\n", signedString)
+
+			//_, err = jwt.Parse([]byte(signedString), jwt.WithKey(jwa.RS256, jwkey))
+			_, err = jwt.Parse(signed, jwt.WithKey(jwa.RS256, jwkey))
+			if err != nil {
+				return err
+			}
 
 			return nil
 		},

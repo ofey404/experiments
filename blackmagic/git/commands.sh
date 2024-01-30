@@ -37,7 +37,7 @@ git log --all --numstat --pretty=format:%n%ae --no-merges | awk '
     NF==3 {added[user]+=$1; removed[user]+=$2}
     END {
         for (user in added) {
-            printf "Author: %-30s | Added lines: %8d | Removed lines: %8d | Total lines: %8d\n", user, added[user], removed[user], added[user]-removed[user]
+            printf "Author: %-50s | Added lines: %8d | Removed lines: %8d | Total lines: %8d\n", user, added[user], removed[user], added[user]+removed[user]
         }
     }' | sort
 # Author: ofey206@gmail.com              | Added lines:   469244 | Removed lines:    23294 | Total lines:   445950

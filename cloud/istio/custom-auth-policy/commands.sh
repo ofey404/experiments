@@ -22,6 +22,9 @@ docker update --restart=no istio-custom-auth-policy-control-plane
 # 
 # Official Example:
 # https://github.com/istio/istio/blob/56314992f1174196e1e74a5339eff1f443f517cd/samples/extauthz/cmd/extauthz/main.go#L260-L280
+#
+# Another example, builds an RPC server:
+# https://github.com/salrashid123/envoy_external_authz/blob/master/authz_server/grpc_server.go
 
 go run .
 # Starting server on port 8000
