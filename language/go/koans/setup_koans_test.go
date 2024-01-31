@@ -7,8 +7,8 @@ import (
 
 func TestKoans(t *testing.T) {
 	aboutBasics()
-	// aboutStrings()
-	// aboutArrays()
+	aboutStrings()
+	aboutArrays()
 	// aboutSlices()
 	// aboutTypes()
 	// aboutControlFlow()
