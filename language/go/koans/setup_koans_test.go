@@ -17,7 +17,7 @@ func TestKoans(t *testing.T) {
 	// aboutVariadicFunctions()
 	// aboutDefer()
 	// aboutFiles()
-	// aboutInterfaces()
+	aboutInterfaces()
 	// aboutCommonInterfaces()
 	// aboutMaps()
 	// aboutPointers()
