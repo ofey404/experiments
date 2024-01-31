@@ -11,3 +11,4 @@ cd "$SCRIPT_DIR"
 
 # A blog: Go 语言设计与实现
 # https://draveness.me/golang/
+# READ IT LATER

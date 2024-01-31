@@ -10,3 +10,4 @@ cd "$SCRIPT_DIR"
 ##############################################
 
 # https://github.com/cdarwin/go-koans
+# READ IT LATER

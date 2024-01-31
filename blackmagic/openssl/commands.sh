@@ -26,3 +26,7 @@ echo -n "Hello World" |  openssl rsautl -encrypt -pubin -inkey "./public_key.pem
 # qG2covVHKSjWTycddBgNYvZlHIlFRVandRV3AJfwAOPHIp669fTmaTzgi2++F8pMdlQyjKNjK4aH
 # l4FLmreRxfxVb+L8PALfwQW2z8kgvW0/KJ3G8TZA+FtPwDRzhh+xSJsQE+jNNq602dFlor35JSgl
 # b6mqGDQj4ocjiLoXKBxdKJiBIbUhs+CE9i9+6w==
+
+# Find out key length
+openssl rsa -in private_key.pem -text -noout
+# Private-Key: (2048 bit, 2 primes)

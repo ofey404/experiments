@@ -35,3 +35,8 @@ func main() {
 	logger2.Warn("Warning message")
 	logger2.Error("Error message")
 }
+
+// Another good resource:
+//
+// https://learninggolang.com/
+// Learn Go by building a REST API and a Command Line Interface (CLI)

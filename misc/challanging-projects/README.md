@@ -1,6 +1,6 @@
 # Challenging projects every programmer should try
 
-TODO
+READ IT LATER
 
 https://austinhenley.com/blog/challengingprojects.html
 
