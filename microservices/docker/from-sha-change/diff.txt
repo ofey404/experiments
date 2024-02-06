@@ -1,0 +1,88 @@
+--- original.json	2024-02-06 11:51:43.576981999 +0800
++++ modified.json	2024-02-06 11:52:38.068512362 +0800
+@@ -1,55 +1,35 @@
+ [
+     {
+-        "Id": "sha256:89da1fb6dcb964dd35c3f41b7b93ffc35eaf20bc61f2e1335fea710a18424287",
++        "Id": "sha256:477b8e063cf21851f9aef51a57deab4e15ff24283597f68b31e1cd83727f0679",
+         "RepoTags": [
+-            "nginx:1.25.1",
+-            "nginx:latest"
+-        ],
+-        "RepoDigests": [
+-            "nginx@sha256:67f9a4f10d147a6e04629340e6493c9703300ca23a2f7f3aa56fe615d75d31ca"
++            "nginx:inspect-from-sha-change",
++            "test-231219:latest"
+         ],
++        "RepoDigests": [],
+         "Parent": "",
+         "Comment": "",
+         "Created": "2023-07-28T02:30:07.215160457Z",
+-        "Container": "bf98dc4dfdd59d7841d9111d2c8e347b70b76c5e224de9e5469a37cd6192b60f",
++        "Container": "",
+         "ContainerConfig": {
+-            "Hostname": "bf98dc4dfdd5",
++            "Hostname": "",
+             "Domainname": "",
+             "User": "",
+             "AttachStdin": false,
+             "AttachStdout": false,
+             "AttachStderr": false,
+-            "ExposedPorts": {
+-                "80/tcp": {}
+-            },
+             "Tty": false,
+             "OpenStdin": false,
+             "StdinOnce": false,
+-            "Env": [
+-                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+-                "NGINX_VERSION=1.25.1",
+-                "NJS_VERSION=0.7.12",
+-                "PKG_RELEASE=1~bookworm"
+-            ],
+-            "Cmd": [
+-                "/bin/sh",
+-                "-c",
+-                "#(nop) ",
+-                "CMD [\"nginx\" \"-g\" \"daemon off;\"]"
+-            ],
+-            "Image": "sha256:6634f389b46db3b5c23f6c0a5f9e5595c83a2cbd9f1359a47028ab313a393315",
++            "Env": null,
++            "Cmd": null,
++            "Image": "",
+             "Volumes": null,
+             "WorkingDir": "",
+-            "Entrypoint": [
+-                "/docker-entrypoint.sh"
+-            ],
++            "Entrypoint": null,
+             "OnBuild": null,
+-            "Labels": {
+-                "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
+-            },
+-            "StopSignal": "SIGQUIT"
++            "Labels": null
+         },
+-        "DockerVersion": "20.10.23",
++        "DockerVersion": "",
+         "Author": "",
+         "Config": {
+             "Hostname": "",
+@@ -75,7 +55,7 @@
+                 "-g",
+                 "daemon off;"
+             ],
+-            "Image": "sha256:6634f389b46db3b5c23f6c0a5f9e5595c83a2cbd9f1359a47028ab313a393315",
++            "Image": "",
+             "Volumes": null,
+             "WorkingDir": "",
+             "Entrypoint": [
+@@ -113,7 +93,7 @@
+             ]
+         },
+         "Metadata": {
+-            "LastTagTime": "0001-01-01T00:00:00Z"
++            "LastTagTime": "2024-02-06T03:52:33.604075313Z"
+         }
+     }
+ ]
