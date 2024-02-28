@@ -2,9 +2,10 @@ package utils
 
 import (
 	"encoding/json"
-	"github.com/zeromicro/go-zero/core/logx"
 	"math/rand"
 	"time"
+
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 func RandomString(length int) string {
@@ -22,4 +23,8 @@ func SprintAsJson(obj any) string {
 	logx.Must(err)
 
 	return string(json)
+}
+
+func ToPointer[T any](value T) *T {
+	return &value
 }

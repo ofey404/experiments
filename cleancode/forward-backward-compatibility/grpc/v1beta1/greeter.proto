@@ -1,22 +1,8 @@
-// Copyright 2015 gRPC authors.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 syntax = "proto3";
 
 option go_package = "github.com/ofey404/experiments/cleancode/forward-backward-compatibility/grpc/v1beta1";
 
-package v1beta1;
+package greeter;
 
 // The greeting service definition.
 service Greeter {
@@ -27,7 +13,27 @@ service Greeter {
 // The request message containing the user's name.
 message HelloRequest {
   string name = 1;
+
+  // add another high-frequency used field
+  optional string another_new_frequently_used_field = 2;
+
+  // still for future use.
+  reserved 3, 4;
+
+  // deprecate by reserving the field number
+  reserved 5; // string deprecate_by_reserve = 5;
+  string deprecate_by_mark = 6 [deprecated = true];
+
+  reserved 7;  // string change_field_type = 7;
+  int64 change_field_type = 8;
+
+  // old code still see one object in the array
+  repeated string change_to_array_by_add_repeated = 9;
+  // or old code would see nothing
+  reserved 10; // string change_into_array_by_reserve_and_add_a_new_field = 8;
+  repeated string change_into_array_by_reserve_and_add_a_new_field = 11;
 }
+
 
 // The response message containing the greetings
 message HelloReply {

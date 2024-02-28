@@ -1,4 +1,4 @@
-package v1alpha1
+package v1beta1
 
 import (
 	"context"
@@ -13,19 +13,16 @@ func (s *Server) SayHello(ctx context.Context, in *HelloRequest) (*HelloReply, e
 	fmt.Printf(`Received request:
 	Name:
 		%s
-	DeprecateByReserve:
-		%s
 	DeprecateByMark:
 		%s
 	ChangeFieldType:
-		%s
+		%d (int64)
 	ChangeToArrayByAddRepeated:
 		%s
 	ChangeIntoArrayByReserveAndAddANewField:
 		%s
 `,
 		in.GetName(),
-		in.GetDeprecateByReserve(),
 		in.GetDeprecateByMark(),
 		in.GetChangeFieldType(),
 		in.GetChangeToArrayByAddRepeated(),
