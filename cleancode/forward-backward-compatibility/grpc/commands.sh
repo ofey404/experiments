@@ -25,5 +25,6 @@ cd "$SCRIPT_DIR"
 #
 # Protocols are about consensus among people,
 # which is harder to handle than code itself.
-#
-#
+
+# generate protos
+./generate.sh

@@ -25,7 +25,7 @@ import (
 	"log"
 	"time"
 
-	pb "github\.com/ofey404/experiments/microservices/grpc/helloworld/go/helloworld"
+	pb "github.com/ofey404/experiments/microservices/grpc/helloworld/go/helloworld"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )

@@ -1,0 +1,48 @@
+// Copyright 2015 gRPC authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+option go_package = "github.com/ofey404/experiments/cleancode/forward-backward-compatibility/grpc/v1alpha1";
+
+package v1alpha1;
+
+service Greeter {
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+}
+
+message HelloRequest {
+  string name = 1;
+
+  // the most frequently exchanged data should have the smallest field numbers.
+  // so we reserved some field numbers for future use.
+  reserved 2 to 4;
+
+  // deprecate a field by reserving its field number.
+  string this_would_be_deprecated = 5;
+
+  // NOT RECOMMENDED
+  //
+  // in protobuf, a single field could be changed to repeated,
+  // and the old code could still read the first element in the new message.
+  string this_would_change_into_array = 6;
+
+  // RECOMMENDED
+  string better_way_to_change_into_array = 7;
+}
+
+// The response message containing the greetings
+message HelloReply {
+  string message = 1;
+}
