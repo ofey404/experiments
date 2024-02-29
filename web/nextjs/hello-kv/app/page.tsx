@@ -1,5 +1,5 @@
-import GetKey from "../components/GetKey";
-import SetKey from "../components/SetKey";
+import GetKey from "./_components/GetKey";
+import SetKey from "./_components/SetKey";
 
 export default function Home() {
   return (
