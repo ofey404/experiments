@@ -14,13 +14,13 @@ const GetKey = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <label className="flex flex-col">
         Key:
-        <input type="text" value={key} onChange={(e) => setKey(e.target.value)} />
+        <input type="text" value={key} onChange={(e) => setKey(e.target.value)} className="border p-2 rounded text-black" />
       </label>
-      <button type="submit">Get Key</button>
-      <p>Value: {value}</p>
+      <button type="submit" className="w-full p-2 bg-blue-500 rounded">Get Key</button>
+      <p className='text-black'>Value: {value}</p>
     </form>
   );
 };

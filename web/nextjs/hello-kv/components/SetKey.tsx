@@ -21,16 +21,16 @@ const SetKey = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <label className="flex flex-col">
         Key:
-        <input type="text" value={key} onChange={(e) => setKey(e.target.value)} />
+        <input type="text" value={key} onChange={(e) => setKey(e.target.value)} className="border p-2 rounded text-black" />
       </label>
-      <label>
+      <label className="flex flex-col">
         Value:
-        <input type="text" value={value} onChange={(e) => setValue(e.target.value)} />
+        <input type="text" value={value} onChange={(e) => setValue(e.target.value)} className="border p-2 rounded text-black" />
       </label>
-      <button type="submit">Set Key</button>
+      <button type="submit" className="w-full p-2 text-white bg-blue-500 rounded">Set Key</button>
     </form>
   );
 };
