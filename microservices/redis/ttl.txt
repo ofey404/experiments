@@ -1,0 +1,8 @@
+redis> SET mykey "Hello, Redis" EX 3600  # Set key with expiration of 1 hour
+OK
+
+redis> TTL mykey  # Get the time to live of the key in seconds
+(integer) 3540  # Remaining time in seconds until expiration
+
+redis> PTTL mykey  # Get the time to live of the key in milliseconds
+(integer) 3540000  # Remaining time in milliseconds until expiration

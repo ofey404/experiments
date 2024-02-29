@@ -9,6 +9,7 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-redis-cli
-
 docker run --name some-redis -it --rm -p 6379:6379 redis:7.2.3
+
+sudo apt install redis-tools
+redis-cli
