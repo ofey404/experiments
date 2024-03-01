@@ -31,9 +31,3 @@ body {
     text-wrap: balance;
   }
 }
-
-@layer components {
-  .button-blue-rounded {
-    @apply text-white font-semibold bg-blue-500 rounded;
-  }
-}

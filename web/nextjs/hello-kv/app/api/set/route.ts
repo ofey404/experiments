@@ -1,6 +1,6 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import Redis from 'ioredis';
 import { NextRequest, NextResponse } from 'next/server';
+import { SetRequest, SetResponse } from './types';
 
 const redis = new Redis({
   port: 6379,
@@ -8,15 +8,16 @@ const redis = new Redis({
 });
 
 export async function POST(req: NextRequest) {
-  const body = await req.json()
-  const { key, value } = body;
+  const { key, value }: SetRequest = await req.json()
   
   if (!key || !value) {
-    return NextResponse.json({ error: 'Missing key or value in request body' }, { status: 400 });
+    const response: SetResponse = { error: 'Missing key or value in request body' };
+    return NextResponse.json(response, { status: 400 });
   }
   
   await redis.set(key, value);
   
-  return NextResponse.json({ reply: 'OK' }, { status: 200 });
+  const response: SetResponse = { reply: 'OK' };
+  return NextResponse.json(response, { status: 200 });
 };
 

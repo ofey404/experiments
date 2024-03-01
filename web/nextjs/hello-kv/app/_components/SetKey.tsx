@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react';
+import { SetRequest, SetResponse } from '../api/set/types';
 
 const SetKey = () => {
   const [key, setKey] = useState('');
@@ -8,15 +9,17 @@ const SetKey = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
+    const requestBody: SetRequest = { key, value };
+
     const response = await fetch('/api/set', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ key, value })
+      body: JSON.stringify(requestBody)
     });
 
-    const data = await response.json();
+    const data: SetResponse = await response.json();
     console.log(data);
   };
 
@@ -30,7 +33,7 @@ const SetKey = () => {
         Value:
         <input type="text" value={value} onChange={(e) => setValue(e.target.value)} className="border p-2 rounded text-black" />
       </label>
-      <button type="submit" className="w-full p-2 text-white bg-blue-500 rounded">Set Key</button>
+      <button type="submit" className="w-full p-2 button-blue-rounded">Set Key</button>
     </form>
   );
 };

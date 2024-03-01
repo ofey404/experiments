@@ -19,7 +19,7 @@ const GetKey = () => {
         Key:
         <input type="text" value={key} onChange={(e) => setKey(e.target.value)} className="border p-2 rounded text-black" />
       </label>
-      <button type="submit" className="w-full p-2 bg-blue-500 rounded">Get Key</button>
+      <button type="submit" className="w-full p-2 button-blue-rounded">Get Key</button>
       <p className='text-black'>Value: {value}</p>
     </form>
   );
