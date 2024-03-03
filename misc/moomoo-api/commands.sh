@@ -12,6 +12,7 @@ cd "$SCRIPT_DIR"
 # https://openapi.moomoo.com/moomoo-api-doc/intro/intro.html
 # 
 # 1. Start moomoo OpenD on localhost port 11111
+#    In WSL, plz use OpenD for Ubuntu. Process on host machine would cause network issue.
 
 # 2. Optional: Install TA-Lib, https://ta-lib.org/
 cd /tmp
