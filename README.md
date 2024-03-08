@@ -2,6 +2,8 @@
 
 This repo contains my miscellaneous exploration on new technologies.
 
+Search `TO BE CONTINUED` for some pending projects.
+
 ## Conventions
 
 The code talks - anything except the runnable, would stale quickly.
