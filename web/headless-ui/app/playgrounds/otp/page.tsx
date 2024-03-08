@@ -1,5 +1,5 @@
 'use client'
-import {useState, useEffect, useRef} from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export default function Otp() {
   const [requested, setRequested] = useState(false);
@@ -46,7 +46,6 @@ export default function Otp() {
         <form onSubmit={handleSubmit} className="px-4">
           <div className="flex flex-row text-black items-center justify-center">
             <label className="text-xl m-2">OTP:</label>
-            <input type="text" className="text-xl border border-black m-2 rounded flex-grow"/>
           </div>
           <div className="flex flex-row text-black items-center justify-center">
             <button
@@ -58,7 +57,7 @@ export default function Otp() {
               {requested ? `Resend OTP (${timeLeft})` : 'Send OTP'}
             </button>
             <button type="submit"
-                    className="w-32 px-4 text-xl m-2 text-white font-semibold bg-blue-500 rounded">Submit
+              className="w-32 px-4 text-xl m-2 text-white font-semibold bg-blue-500 rounded">Submit
             </button>
           </div>
         </form>
