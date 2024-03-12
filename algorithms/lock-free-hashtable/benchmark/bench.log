@@ -1,0 +1,18 @@
+goos: linux
+goarch: amd64
+pkg: github.com/ofey404/experiments/algorithms/lock-free-hashtable/benchmark
+cpu: 13th Gen Intel(R) Core(TM) i7-1355U
+BenchmarkReadMapUint-2                 	   18793	     53915 ns/op
+BenchmarkReadMapUint-4                 	   20386	     54547 ns/op
+BenchmarkReadSyncMapUint-2             	   82518	     16470 ns/op
+BenchmarkReadSyncMapUint-4             	   99853	     11208 ns/op
+BenchmarkReadHashMapUint-2             	  259824	      4032 ns/op
+BenchmarkReadHashMapUint-4             	  447090	      2860 ns/op
+BenchmarkReadMapWithWritesUint-2       	    3694	    296722 ns/op
+BenchmarkReadMapWithWritesUint-4       	    6697	    205383 ns/op
+BenchmarkReadSyncMapWithWritesUint-2   	   43304	     31744 ns/op
+BenchmarkReadSyncMapWithWritesUint-4   	   71624	     17124 ns/op
+BenchmarkReadHashMapWithWritesUint-2   	  136856	      8111 ns/op
+BenchmarkReadHashMapWithWritesUint-4   	  282783	      4107 ns/op
+PASS
+ok  	github.com/ofey404/experiments/algorithms/lock-free-hashtable/benchmark	18.492s
