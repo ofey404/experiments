@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+pydantic
+pydantic-settings
+pyyaml
+yaml-settings-pydantic
+sqlalchemy
