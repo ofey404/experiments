@@ -10,7 +10,7 @@ app = FastAPI(
 
 app.include_router(
     kv.router,
-    prefix="/chat",
+    prefix="/kv",
 )
 
 # more routers ...
