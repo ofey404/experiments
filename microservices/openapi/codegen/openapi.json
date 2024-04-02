@@ -1,0 +1,247 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "FastAPI Example Project API Server",
+        "version": "0.1.0"
+    },
+    "paths": {
+        "/kv/get": {
+            "post": {
+                "summary": "Get Logic",
+                "operationId": "get_logic_kv_get_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_get_logic_kv_get_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/kv/set": {
+            "post": {
+                "summary": "Set Logic",
+                "operationId": "set_logic_kv_set_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_set_logic_kv_set_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SetResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Body_get_logic_kv_get_post": {
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "title": "Key",
+                        "description": "The key to get the value for"
+                    },
+                    "common_args": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/CommonArgs"
+                            }
+                        ],
+                        "description": "Common arguments for the request"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "key",
+                    "common_args"
+                ],
+                "title": "Body_get_logic_kv_get_post"
+            },
+            "Body_set_logic_kv_set_post": {
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "title": "Key",
+                        "description": "The key to set the value for"
+                    },
+                    "value": {
+                        "type": "string",
+                        "title": "Value",
+                        "description": "The value to set"
+                    },
+                    "common_args": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/CommonArgs"
+                            }
+                        ],
+                        "description": "Common arguments for the request"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "key",
+                    "value",
+                    "common_args"
+                ],
+                "title": "Body_set_logic_kv_set_post"
+            },
+            "CommonArgs": {
+                "properties": {
+                    "foo": {
+                        "type": "string",
+                        "title": "Foo"
+                    },
+                    "bar": {
+                        "type": "integer",
+                        "title": "Bar"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "foo",
+                    "bar"
+                ],
+                "title": "CommonArgs"
+            },
+            "GetResponse": {
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "title": "Key"
+                    },
+                    "value": {
+                        "type": "string",
+                        "title": "Value"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "key",
+                    "value"
+                ],
+                "title": "GetResponse"
+            },
+            "HTTPValidationError": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        },
+                        "type": "array",
+                        "title": "Detail"
+                    }
+                },
+                "type": "object",
+                "title": "HTTPValidationError"
+            },
+            "SetResponse": {
+                "properties": {
+                    "updated": {
+                        "type": "boolean",
+                        "title": "Updated"
+                    },
+                    "old_value": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Old Value"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "updated"
+                ],
+                "title": "SetResponse"
+            },
+            "ValidationError": {
+                "properties": {
+                    "loc": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Location"
+                    },
+                    "msg": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Error Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "title": "ValidationError"
+            }
+        }
+    }
+}

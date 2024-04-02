@@ -23,4 +23,6 @@ def get_logic(
     ]
 ) -> GetResponse:
     kv = db.query(KeyValue).filter_by(key=key).first()
+    if kv is None:
+        return GetResponse(key=key, value="")
     return GetResponse(key=key, value=kv.value)
