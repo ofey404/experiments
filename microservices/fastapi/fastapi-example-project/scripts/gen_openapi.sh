@@ -11,8 +11,14 @@ python main.py &
 
 sleep 5
 
-echo "Generating OpenAPI schema..."
-wget http://127.0.0.1:8888/openapi.json
+echo "Try to get OpenAPI schema..."
+while true; do
+    wget http://127.0.0.1:8888/openapi.json
+    if [ $? -eq 0 ]; then
+        break
+    fi
+    sleep 5  # Wait for 5 seconds before retrying
+done
 echo "OpenAPI schema generated at openapi.json"
 
 # On exit, kill the whole process group.
