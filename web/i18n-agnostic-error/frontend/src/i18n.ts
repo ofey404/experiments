@@ -7,12 +7,16 @@ import { initReactI18next } from "react-i18next";
 const resources = {
   en: {
     translation: {
-      "Welcome to React": "Welcome to React and react-i18next"
+      "Welcome to React": "Welcome to React and react-i18next",
+      "Key Value Example": "Key Value Example, {{value1}}, {{value2}}",
+      "Invalid request": "Invalid request from user {{user}}, ID {{id}}"
     }
   },
   zh: {
     translation: {
-      "Welcome to React": "欢迎来到 React 和 react-i18next"
+      "Welcome to React": "欢迎来到 React 和 react-i18next",
+      "Key Value Example": "键值示例, {{value1}}, {{value2}}",
+      "Invalid request": "不合法请求，来自用户 {{user}}，ID {{id}}"
     }
   }
 };
