@@ -23,3 +23,6 @@ streamlit run hello/3_mapping_demo.py
 streamlit run hello/4_dataframe_demo.py 
 
 streamlit run conversational_app.py 
+
+# custom argument example
+streamlit run custom_arguments.py -- --arg1 value1 --arg2 value2
