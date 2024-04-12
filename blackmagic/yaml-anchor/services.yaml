@@ -1,0 +1,16 @@
+# Anchor is yaml standard feature that allows you to
+# define a value once and reference it multiple times.
+defaultService: &defaultService
+  replicas: 3
+  selector:
+    matchLabels:
+      app: MyApp
+
+serviceA:
+  <<: *defaultService
+  name: ServiceA
+
+serviceB:
+  <<: *defaultService
+  name: ServiceB
+  replicas: 5 # serviceB has 5 replicas instead of the default 3
