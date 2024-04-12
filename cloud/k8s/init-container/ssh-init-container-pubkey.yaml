@@ -1,0 +1,56 @@
+# THIS IS NOT FINISHED YET
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ssh-container
+  labels:
+    app: ssh-container
+spec:
+  initContainers:
+    - name: dockerfile-creator
+      image: busybox
+      command: ["/bin/sh", "-c"]
+      args:
+        - |
+          cat <<EOF > /workspace/authorized_keys
+          ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCvwIzVY20jd3J1afMtKClehysbm2v9rwbhNg7HBt8ZCHqddkCI7vwSjhSy0wPf4C619/8H1Kj5UR7+KDbQx2bRY4kOcOytopJt2t7CyBKawW9s9Vs9nafI5yJGC5AWAIdouwduGPjna8fwhyR5eSllvUai349zl1WhD6VXvai1xaamPbyMXKqtSkv260i5cx3WwHkWU8PpP1klviqsMFhxTHMUYD7v5B1FE/RAshIX7+wuYbytcj+UIFZB7cgaTsihE5+qVmUef82X3i5AzaBiKpKyont9PPc/ktOb9CHvaURcDAzilH2ZvNAjBXf5YYRBFTbKuYI7P1sV1GwWbXpa/ssLQTi/yBiF4gHBqm+5la6dhB7g+xwayAdMQb12iKwljNDKdZU3ZZ+P0qmeJ9iM1MvFrvikvh48Qjfc6Q+NT0JsMO6Y8mIl9wBT3moZYjg2LgrEqzQY1TOm4NTgSLhtKV9TveZcluY6qlHpOcUVFqxUwz0ee4vgIypFIP42qYs= ofey@work
+          EOF
+
+      volumeMounts:
+        - name: my-volume
+          mountPath: /workspace
+  containers:
+    - name: myapp-container
+      image: linuxserver/openssh-server:version-9.6_p1-r0
+      # user: linuxserver.io
+      env:
+        - name: PASSWORD_ACCESS
+          value: "true"
+        - name: USER_PASSWORD
+          value: password
+      # TODO(ofey404): this command doesn't work,
+      #                because it will override the entrypoint.
+      # command:
+      #   - "/bin/sh"
+      #   - "-c"
+      #   - |
+      #     mv /workspace/authorized_keys /etc/ssh/authorized_keys
+      #     while true; do echo $(date); sleep 1; done
+      volumeMounts:
+        - name: my-volume
+          mountPath: /workspace
+
+  volumes:
+    - name: my-volume
+      emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ssh
+spec:
+  selector:
+    app: ssh-container
+  ports:
+    - name: ssh
+      port: 2222

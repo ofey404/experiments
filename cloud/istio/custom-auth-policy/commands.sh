@@ -53,7 +53,7 @@ kubectl label namespace default istio-injection=enabled
 kubectl apply -f manifests/ext-authz.yaml
 
 # auth policy
-kubectl apply -f ../../../snippets/request-visualizer.yaml
+kubectl apply -f manifests/request-visualizer.yaml
 kubectl apply -f manifests/custom-auth-policy.yaml
 
 # visit
@@ -74,3 +74,16 @@ curl -v -H 'x-ext-authz: allow' localhost:8000
 # visit subpath, would forward to the same subpath of authz server
 curl -v -H 'x-ext-authz: allow' localhost:8000/aa/bb
 # 2024/01/19 08:04:16 [HTTP][allowed]: GET localhost:8000/aa/bb, ...
+
+# another common feature: redirect to login page
+# in this demo we redirect to /new/{original-path}
+curl -v -H 'x-ext-authz: redirect' localhost:8000
+# < location: /new
+# ...
+# <a href="/new">Moved Permanently</a>.
+
+# subpath example
+curl -v -H 'x-ext-authz: redirect' localhost:8000/aa/bb
+# < location: /new/aa/bb
+# ...
+# <a href="/new/aa/bb">Moved Permanently</a>.

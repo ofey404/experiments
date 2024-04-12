@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/zeromicro/go-zero/core/logx"
 	"io"
 	"log"
 	"net/http"
+	"path"
+
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type AuthServer struct{}
@@ -17,6 +19,7 @@ func NewAuthServer() *AuthServer {
 const (
 	checkHeader    = "x-ext-authz"
 	allowedValue   = "allow"
+	redirectValue  = "redirect"
 	resultHeader   = "x-ext-authz-check-result"
 	receivedHeader = "x-ext-authz-check-received"
 	overrideHeader = "x-ext-authz-additional-header-override"
@@ -32,13 +35,22 @@ func (s *AuthServer) ServeHTTP(response http.ResponseWriter, request *http.Reque
 		log.Printf("[HTTP] read body failed: %v", err)
 	}
 	l := fmt.Sprintf("%s %s%s, headers: %v, body: [%s]\n", request.Method, request.Host, request.URL, request.Header, body)
-	if allowedValue == request.Header.Get(checkHeader) {
+
+	value := request.Header.Get(checkHeader)
+	switch value {
+	case allowedValue:
 		log.Printf("[HTTP][allowed]: %s", l)
 		response.Header().Set(resultHeader, resultAllowed)
 		response.Header().Set(overrideHeader, request.Header.Get(overrideHeader))
 		response.Header().Set(receivedHeader, l)
 		response.WriteHeader(http.StatusOK)
-	} else {
+	case redirectValue:
+		log.Printf("[HTTP][redirect]: %s", l)
+		// TODO(ofey404): redirect to login page
+		newPath := path.Join("/new", request.URL.Path)
+
+		http.Redirect(response, request, newPath, http.StatusMovedPermanently)
+	default:
 		log.Printf("[HTTP][denied]: %s", l)
 		response.Header().Set(resultHeader, resultDenied)
 		response.Header().Set(overrideHeader, request.Header.Get(overrideHeader))
