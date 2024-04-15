@@ -25,6 +25,9 @@ helm install bitnami/mysql --generate-name
 
 helm search hub wordpress
 
+# print out values.yaml
+helm show values kubeflow/kubeflow
+
 # download chart from hub
 helm pull kubeflow/kubeflow --version 2.5.1 --untar
 

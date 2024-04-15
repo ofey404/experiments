@@ -1,0 +1,19 @@
+configOverrides:
+  secret: |
+    # Generate your own secret key for encryption. Use `openssl rand -base64 42` to generate a good key
+    SECRET_KEY = 'fek26N/0/95WSaEOa34ELI/Xjk8v/G/+vsqlnzY38lP+NOoB5xPuFAjl'
+
+postgresql:
+  ##
+  ## Use the PostgreSQL chart dependency.
+  ## Set to false if bringing your own PostgreSQL.
+  enabled: false
+
+supersetNode:
+  connections:
+    # You need to change below configuration incase bringing own PostgresSQL instance and also set postgresql.enabled:false
+    db_host: "postgresql"
+    db_port: "5432"
+    db_user: postgres
+    db_pass: mysecretpassword
+    db_name: superset

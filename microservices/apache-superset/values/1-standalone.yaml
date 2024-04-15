@@ -1,0 +1,4 @@
+configOverrides:
+  secret: |
+    # Generate your own secret key for encryption. Use `openssl rand -base64 42` to generate a good key
+    SECRET_KEY = 'fek26N/0/95WSaEOa34ELI/Xjk8v/G/+vsqlnzY38lP+NOoB5xPuFAjl'

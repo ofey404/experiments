@@ -26,3 +26,10 @@ PGPASSWORD=mysecretpassword psql -h localhost -U postgres
 # other techniques which is useful in migration:
 #
 # https://knock.app/blog/zero-downtime-postgres-upgrades
+
+helm install postgresql bitnami/postgresql \
+     --version 15.2.5 \
+     --set auth.postgresPassword=mysecretpassword
+
+# In-pod, do:
+PGPASSWORD=mysecretpassword psql -U postgres
