@@ -1,0 +1,5 @@
+# show all keys
+KEYS *
+
+# switch database (0 - 15)
+SELECT 1

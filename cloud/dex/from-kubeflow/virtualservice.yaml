@@ -4,15 +4,15 @@ metadata:
   name: authservice
 spec:
   hosts:
-  - "*"
+    - "*"
   gateways:
-  - kubeflow/kubeflow-gateway
+    - kubeflow/kubeflow-gateway
   http:
-  - match:
-    - uri:
-        prefix: /authservice
-    route:
-    - destination:
-        port:
-          number: 80
-        host: authservice.istio-system.svc.cluster.local
+    - match:
+        - uri:
+            prefix: /authservice
+      route:
+        - destination:
+            port:
+              number: 80
+            host: authservice.istio-system.svc.cluster.local
