@@ -1,4 +1,5 @@
 import ColumnVisibility from "./components/ColumnVisibility";
+import DragDropAcrossTable from "./components/DragDropAcrossTable";
 import DragDropColumn from "./components/DragDropColumn";
 import DragDropRow from "./components/DragDropRow";
 import ResponsiveTable from "./components/ResponsiveTable";
@@ -12,6 +13,7 @@ function App() {
         <DragDropColumn />
         <DragDropRow />
         <ColumnVisibility/>
+        <DragDropAcrossTable/>
       </div>
     </div>
   );
