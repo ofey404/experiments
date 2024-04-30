@@ -10,7 +10,7 @@ export default function LineChartDemo() {
 
   return (
     <div className="bg-white p-4 rounded-lg">
-      <h2 className='text-l text-black'>LineChart Demo</h2>
+      <h2 className='text-l text-black'>Line Chart Demo</h2>
 
       <LineChart width={600} height={300} data={data}>
         <Line type="monotone" dataKey="uv" stroke="#8884d8" />
