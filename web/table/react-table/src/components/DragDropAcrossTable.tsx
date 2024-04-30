@@ -111,8 +111,9 @@ export default function DragDropAcrossTable() {
         []
     )
     // 将原始数据分为两组，每组一个表格
-    const [data1, setData1] = React.useState(() => makeData(10))
-    const [data2, setData2] = React.useState(() => makeData(10))
+    const count = 3
+    const [data1, setData1] = React.useState(() => makeData(count))
+    const [data2, setData2] = React.useState(() => makeData(count))
 
     const data1Ids = React.useMemo<UniqueIdentifier[]>(
         () => data1?.map(({ userId }) => userId),
@@ -124,8 +125,8 @@ export default function DragDropAcrossTable() {
     )
 
     const rerender = () => {
-        setData1(() => makeData(10))
-        setData2(() => makeData(10))
+        setData1(() => makeData(count))
+        setData2(() => makeData(count))
     }
 
     const table1 = useReactTable({
@@ -152,24 +153,32 @@ export default function DragDropAcrossTable() {
     function handleDragEnd(event: DragEndEvent) {
         const { active, over } = event
         if (active && over && active.id !== over.id) {
-        const oldIndex = data1Ids.indexOf(active.id)
-        const newIndex = data1Ids.indexOf(over.id)
-        const oldIndex2 = data2Ids.indexOf(active.id)
-        const newIndex2 = data2Ids.indexOf(over.id)
-        if (oldIndex !== -1 && newIndex !== -1) {
-            setData1(data => arrayMove(data, oldIndex, newIndex))
-        }
-        if (oldIndex2 !== -1 && newIndex2 !== -1) {
-            setData2(data => arrayMove(data, oldIndex2, newIndex2))
-        }
-        if (oldIndex !== -1 && newIndex2 !== -1) {
-            setData1(data => data.filter((_, idx) => idx !== oldIndex))
-            setData2(data => [...data, data[oldIndex]])
-        }
-        if (oldIndex2 !== -1 && newIndex !== -1) {
-            setData2(data => data.filter((_, idx) => idx !== oldIndex2))
-            setData1(data => [...data, data2[oldIndex2]])
-        }
+            const oldIndex = data1Ids.indexOf(active.id)
+            const newIndex = data1Ids.indexOf(over.id)
+            const oldIndex2 = data2Ids.indexOf(active.id)
+            const newIndex2 = data2Ids.indexOf(over.id)
+            if (oldIndex !== -1 && newIndex !== -1) {
+                setData1(data => arrayMove(data, oldIndex, newIndex))
+            }
+            if (oldIndex2 !== -1 && newIndex2 !== -1) {
+                setData2(data => arrayMove(data, oldIndex2, newIndex2))
+            }
+            if (oldIndex !== -1 && newIndex2 !== -1) {
+                setData1(data => data.filter((_, idx) => idx !== oldIndex))
+                setData2(data => {
+                    const newData = [...data];
+                    newData.splice(newIndex2, 0, data1[oldIndex]);
+                    return newData;
+                })
+            }
+            if (oldIndex2 !== -1 && newIndex !== -1) {
+                setData1(data => {
+                    const newData = [...data];
+                    newData.splice(newIndex2, 0, data2[oldIndex2]);
+                    return newData;
+                })
+                setData2(data => data.filter((_, idx) => idx !== oldIndex2))
+            }
         }
     }
 
@@ -253,7 +262,10 @@ export default function DragDropAcrossTable() {
                             </SortableContext>
                         </tbody>
                     </table>
-                    {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
+                    <h2>Data 1</h2>
+                    <pre>{JSON.stringify(data1, null, 2)}</pre>
+                    <h2>Data 2</h2>
+                    <pre>{JSON.stringify(data2, null, 2)}</pre>
                 </div>
             </DndContext>
         </div >
