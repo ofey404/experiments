@@ -10,3 +10,9 @@ cd "$SCRIPT_DIR"
 ##############################################
 
 npm start
+
+# This toolchain is old and cumbersome, I can't make it work.
+#
+# https://www.chartjs.org/docs/latest/charts/radar.html
+
+npm install chart.js react-chartjs-2
