@@ -1,3 +1,4 @@
+import ColumnFilter from "./components/ColumnFilter";
 import ColumnVisibility from "./components/ColumnVisibility";
 import DragDropAcrossTable from "./components/DragDropAcrossTable";
 import DragDropColumn from "./components/DragDropColumn";
@@ -14,6 +15,7 @@ function App() {
         <DragDropRow />
         <ColumnVisibility/>
         <DragDropAcrossTable/>
+        <ColumnFilter/>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import React from 'react';
 import LineChartDemo from './components/LineChartDemo';
 import RadarChartDemo from './components/RadarChartDemo';
 import ScatterChartDemo from './components/ScatterChartDemo';
+import ComposedChartDemo from './components/ComposedChartDemo';
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
           <LineChartDemo />
           <RadarChartDemo />
           <ScatterChartDemo />
+          <ComposedChartDemo/>
         </div>
       </div>
     </main>

@@ -78,34 +78,42 @@ export default function DragDropAcrossTable() {
             {
                 id: 'drag-handle',
                 header: 'Move',
-                cell: ({ row }) => <RowDragHandleCell rowId={row.id} />,
+                cell: ({ row }) => {
+                    if (row.id === "placeholder") return <></>
+                    return <RowDragHandleCell rowId={row.id} />
+                }
+                ,
                 size: 60,
             },
             {
                 accessorKey: 'firstName',
-                cell: info => info.getValue(),
+                cell: info => info.row.id === "placeholder" ? <></> : info.getValue()
             },
             {
                 accessorFn: row => row.lastName,
                 id: 'lastName',
-                cell: info => info.getValue(),
+                cell: info => info.row.id === "placeholder" ? <></> : info.getValue(),
                 header: () => <span>Last Name</span>,
             },
             {
                 accessorKey: 'age',
                 header: () => 'Age',
+                cell: info => info.row.id === "placeholder" ? <></> : info.getValue()
             },
             {
                 accessorKey: 'visits',
                 header: () => <span>Visits</span>,
+                cell: info => info.row.id === "placeholder" ? <></> : info.getValue()
             },
             {
                 accessorKey: 'status',
                 header: 'Status',
+                cell: info => info.row.id === "placeholder" ? <></> : info.getValue()
             },
             {
                 accessorKey: 'progress',
                 header: 'Profile Progress',
+                cell: info => info.row.id === "placeholder" ? <></> : info.getValue()
             },
         ],
         []
@@ -115,13 +123,30 @@ export default function DragDropAcrossTable() {
     const [data1, setData1] = React.useState(() => makeData(count))
     const [data2, setData2] = React.useState(() => makeData(count))
 
+    const placeholderData = {
+        userId: "placeholder",
+        firstName: "",
+        lastName: "",
+        age: 0,
+        visits: 0,
+        progress: 0,
+        status: "relationship",
+    } as Person;
+    const data1WithPlaceholder = React.useMemo(() => {
+        return data1.length ? data1 : [placeholderData];
+    }, [data1]);
+
+    const data2WithPlaceholder = React.useMemo(() => {
+        return data2.length ? data2 : [placeholderData];
+    }, [data2]);
+
     const data1Ids = React.useMemo<UniqueIdentifier[]>(
-        () => data1?.map(({ userId }) => userId),
-        [data1]
+        () => data1WithPlaceholder?.map(({ userId }) => userId),
+        [data1WithPlaceholder]
     )
     const data2Ids = React.useMemo<UniqueIdentifier[]>(
-        () => data2?.map(({ userId }) => userId),
-        [data2]
+        () => data2WithPlaceholder?.map(({ userId }) => userId),
+        [data2WithPlaceholder]
     )
 
     const rerender = () => {
@@ -130,7 +155,7 @@ export default function DragDropAcrossTable() {
     }
 
     const table1 = useReactTable({
-        data: data1,
+        data: data1WithPlaceholder,
         columns,
         getCoreRowModel: getCoreRowModel(),
         getRowId: row => row.userId, //required because row indexes will change
@@ -140,7 +165,7 @@ export default function DragDropAcrossTable() {
     })
 
     const table2 = useReactTable({
-        data: data2,
+        data: data2WithPlaceholder,
         columns,
         getCoreRowModel: getCoreRowModel(),
         getRowId: row => row.userId, //required because row indexes will change
@@ -164,21 +189,22 @@ export default function DragDropAcrossTable() {
                 setData2(data => arrayMove(data, oldIndex2, newIndex2))
             }
             if (oldIndex !== -1 && newIndex2 !== -1) {
-                setData1(data => data.filter((_, idx) => idx !== oldIndex))
+                setData1(data => data.filter((item, idx) => idx !== oldIndex && item.userId !== "placeholder"))
                 setData2(data => {
-                    const newData = [...data];
+                    const newData = [...data.filter(item => item.userId !== "placeholder")];
                     newData.splice(newIndex2, 0, data1[oldIndex]);
                     return newData;
                 })
             }
             if (oldIndex2 !== -1 && newIndex !== -1) {
                 setData1(data => {
-                    const newData = [...data];
+                    const newData = [...data.filter(item => item.userId !== "placeholder")];
                     newData.splice(newIndex2, 0, data2[oldIndex2]);
                     return newData;
                 })
-                setData2(data => data.filter((_, idx) => idx !== oldIndex2))
+                setData2(data => data.filter((item, idx) => idx !== oldIndex2 && item.userId !== "placeholder"))
             }
+
         }
     }
 
@@ -270,5 +296,4 @@ export default function DragDropAcrossTable() {
             </DndContext>
         </div >
     )
-
 }
