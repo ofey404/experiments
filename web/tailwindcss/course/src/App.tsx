@@ -18,17 +18,24 @@ function App() {
             />
             <h1 className='mt-6 text-xl lg:text-3xl font-semibold lg:font-bold text-gray-900 leading-tight'>
               Showcase tailwind css basic usage.{" "}
-              <br className='hidden lg:inline'/>
+              <br className='hidden lg:inline' />
               <span className='text-cyan-500' >Check the source code for more.</span>
             </h1>
             <p className='mt-2 text-gray-600'>
               The Utility-First Workflow:
               Learn how to use Tailwind's utility classes to build a custom marketing page.
             </p>
-            <div className='mt-4'>
-              <a href="#" className='inline-block bg-cyan-600 text-white px-5 py-3 rounded-lg shadow-lg uppercase tracking-wide'>
-                Check the original tutorial
-              </a>
+            <div className='mt-4 flex space-x-1'>
+              <div>
+                <a href="#" className='btn-cyan shadow-lg h-full'>
+                  The original tutorial
+                </a>
+              </div>
+              <div>
+                <a href="#" className='btn-grey shadow-lg h-full'>
+                  More
+                </a>
+              </div>
             </div>
           </div>
         </div>

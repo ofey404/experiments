@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
+
+.btn {
+  @apply inline-block px-5 py-3 rounded-lg uppercase tracking-wide;
+}
+
+.btn-cyan {
+  @apply btn bg-cyan-600 text-white;
+}
+
+.btn-cyan:hover {
+  @apply bg-cyan-500;
+}
+
+
+.btn-grey {
+  @apply btn bg-gray-600 text-white;
+}
+
+.btn-grey:hover {
+  @apply bg-gray-500;
+}
+
 @tailwind utilities;
