@@ -3,6 +3,7 @@ import LineChartDemo from './components/LineChartDemo';
 import RadarChartDemo from './components/RadarChartDemo';
 import ScatterChartDemo from './components/ScatterChartDemo';
 import ComposedChartDemo from './components/ComposedChartDemo';
+import ChartToPngDemo from './components/ChartToPngDemo';
 
 
 function App() {
@@ -14,7 +15,8 @@ function App() {
           <LineChartDemo />
           <RadarChartDemo />
           <ScatterChartDemo />
-          <ComposedChartDemo/>
+          <ComposedChartDemo />
+          <ChartToPngDemo />
         </div>
       </div>
     </main>

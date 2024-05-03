@@ -13,3 +13,6 @@ npm install
 npm start
 
 npm install recharts @types/recharts
+
+npm install file-saver @types/file-saver recharts-to-png
+ 
