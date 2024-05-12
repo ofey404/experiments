@@ -9,14 +9,4 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-# https://realpython.com/modern-web-automation-with-python-and-selenium/
-# Target:
-# https://www.toolify.ai/new
-
-pip install selenium
-
-# for extra dependency
-sudo apt-get install -y chromium-browser
-
-# Well... Selenium is too heavy, and its dependency is machine specific.
-# I'll try scrapy-splash.
+# https://developer.chrome.com/docs/extensions?hl=zh-cn

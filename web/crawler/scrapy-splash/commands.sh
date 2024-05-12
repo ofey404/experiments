@@ -9,14 +9,12 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-# https://realpython.com/modern-web-automation-with-python-and-selenium/
-# Target:
-# https://www.toolify.ai/new
+# https://www.zenrows.com/blog/scrapy-splash#steps-to-integrate-scrapy-splash
 
-pip install selenium
+# add sudo to get the web permission
+sudo docker run -it -p 8050:8050 --rm scrapinghub/splash
+# visit:
+# http://0.0.0.0:8050
 
-# for extra dependency
-sudo apt-get install -y chromium-browser
-
-# Well... Selenium is too heavy, and its dependency is machine specific.
-# I'll try scrapy-splash.
+pip install scrapy-splash
+pip install scrapy
