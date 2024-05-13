@@ -9,6 +9,7 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-# https://platform.openai.com/docs/guides/text-to-speech
+# https://github.com/openai/openai-node
 
-# I'd like to use ts + node.
+npm install openai
+npm run start
