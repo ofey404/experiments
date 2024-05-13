@@ -28,7 +28,7 @@
   "author": "Pierre Dahmani <hi@pierre-dev.com>",
   "license": "MIT",
   "scripts": {
-    "bundle": "esbuild src/index.ts --outdir=bundle --sourcemap --bundle --platform=node --target=node20.10.0 --external:jsdom",
+    "bundle": "esbuild src/index.ts --outdir=bundle --sourcemap --bundle --platform=node --target=node20.10.0 --external:jsdom --external:turndown",
     "clean": "rimraf dist",
     "compile": "tsc",
     "compile-watch": "tsc -w",
@@ -59,6 +59,8 @@
   "dependencies": {
     "@mozilla/readability": "^0.5.0",
     "@types/jsdom": "^21.1.6",
-    "jsdom": "^24.0.0"
+    "@types/turndown": "^5.0.4",
+    "jsdom": "^24.0.0",
+    "turndown": "^7.1.3"
   }
 }

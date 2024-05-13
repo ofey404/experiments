@@ -13,7 +13,7 @@ cd "$SCRIPT_DIR"
 # https://github.com/xddq/nodejs-typescript-modern-starter
 
 npm install
-npm install @mozilla/readability jsdom @types/jsdom
+npm install @mozilla/readability jsdom @types/jsdom turndown @types/turndown
 
 # Modify package.json
 # exclude jsdom package.
