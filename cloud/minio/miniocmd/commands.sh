@@ -33,3 +33,6 @@ mc ls $ALIAS
 #   mc $cmd
 # done
 
+
+# alicloud css
+mc config host add s3 https://oss-cn-beijing.aliyuncs.com $AK $SK --api s3v4

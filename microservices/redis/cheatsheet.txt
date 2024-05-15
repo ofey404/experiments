@@ -3,3 +3,6 @@ KEYS *
 
 # switch database (0 - 15)
 SELECT 1
+
+# count keys
+DBSIZE
