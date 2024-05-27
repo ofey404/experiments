@@ -9,13 +9,15 @@ from server.components.db.connect import Base, engine
 
 LOGGER = logging.getLogger(__name__)
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # startup
     LOGGER.info("Executing lifespan startup code")
-    LOGGER.debug(f"""App config:
-{yaml.dump(CONFIG.model_dump())}""")
-
+    LOGGER.debug(
+        f"""App config:
+{yaml.dump(CONFIG.model_dump())}"""
+    )
 
     Base.metadata.create_all(bind=engine)
 
