@@ -36,7 +36,7 @@ class MySpider(scrapy.Spider):
 
         for article in response.css("div.theme-doc-markdown"):
             title = article.css("h1 ::text").get()
-            link = response.css("a.pagination-nav__link--next ::attr(href)").get()
+            link = response.url
             content = "".join(article.css("::text").getall())
             print(f"title: {title}")
             print(f"link: {link}")

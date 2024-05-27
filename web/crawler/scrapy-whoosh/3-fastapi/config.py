@@ -21,5 +21,7 @@ class Config(BaseSettings):
     crawl_limit: int | None = 5
     index_dir: Path = Path("./indexdir")
 
+    search_limit: int = 3
+
 
 CONFIG = Config()
