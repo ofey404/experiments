@@ -44,7 +44,7 @@ async function fetchComments(params: CommentParams): Promise<Comment[]> {
   return response.data;
 }
 
-interface PostRequest {
+interface Post {
   title: string;
   body: string;
   userId: number;
@@ -57,7 +57,7 @@ interface PostResponse {
   userId: number;
 }
 
-async function createPost(post: PostRequest): Promise<PostResponse> {
+async function createPost(post: Post): Promise<PostResponse> {
   const response = await axios.post<PostResponse>(
     "https://jsonplaceholder.typicode.com/posts",
     post,
@@ -71,8 +71,7 @@ async function createPost(post: PostRequest): Promise<PostResponse> {
   return response.data;
 }
 
-// shorter version
-const createPost2 = async (post: PostRequest) =>
+const createPost2 = async (post: Post) =>
   (
     await axios.post<PostResponse>(
       "https://jsonplaceholder.typicode.com/posts",
@@ -87,7 +86,7 @@ const main = async () => {
   const comments = await fetchComments({ postId: 1 });
   console.log(comments.slice(0, 2));
 
-  const newPost: PostRequest = {
+  const newPost: Post = {
     title: "foo",
     body: "bar",
     userId: 1,
