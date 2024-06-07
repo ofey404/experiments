@@ -1,11 +1,6 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import Redis from "ioredis";
 import { NextRequest, NextResponse } from "next/server";
-
-const redis = new Redis({
-  port: 6379,
-  host: "localhost",
-});
+import { svcCtx } from "../serviceContext";
+import { ErrKeyNotFound, ErrMissingKey } from "@/libs/errors";
 
 export interface GetParams {
   key: string;
@@ -19,13 +14,13 @@ export async function GET(req: NextRequest) {
   const key = req.nextUrl.searchParams.get("key");
 
   if (!key) {
-    return NextResponse.json(
-      { message: "Missing key in request" },
-      { status: 400 }
-    );
+    return ErrMissingKey.toNextResponse(400);
   }
 
-  const value = await redis.get(String(key));
+  const value = await svcCtx.redis.get(String(key));
+  if (value === null) {
+    return ErrKeyNotFound.toNextResponse(400);
+  }
 
   return NextResponse.json({ reply: value }, { status: 200 });
 }

@@ -1,10 +1,6 @@
-import Redis from "ioredis";
 import { NextRequest, NextResponse } from "next/server";
-
-const redis = new Redis({
-  port: 6379,
-  host: "localhost",
-});
+import { svcCtx } from "../serviceContext";
+import { ErrMissingKey, ErrMissingVal } from "@/libs/errors";
 
 export interface SetRequest {
   key: string;
@@ -13,20 +9,19 @@ export interface SetRequest {
 
 export interface SetResponse {
   reply?: string;
-  error?: string;
 }
 
 export async function POST(req: NextRequest) {
   const { key, value }: SetRequest = await req.json();
 
-  if (!key || !value) {
-    const response: SetResponse = {
-      error: "Missing key or value in request body",
-    };
-    return NextResponse.json(response, { status: 400 });
+  if (!key) {
+    return ErrMissingKey.toNextResponse(400);
+  }
+  if (!value) {
+    return ErrMissingVal.toNextResponse(400);
   }
 
-  await redis.set(key, value);
+  await svcCtx.redis.set(key, value);
 
   const response: SetResponse = { reply: "OK" };
   return NextResponse.json(response, { status: 200 });

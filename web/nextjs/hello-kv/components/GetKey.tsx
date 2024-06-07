@@ -1,5 +1,6 @@
 'use client'
 import { get } from '@/libs/api';
+import { AppError, ErrKeyNotFound, ErrMissingKey } from '@/libs/errors';
 import { useState } from 'react';
 
 const GetKey = () => {
@@ -9,8 +10,18 @@ const GetKey = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const response = await get({ key })
-    setValue(response.reply);
+    try {
+      const response = await get({ key })
+      setValue(response.reply);
+    } catch (e) {
+      if (ErrMissingKey.is(e)) {
+        alert(ErrMissingKey.message)
+      } else if (ErrKeyNotFound.is(e)) {
+        alert(ErrKeyNotFound.message)
+      } else {
+        throw e
+      }
+    }
   };
 
   return (

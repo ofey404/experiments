@@ -1,8 +1,9 @@
-'use client'
+"use client";
 
-import { GetParams, GetResponse } from '@/app/api/get/route';
-import { SetRequest, SetResponse } from '@/app/api/set/route';
-import axios from 'axios';
+import { GetParams, GetResponse } from "@/app/api/get/route";
+import { SetRequest, SetResponse } from "@/app/api/set/route";
+import axios, { AxiosError } from "axios";
+import { AppError, AppErrorBody } from "./errors";
 
 export const set = async (body: SetRequest) => {
   const r = await axios.post<SetResponse>("/api/set", body);
@@ -10,8 +11,20 @@ export const set = async (body: SetRequest) => {
 };
 
 export const get = async (params: GetParams) => {
+  try {
     const r = await axios.get<GetResponse>("/api/get", {
-        params
-    })
-    return r.data
-}
+      params,
+    });
+    return r.data;
+  } catch (e) {
+    const err = e as AxiosError<AppErrorBody>;
+    if (err.response) {
+      const { appCode, message } = err.response.data;
+      throw new AppError(appCode, message);
+    } else {
+      throw e; // re-throw the error if it's not one we understand
+    }
+  }
+};
+
+// TODO: Error handling
