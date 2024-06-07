@@ -1,11 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { svcCtx } from "../serviceContext";
-import {
-  AppError,
-  ErrKeyNotFound,
-  ErrMissingKey,
-  ErrUnknown,
-} from "@/libs/errors";
+import { AppError, ErrMissingKey, ErrUnknown } from "@/libs/errors";
 import { GetLogic } from "./logic";
 
 export interface GetParams {

@@ -8,13 +8,13 @@ export class AppError extends Error {
     this.appCode = appCode;
   }
 
-  toNextResponse(code: number) {
+  toNextResponse(code?: number) {
     return NextResponse.json(
       {
         appCode: this.appCode,
         message: this.message,
       } as AppErrorBody,
-      { status: code }
+      { status: code ? code : 400 }
     );
   }
 
@@ -23,6 +23,10 @@ export class AppError extends Error {
       return e.appCode === this.appCode;
     }
     return false;
+  }
+
+  withMessage(m: string) {
+    return new AppError(this.appCode, m);
   }
 
   toString(): string {
@@ -46,6 +50,7 @@ export const ErrUnknown = (e: any) => {
 };
 
 export const ErrInternal = new AppError(10000, "internal service error");
-export const ErrKeyNotFound = new AppError(10001, "key not found");
-export const ErrMissingKey = new AppError(10002, "missing key in request");
-export const ErrMissingVal = new AppError(10003, "missing value in request");
+export const ErrValidateSchema = new AppError(10001, "schema validate error");
+export const ErrKeyNotFound = new AppError(10002, "key not found");
+export const ErrMissingKey = new AppError(10003, "missing key in request");
+export const ErrMissingVal = new AppError(10004, "missing value in request");

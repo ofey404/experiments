@@ -1,6 +1,6 @@
 'use client'
 import { get } from '@/libs/api';
-import { AppError, ErrKeyNotFound, ErrMissingKey } from '@/libs/errors';
+import { AppError, ErrValidateSchema } from '@/libs/errors';
 import { useState } from 'react';
 
 const GetKey = () => {
@@ -15,10 +15,9 @@ const GetKey = () => {
       setValue(response.reply);
     } catch (e) {
       if (e instanceof AppError) {
-        if (ErrMissingKey.is(e)) {
-          alert(ErrMissingKey.message)
-        } else if (ErrKeyNotFound.is(e)) {
-          alert(ErrKeyNotFound.message)
+        if (ErrValidateSchema.is(e)) {
+          // specific
+          alert(e.message)
         } else {
           alert(e.message) // common
         }

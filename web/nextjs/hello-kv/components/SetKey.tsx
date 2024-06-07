@@ -1,6 +1,6 @@
 'use client'
 import { set } from '@/libs/api';
-import { AppError, ErrKeyNotFound, ErrMissingKey } from '@/libs/errors';
+import { AppError } from '@/libs/errors';
 import { useState } from 'react';
 
 const SetKey = () => {
