@@ -14,12 +14,14 @@ const GetKey = () => {
       const response = await get({ key })
       setValue(response.reply);
     } catch (e) {
-      if (ErrMissingKey.is(e)) {
-        alert(ErrMissingKey.message)
-      } else if (ErrKeyNotFound.is(e)) {
-        alert(ErrKeyNotFound.message)
-      } else if (e instanceof AppError) {
-        alert(e.message) // common
+      if (e instanceof AppError) {
+        if (ErrMissingKey.is(e)) {
+          alert(ErrMissingKey.message)
+        } else if (ErrKeyNotFound.is(e)) {
+          alert(ErrKeyNotFound.message)
+        } else {
+          alert(e.message) // common
+        }
       } else {
         throw e
       }
