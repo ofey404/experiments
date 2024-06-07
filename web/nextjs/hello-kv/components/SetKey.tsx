@@ -1,6 +1,6 @@
 'use client'
+import { set } from '@/libs/api';
 import { useState } from 'react';
-import { SetRequest, SetResponse } from '../api/set/types';
 
 const SetKey = () => {
   const [key, setKey] = useState('');
@@ -9,18 +9,7 @@ const SetKey = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const requestBody: SetRequest = { key, value };
-
-    const response = await fetch('/api/set', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(requestBody)
-    });
-
-    const data: SetResponse = await response.json();
-    console.log(data);
+    await set({ key, value })
   };
 
   return (

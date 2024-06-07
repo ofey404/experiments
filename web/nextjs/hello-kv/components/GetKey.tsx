@@ -1,4 +1,5 @@
 'use client'
+import { get } from '@/libs/api';
 import { useState } from 'react';
 
 const GetKey = () => {
@@ -8,9 +9,8 @@ const GetKey = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const response = await fetch(`/api/get?key=${key}`);
-    const data = await response.json();
-    setValue(data.reply);
+    const response = await get({ key })
+    setValue(response.reply);
   };
 
   return (
