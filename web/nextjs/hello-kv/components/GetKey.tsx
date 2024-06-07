@@ -18,6 +18,8 @@ const GetKey = () => {
         alert(ErrMissingKey.message)
       } else if (ErrKeyNotFound.is(e)) {
         alert(ErrKeyNotFound.message)
+      } else if (e instanceof AppError) {
+        alert(e.message) // common
       } else {
         throw e
       }

@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { svcCtx } from "../serviceContext";
-import { ErrKeyNotFound, ErrMissingKey } from "@/libs/errors";
+import {
+  AppError,
+  ErrKeyNotFound,
+  ErrMissingKey,
+  ErrUnknown,
+} from "@/libs/errors";
+import { GetLogic } from "./logic";
 
 export interface GetParams {
   key: string;
@@ -17,10 +23,15 @@ export async function GET(req: NextRequest) {
     return ErrMissingKey.toNextResponse(400);
   }
 
-  const value = await svcCtx.redis.get(String(key));
-  if (value === null) {
-    return ErrKeyNotFound.toNextResponse(400);
+  const logic = new GetLogic();
+  try {
+    const resp = await logic.Handle({ key });
+    return NextResponse.json(resp, { status: 200 });
+  } catch (e) {
+    if (e instanceof AppError) {
+      return e.toNextResponse(400);
+    } else {
+      return ErrUnknown(e).toNextResponse(500);
+    }
   }
-
-  return NextResponse.json({ reply: value }, { status: 200 });
 }

@@ -1,5 +1,6 @@
 'use client'
 import { set } from '@/libs/api';
+import { AppError, ErrKeyNotFound, ErrMissingKey } from '@/libs/errors';
 import { useState } from 'react';
 
 const SetKey = () => {
@@ -9,7 +10,15 @@ const SetKey = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    await set({ key, value })
+    try {
+      await set({ key, value })
+    } catch (e) {
+      if (e instanceof AppError) {
+        alert(e.message)
+      } else {
+        throw e
+      }
+    }
   };
 
   return (

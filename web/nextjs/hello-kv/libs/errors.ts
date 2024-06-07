@@ -35,6 +35,16 @@ export interface AppErrorBody {
   message: string;
 }
 
+export const ErrUnknown = (e: any) => {
+  try {
+    const s = JSON.stringify(e);
+    return new AppError(0, s);
+  } catch (_) {
+    // Ignore errors in stringifying
+    return new AppError(0, "error cannot be stringified");
+  }
+};
+
 export const ErrInternal = new AppError(10000, "internal service error");
 export const ErrKeyNotFound = new AppError(10001, "key not found");
 export const ErrMissingKey = new AppError(10002, "missing key in request");
