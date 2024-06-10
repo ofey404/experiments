@@ -15,7 +15,7 @@ alias l='ls -CF'
 
 
 # == MY_ANCHOR_START ==
-# The following is the section that will be updated automatically,
+# The following is the section that will be updated automatically
 # DON'T EDIT IT
 echo 'This is a dummy line 1'
 echo 'This is a dummy line 2'
@@ -24,3 +24,9 @@ echo 'Update date is: Mon Jun 10 11:38:18 CST 2024'
 
 # content after anchor
 export PATH="$PATH:/snap/bin"
+
+# == MY_ANCHOR_2_START ==
+# The following is the section that will be updated automatically
+# 
+# If this section not exist in bashrc, append.sh script would add it.
+# == MY_ANCHOR_2_END ==

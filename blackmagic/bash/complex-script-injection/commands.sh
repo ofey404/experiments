@@ -30,4 +30,20 @@ cd -
 
 cd 2-update-bashrc-section/
 
+./update.sh
+
+cd -
+
+#####################################################################
+# 3. Build script with Go template
+#####################################################################
+
+cd 3-build-script-with-go-template/
+
+go run main.go
+bash generated-script.sh 
+# Welcome, JohnDoe!
+# Today's date is: Mon Jun 10 11:58:17 CST 2024
+# You have administrative privileges.
+
 cd -

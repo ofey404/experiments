@@ -1,0 +1,9 @@
+#!/bin/bash
+# This is a generated script
+echo "Welcome, {{.Username}}!"
+echo "Today's date is: $(date)"
+{{ if .IsAdmin }}
+echo "You have administrative privileges."
+{{ else }}
+echo "You are a standard user."
+{{ end }}
