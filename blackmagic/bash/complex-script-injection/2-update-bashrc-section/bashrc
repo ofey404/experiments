@@ -1,0 +1,26 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+# some more ls aliases
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+
+# == MY_ANCHOR_START ==
+# The following is the section that will be updated automatically,
+# DON'T EDIT IT
+echo 'This is a dummy line 1'
+echo 'This is a dummy line 2'
+echo 'Update date is: Mon Jun 10 11:38:18 CST 2024'
+# == MY_ANCHOR_END ==
+
+# content after anchor
+export PATH="$PATH:/snap/bin"
