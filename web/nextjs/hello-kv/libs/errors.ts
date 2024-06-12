@@ -1,18 +1,21 @@
+import Joi from "joi";
 import { NextResponse } from "next/server";
 
 export class AppError extends Error {
   appCode: number;
+  rawMessage: string;
 
   constructor(appCode: number, message: string) {
-    super(message);
+    super(`AppError(${appCode}): ${message}`); // displays code + message in every built-in places
     this.appCode = appCode;
+    this.rawMessage = message;
   }
 
   toNextResponse(code?: number) {
     return NextResponse.json(
       {
         appCode: this.appCode,
-        message: this.message,
+        message: this.rawMessage,
       } as AppErrorBody,
       { status: code ? code : 400 }
     );
@@ -28,15 +31,20 @@ export class AppError extends Error {
   withMessage(m: string) {
     return new AppError(this.appCode, m);
   }
-
-  toString(): string {
-    return `AppError(${this.appCode}): ${this.message}`;
-  }
 }
 
 export interface AppErrorBody {
   appCode: number;
   message: string;
+}
+
+export function validateSchema(schema: Joi.ObjectSchema, data: any) {
+  const { error } = schema.validate(data);
+  if (error) {
+    throw ErrValidateSchema.withMessage(
+      error.details[0].message
+    )
+  }
 }
 
 export const ErrUnknown = (e: any) => {

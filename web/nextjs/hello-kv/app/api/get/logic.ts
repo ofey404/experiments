@@ -1,10 +1,10 @@
 import { ErrKeyNotFound } from "@/libs/errors";
-import { svcCtx } from "../serviceContext";
 import { GetParams, GetResponse } from "./route";
+import { CommonLogic } from "../common-logic";
 
-export class GetLogic {
+export class GetLogic extends CommonLogic {
   async Handle(req: GetParams): Promise<GetResponse> {
-    const value = await svcCtx.redis.get(String(req.key));
+    const value = await this.sc.redis.get(String(req.key));
     if (value === null) {
       throw ErrKeyNotFound;
     }

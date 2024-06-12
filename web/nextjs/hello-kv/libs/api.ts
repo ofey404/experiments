@@ -10,7 +10,7 @@ export const set = async (body: SetRequest) => {
     const r = await axios.post<SetResponse>("/api/set", body);
     return r.data;
   } catch (e) {
-    throw parseAxiosError(e);
+    handleApiError(e);
   }
 };
 
@@ -21,16 +21,16 @@ export const get = async (params: GetParams) => {
     });
     return r.data;
   } catch (e) {
-    throw parseAxiosError(e);
+    handleApiError(e);
   }
 };
 
-function parseAxiosError(e: any) {
+function handleApiError(e: any) {
   const err = e as AxiosError<AppErrorBody>;
   if (err.response) {
     const { appCode, message } = err.response.data;
-    return new AppError(appCode, message);
+    throw new AppError(appCode, message);
   } else {
-    return e;
+    throw e;
   }
 }

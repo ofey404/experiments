@@ -1,9 +1,9 @@
+import { CommonLogic } from "../common-logic";
 import { SetRequest, SetResponse } from "./route";
-import { svcCtx } from "../serviceContext";
 
-export class SetLogic {
+export class SetLogic extends CommonLogic {
   async Handle(req: SetRequest): Promise<SetResponse> {
-    await svcCtx.redis.set(req.key, req.value);
+    await this.sc.redis.set(req.key, req.value);
 
     return { reply: "OK" };
   }
