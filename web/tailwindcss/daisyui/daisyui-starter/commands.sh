@@ -13,3 +13,4 @@ cd "$SCRIPT_DIR"
 # 
 # Check https://daisyui.com/components/ for more components.
 
+npm run dev
