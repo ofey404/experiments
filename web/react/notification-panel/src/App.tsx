@@ -42,11 +42,6 @@ function App() {
     setNotifications(updatedNotifications);
   };
 
-  const formatTimestamp = (timestamp: number) => {
-    const date = new Date(timestamp * 1000);
-    return date.toISOString().replace('T', ' ').substring(0, 19);
-  };
-
   const hasUnreadNotifications = notifications.some(notification => notification.status === 'unread');
 
   return (
@@ -73,8 +68,85 @@ function App() {
               <span className="absolute top-0 right-0 inline-block w-2 h-2 bg-red-600 rounded-full"></span>
             )}
           </button>
+          {/* Popup vs drawer */}
+          {/* {isNotificationOpen && (
+            <NotificationPopup
+              notifications={notifications}
+              addMoreNotifications={addMoreNotifications}
+            />
+          )} */}
         </div>
       </nav>
+      <NotificationDrawer
+        isNotificationOpen={isNotificationOpen}
+        notifications={notifications}
+        addMoreNotifications={addMoreNotifications}
+        setIsNotificationOpen={setIsNotificationOpen}
+      />
+      <div className="flex-grow flex items-center justify-center">
+        <div className="text-center">
+          <img src={logo} className="App-logo mx-auto" alt="logo" />
+          <h1 className="text-3xl font-bold">
+            Click Notification button on the top left to see notifications
+          </h1>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+interface NotificationPopupProps {
+  notifications: Notification[];
+  addMoreNotifications: () => void;
+}
+
+function NotificationPopup({ notifications, addMoreNotifications }: NotificationPopupProps) {
+  return (
+    <div className="absolute right-0 mt-2 w-64 bg-white shadow-lg rounded-lg z-10 max-h-[80vh] overflow-y-auto">
+      <ul>
+        {notifications.map((notification, index) => (
+          <li key={index} className="p-2 border-b border-gray-200">
+            <div className="text-sm">{notification.content}</div>
+            <div className="text-xs text-gray-500">{new Date(notification.timestamp * 1000).toLocaleString()}</div>
+          </li>
+        ))}
+      </ul>
+      <button
+        className="w-full p-2 text-center text-blue-500 hover:bg-gray-100"
+        onClick={addMoreNotifications}
+      >
+        More Notifications
+      </button>
+    </div>
+  );
+}
+
+interface Notification {
+  content: string;
+  timestamp: number;
+  status: string;
+}
+
+interface NotificationDrawerProps {
+  isNotificationOpen: boolean;
+  addMoreNotifications: () => void;
+  notifications: Notification[];
+  setIsNotificationOpen: (isOpen: boolean) => void;
+}
+
+function NotificationDrawer({
+  isNotificationOpen,
+  addMoreNotifications,
+  notifications,
+  setIsNotificationOpen,
+}: NotificationDrawerProps) {
+  const formatTimestamp = (timestamp: number) => {
+    const date = new Date(timestamp * 1000);
+    return date.toISOString().replace('T', ' ').substring(0, 19);
+  };
+
+  return (
+    <>
       <div
         className={`fixed top-0 right-0 bottom-0 bg-white shadow-lg z-20 transform ${isNotificationOpen ? 'translate-x-0' : 'translate-x-full'
           } transition-transform duration-300 ease-in-out`}
@@ -89,30 +161,22 @@ function App() {
                 <div className="text-sm text-gray-500">{formatTimestamp(notification.timestamp)}</div>
               </li>
             ))}
-            <li className="px-4 py-2 text-center text-gray-800 hover:bg-gray-200">
-              <button
-                className="w-full"
-                onClick={addMoreNotifications}
-              >
-                More Notifications
-              </button>
-            </li>
           </ul>
+          <div className="px-4 py-2 text-center text-gray-800 hover:bg-gray-200">
+            <button
+              className="w-full"
+              onClick={addMoreNotifications}
+            >
+              More Notifications
+            </button>
+          </div>
         </div>
       </div>
       <div
         className={`fixed inset-0 z-10 ${isNotificationOpen ? 'block' : 'hidden'}`}
         onClick={() => setIsNotificationOpen(false)}
       ></div>
-      <div className="flex-grow flex items-center justify-center">
-        <div className="text-center">
-          <img src={logo} className="App-logo mx-auto" alt="logo" />
-          <h1 className="text-3xl font-bold">
-            Click Notification button on the top left to see notifications
-          </h1>
-        </div>
-      </div>
-    </div>
+    </>
   );
 }
 
