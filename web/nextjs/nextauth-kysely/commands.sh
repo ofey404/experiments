@@ -9,9 +9,7 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-# https://daisyui.com/docs/install/
-# 
-# Check https://daisyui.com/components/ for more components.
-
+npm install kysely
+npm install pg   # driver dependency
+npm install axios
 npm i -D daisyui@latest
-npm run dev
