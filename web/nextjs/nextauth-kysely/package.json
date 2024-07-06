@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "start-db": "bash ./src/db/start_local_test_db.sh",
-    "generate-db-schema": "kysely-codegen --env-file .env.local --out-file src/libs/db/types.d.ts"
+    "db-start": "bash ./src/db/start_local_test_db.sh",
+    "db-generate-schema": "kysely-codegen --env-file .env.local --out-file src/libs/db/types.d.ts"
   },
   "dependencies": {
     "@auth/pg-adapter": "^1.4.1",

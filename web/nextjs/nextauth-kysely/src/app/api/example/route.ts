@@ -4,7 +4,7 @@ import { auth } from "@/auth";
 import { db } from "@/libs/db/client";
 
 export const POST = auth(async function POST(req) {
-    if (!req.auth) {
+    if (!req.auth || !req.auth.user ) {
         return NextResponse.json({ message: "Not authenticated" }, { status: 401 })
     }
 
@@ -21,8 +21,15 @@ export const POST = auth(async function POST(req) {
 
     const timestamp = new Date().toISOString();
 
+    const userProfile = await db.selectFrom('userprofile')
+        .select(['profile_info'])
+        .where('user_id', '=', Number(req.auth.user.id))
+        .executeTakeFirst();
+
     return NextResponse.json({
         message: `Hello, world! Timestamp: ${timestamp}`,
-        keyValueCount: countResult?.total_keys
+        keyValueCount: countResult?.total_keys,
+        userInfo: req.auth.user,
+        userProfile: userProfile?.profile_info
     });
 })

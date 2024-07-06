@@ -6,6 +6,18 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
 
 export type Int8 = ColumnType<string, bigint | number | string, bigint | number | string>;
 
+export type Json = JsonValue;
+
+export type JsonArray = JsonValue[];
+
+export type JsonObject = {
+  [K in string]?: JsonValue;
+};
+
+export type JsonPrimitive = boolean | number | string | null;
+
+export type JsonValue = JsonArray | JsonObject | JsonPrimitive;
+
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
 export interface Accounts {
@@ -48,6 +60,11 @@ export interface Sessions {
   userId: number;
 }
 
+export interface Userprofile {
+  profile_info: Generated<Json>;
+  user_id: number;
+}
+
 export interface Users {
   email: string | null;
   emailVerified: Timestamp | null;
@@ -67,6 +84,7 @@ export interface DB {
   flyway_schema_history: FlywaySchemaHistory;
   key_value: KeyValue;
   sessions: Sessions;
+  userprofile: Userprofile;
   users: Users;
   verification_token: VerificationToken;
 }

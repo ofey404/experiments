@@ -29,6 +29,5 @@ npm install next-auth@beta
 npm install @auth/pg-adapter pg
 npx auth secret
 
-
 # https://authjs.dev/guides/configuring-github
 # register an app in https://github.com/settings/developers
