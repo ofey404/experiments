@@ -12,8 +12,14 @@ export default function Home() {
       setApiResponse(JSON.stringify(response.data, null, 2));
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const err = error as AxiosError;
-        setApiResponse(`Error: ${err.message}`);
+        const err = error as AxiosError<{ message: string }>;
+        if (err.response && err.response.data) {
+          const errorMessage = `Error ${err.response.status}: ${JSON.stringify(err.response.data, null, 2)}`;
+          setApiResponse(errorMessage);
+        } else {
+          const errorMessage = `Error: ${err.message} (Code: ${err.code})`;
+          setApiResponse(errorMessage);
+        }
       } else {
         setApiResponse("An unexpected error occurred");
       }

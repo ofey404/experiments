@@ -1,33 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { Pool } from 'pg'
-import { Kysely, PostgresDialect } from 'kysely';
-import { DB } from "@/libs/types/db";
+import { auth } from "@/auth";
+import { db } from "@/libs/db/client";
 
-export async function POST(req: NextRequest) {
-    const db = new Kysely<DB>({
-        dialect: new PostgresDialect({
-            pool: new Pool({
-                connectionString: process.env.DATABASE_URL,
-            })
-        }),
-    });
+export const POST = auth(async function POST(req) {
+    if (!req.auth) {
+        return NextResponse.json({ message: "Not authenticated" }, { status: 401 })
+    }
 
     // count key
     const countResult = await db.selectFrom('key_value').select([
         b => b.fn.count("key_value.key").as("total_keys")
     ]).executeTakeFirst()
 
+    // mimic a insertion
     await db.insertInto('key_value').values({
         key: `key_${Math.random().toString(36).substring(2, 15)}`,
         value: 'dummy_value'
     }).execute();
 
     const timestamp = new Date().toISOString();
-    await db.destroy();
 
-    return NextResponse.json({ 
-        message: `Hello, world! Timestamp: ${timestamp}`, 
+    return NextResponse.json({
+        message: `Hello, world! Timestamp: ${timestamp}`,
         keyValueCount: countResult?.total_keys
     });
-}
+})

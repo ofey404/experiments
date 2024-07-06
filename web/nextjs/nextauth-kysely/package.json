@@ -7,19 +7,21 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate-db-schema": "bash ./src/db/start_local_test_db.sh && kysely-codegen --env-file .env.local --out-file src/libs/types/db.d.ts"
+    "start-db": "bash ./src/db/start_local_test_db.sh",
+    "generate-db-schema": "kysely-codegen --env-file .env.local --out-file src/libs/db/types.d.ts"
   },
   "dependencies": {
+    "@auth/pg-adapter": "^1.4.1",
     "axios": "^1.7.2",
     "kysely": "^0.27.4",
     "next": "14.2.4",
+    "next-auth": "^5.0.0-beta.19",
     "pg": "^8.12.0",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/pg": "^8.11.6",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "daisyui": "^4.12.10",

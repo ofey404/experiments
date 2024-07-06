@@ -20,12 +20,7 @@ until PGPASSWORD=mysecretpassword psql -h localhost -U postgres -d test -c '\q';
 done
 >&2 echo "Postgres is up!"
 
-echo "Creating schema..."
-docker run --rm -v $(pwd)/migration:/flyway/sql flyway/flyway:10.0 \
-     -url=jdbc:postgresql://host.docker.internal:5432/test \
-     -user=postgres \
-     -password=mysecretpassword \
-     migrate
+bash ./update_local_test_db.sh
 
 echo "Connect to the database:"
 echo "PGPASSWORD=mysecretpassword psql -h localhost -U postgres -d test"

@@ -19,3 +19,12 @@ npm install --save-dev kysely-codegen  # generated types
 # generate postgres types
 ./src/db/start_local_test_db.sh
 kysely-codegen
+
+#####################################################################
+# Auth.js (NextAuthV5)
+# https://authjs.dev
+#####################################################################
+
+npm install next-auth@beta
+npm install @auth/pg-adapter pg
+npx auth secret
