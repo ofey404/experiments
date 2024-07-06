@@ -1,39 +1,20 @@
-'use client'
-import axios from 'axios';
-import { useState } from 'react';
-import { AxiosError } from 'axios';
+import CallApi from '@/components/call-api';
+import { SignIn } from '@/components/signin-button';
+import { SignOut } from '@/components/signout-button';
 
 export default function Home() {
-  const [apiResponse, setApiResponse] = useState<string>('');
-
-  const callApi = async () => {
-    try {
-      const response = await axios.post<{ message: string }>('/api/example');
-      setApiResponse(JSON.stringify(response.data, null, 2));
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const err = error as AxiosError<{ message: string }>;
-        if (err.response && err.response.data) {
-          const errorMessage = `Error ${err.response.status}: ${JSON.stringify(err.response.data, null, 2)}`;
-          setApiResponse(errorMessage);
-        } else {
-          const errorMessage = `Error: ${err.message} (Code: ${err.code})`;
-          setApiResponse(errorMessage);
-        }
-      } else {
-        setApiResponse("An unexpected error occurred");
-      }
-    }
-  };
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <div className="z-10 w-full max-w-5xl flex flex-col items-center justify-center font-mono text-sm">
-        <button onClick={callApi} className="btn btn-primary mb-4">
-          Call API
-        </button>
-        <textarea readOnly className="textarea textarea-bordered w-full h-48" value={apiResponse}></textarea>
-      </div>
+      <nav className="w-full flex justify-between px-10 py-4 bg-gray-800 text-white">
+        <div className="flex items-center">
+          <h1 className="text-lg font-bold">API Caller</h1>
+        </div>
+        <div className="flex items-center gap-4">
+          <SignIn />
+          <SignOut />
+        </div>
+      </nav>
+      <CallApi/>
     </main>
   );
 }
