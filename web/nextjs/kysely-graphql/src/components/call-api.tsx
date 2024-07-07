@@ -1,25 +1,32 @@
 'use client'
-import axios from 'axios';
 import { useState } from 'react';
-import { AxiosError } from 'axios';
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 
 export default function CallApi() {
     const [apiResponse, setApiResponse] = useState<string>('');
 
     const callApi = async () => {
         try {
-            const response = await axios.post<{ message: string }>('/api/example');
-            setApiResponse(JSON.stringify(response.data, null, 2));
+            const client = new ApolloClient({
+                uri: '/api/graphql',
+                cache: new InMemoryCache()
+            });
+
+            const { data } = await client.query({
+                query: gql`
+                    query GetKeyValue {
+                        getKeyValue {
+                            key
+                            value
+                        }
+                    }
+                `
+            });
+
+            setApiResponse(JSON.stringify(data, null, 2));
         } catch (error) {
-            if (axios.isAxiosError(error)) {
-                const err = error as AxiosError<{ message: string }>;
-                if (err.response && err.response.data) {
-                    const errorMessage = `Error ${err.response.status}: ${JSON.stringify(err.response.data, null, 2)}`;
-                    setApiResponse(errorMessage);
-                } else {
-                    const errorMessage = `Error: ${err.message} (Code: ${err.code})`;
-                    setApiResponse(errorMessage);
-                }
+            if (error instanceof Error) {
+                setApiResponse(`Error: ${error.message}`);
             } else {
                 setApiResponse("An unexpected error occurred");
             }

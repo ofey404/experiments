@@ -11,10 +11,14 @@
     "db-generate-schema": "kysely-codegen --env-file .env.local --out-file src/libs/db/types.d.ts"
   },
   "dependencies": {
+    "@apollo/client": "^3.10.8",
+    "@apollo/server": "^4.10.4",
+    "@as-integrations/next": "^3.0.0",
     "@auth/pg-adapter": "^1.4.1",
     "@pothos/core": "^3.41.2",
     "@pothos/plugin-simple-objects": "^3.7.1",
     "axios": "^1.7.2",
+    "graphql": "^16.9.0",
     "graphql-yoga": "^5.6.0",
     "kysely": "^0.27.4",
     "next": "14.2.4",

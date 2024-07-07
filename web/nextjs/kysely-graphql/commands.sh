@@ -9,6 +9,9 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
+# WARNING:
+# THIS EXAMPLE IS NOT COMPLETED
+
 npm install kysely pg axios next-auth@beta @auth/pg-adapter
 npm install --save-dev @types/pg daisyui@latest kysely-codegen
 
@@ -18,4 +21,6 @@ npm install --save-dev @types/pg daisyui@latest kysely-codegen
 # pothos has support of nextjs api route
 npm install @pothos/core graphql-yoga @pothos/plugin-simple-objects
 
+# https://github.com/ivanms1/nextjs-prisma-graphql-pothos-apollo/blob/main/pages/api/graphql.ts
 npm i graphql @apollo/client @apollo/server
+npm i @as-integrations/next

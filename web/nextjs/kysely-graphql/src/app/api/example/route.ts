@@ -1,35 +1,11 @@
-import { NextResponse } from "next/server";
+import { schema } from "@/libs/graphql/schema";
+import { ApolloServer } from "@apollo/server";
+import { startServerAndCreateNextHandler } from "@as-integrations/next";
 
-import { auth } from "@/auth";
-import { db } from "@/libs/db/client";
+const server = new ApolloServer({
+  schema,
+});
 
-export const POST = auth(async function POST(req) {
-    if (!req.auth || !req.auth.user ) {
-        return NextResponse.json({ message: "Not authenticated" }, { status: 401 })
-    }
+const handler = startServerAndCreateNextHandler(server);
 
-    // count key
-    const countResult = await db.selectFrom('key_value').select([
-        b => b.fn.count("key_value.key").as("total_keys")
-    ]).executeTakeFirst()
-
-    // mimic a insertion
-    await db.insertInto('key_value').values({
-        key: `key_${Math.random().toString(36).substring(2, 15)}`,
-        value: 'dummy_value'
-    }).execute();
-
-    const timestamp = new Date().toISOString();
-
-    const userProfile = await db.selectFrom('userprofile')
-        .select(['profile_info'])
-        .where('user_id', '=', Number(req.auth.user.id))
-        .executeTakeFirst();
-
-    return NextResponse.json({
-        message: `Hello, world! Timestamp: ${timestamp}`,
-        keyValueCount: countResult?.total_keys,
-        userInfo: req.auth.user,
-        userProfile: userProfile?.profile_info
-    });
-})
+export { handler as GET, handler as POST };
