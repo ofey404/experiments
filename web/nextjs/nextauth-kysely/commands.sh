@@ -9,6 +9,9 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
+# https://next-auth.js.org/
+# https://github.com/kysely-org/kysely
+
 npm install kysely
 npm install pg   # driver dependency
 npm i --save-dev @types/pg
