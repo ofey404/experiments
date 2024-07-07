@@ -12,7 +12,10 @@
   },
   "dependencies": {
     "@auth/pg-adapter": "^1.4.1",
+    "@pothos/core": "^3.41.2",
+    "@pothos/plugin-simple-objects": "^3.7.1",
     "axios": "^1.7.2",
+    "graphql-yoga": "^5.6.0",
     "kysely": "^0.27.4",
     "next": "14.2.4",
     "next-auth": "^5.0.0-beta.19",
