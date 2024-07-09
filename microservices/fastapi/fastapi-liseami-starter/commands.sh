@@ -9,4 +9,10 @@ cd "$SCRIPT_DIR"
 # Don't run. This file is a note for commands.
 ##############################################
 
-# https://docs.dify.ai/https://docs.dify.ai/https://docs.dify.ai/
+python -m venv venv
+source venv/bin/activate
+pip install poetry
+sudo apt install postgresql-common libpq-dev
+poetry install
+
+# run more when I need it. Now I trust liseami.

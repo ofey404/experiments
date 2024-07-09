@@ -41,3 +41,11 @@ grpcurl -plaintext localhost:8000 describe .envoy.service.auth.v3.CheckRequest
 # ...
 #     reflection.Register(s)
 # ```
+
+# calling example
+grpcurl -d '{"key": "hello"}' \
+-plaintext localhost:8080 \
+hellokv2.Hellokv2.Get
+# {
+#   "value": "world2"
+# }
