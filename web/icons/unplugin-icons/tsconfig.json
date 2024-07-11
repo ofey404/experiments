@@ -10,6 +10,8 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    // commands.sh: ADD THIS
+    "types": ["unplugin-icons/types/react"], 
     "jsx": "preserve",
     "incremental": true,
     "plugins": [

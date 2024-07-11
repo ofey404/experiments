@@ -15,7 +15,15 @@ cd "$SCRIPT_DIR"
 # https://icon-sets.iconify.design/
 # https://icones.js.org/
 
-npm i -D unplugin-icons @iconify/json
+# unplugin-icons package for Webpack compiler
+npm i -D unplugin-icons
 
-# TO BE CONTINUED
-# use nextjs. it seems not compatible with pure react (no vite)
+# @iconify/json package for the icons collection
+npm i -D @iconify/json
+
+# @svgr/core and @svgr/plugin-jsx packages for React compatibility
+npm i -D @svgr/core @svgr/plugin-jsx
+
+# see: https://www.launchfa.st/blog/nextjs-unplugin-icons
+# edit next.config.mjs
+# edit tsconfig.json
