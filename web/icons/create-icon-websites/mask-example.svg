@@ -1,0 +1,16 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <!-- 定义 mask -->
+  <defs>
+    <mask id="hole">
+      <!-- 外部形状，填充白色表示不透明 -->
+      <rect width="100%" height="100%" fill="white" />
+      <!-- 内部挖空的形状，填充黑色表示透明 -->
+      <path d="M50,50 L150,50 L150,150 L50,150 Z" fill="black" />
+    </mask>
+  </defs>
+
+  <!-- 使用 mask 的外部形状 -->
+  <g mask="url(#hole)">
+    <path d="M10,10 L190,10 L190,190 L10,190 Z" fill="#5b1213" />
+  </g>
+</svg>
