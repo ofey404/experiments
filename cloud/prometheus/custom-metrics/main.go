@@ -16,9 +16,7 @@ var (
 		},
 	)
 	gauge = prometheus.NewGauge(
-		prometheus.GaugeOpts{
-
-	})
+		prometheus.GaugeOpts{})
 )
 
 func init() {

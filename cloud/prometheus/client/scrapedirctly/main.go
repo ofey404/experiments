@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -25,7 +26,12 @@ func main() {
 	for name, mf := range metrics {
 		fmt.Printf("Metric: %s\n", name)
 		for _, m := range mf.GetMetric() {
-			fmt.Printf("  Value: %v\n", m)
+			jsonValue, err := json.Marshal(m)
+			if err != nil {
+				fmt.Printf("Error serializing value to JSON: %v\n", err)
+				continue
+			}
+			fmt.Printf("  Value: %s\n", jsonValue)
 		}
 	}
 }
