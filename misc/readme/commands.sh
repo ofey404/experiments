@@ -11,3 +11,4 @@ cd "$SCRIPT_DIR"
 
 # https://github.com/dhyeythumar/awesome-readme-tools
 # https://github.com/matiassingers/awesome-readme
+# https://github.com/DangJin/awesome-readme-generator-tools
