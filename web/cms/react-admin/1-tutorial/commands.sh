@@ -22,10 +22,10 @@ cd "$SCRIPT_DIR"
 # https://refine.dev/
 
 # https://marmelab.com/react-admin/Tutorial.html
-npm init react-admin tutorial
+npm init react-admin 1-tutorial
 # JSON server, `None` auth provider
 
-cd tutorial
+cd 1-tutorial
 npm run dev
 
 # Use JSON placeholder, See web/placeholders/commands.sh
