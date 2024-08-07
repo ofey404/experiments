@@ -10,3 +10,6 @@ cd "$SCRIPT_DIR"
 ##############################################
 
 # https://trpc.io/
+
+# TODO: build an API equivilant to https://jsonplaceholder.typicode.com/
+#       We can build only `user`. It's good for testing.
