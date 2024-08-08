@@ -109,6 +109,21 @@ export const userRouter = createTRPCRouter({
       return user;
     }),
 
+  list: publicProcedure.input(z.object({
+    limit: z.number().min(1).max(100).nullish(),
+    cursor: z.number().nullish(),
+  })).query(({ input }) => {
+    /**
+     * For pagination docs you can have a look here
+     * @link https://trpc.io/docs/v11/useInfiniteQuery
+     * @link https://www.prisma.io/docs/concepts/components/prisma-client/pagination
+     */
+    const limit = input.limit ?? 50;
+    const cursor = input.cursor ?? 0;
+    const items = users.filter(u => u.id > cursor).slice(0, limit);
+    return items;
+  }),
+
   get: publicProcedure
     .input(z.object({ id: z.number() }))
     .query(({ input }) => {

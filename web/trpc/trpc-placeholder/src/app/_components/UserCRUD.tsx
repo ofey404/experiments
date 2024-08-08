@@ -4,7 +4,7 @@ import { api } from "@/trpc/react";
 import { useState } from "react";
 
 export default function UserCRUD() {
-    const [userId, setUserId] = useState(1);
+    const [userId, setUserId] = useState<number | null>(null);
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -15,7 +15,7 @@ export default function UserCRUD() {
             await utils.user.invalidate();
         },
     });
-    const [user] = api.user.get.useSuspenseQuery({ id: userId });
+    const [userList] = api.user.list.useSuspenseQuery({});
 
     const updateUser = api.user.update.useMutation({
         onSuccess: async () => {
@@ -29,6 +29,8 @@ export default function UserCRUD() {
     });
 
     const handleUpdate = async () => {
+        if (userId === null) return;
+        const user = userList.find(u => u.id === userId);
         if (user) {
             const updatedUser = {
                 ...user,
@@ -40,36 +42,55 @@ export default function UserCRUD() {
         }
     };
 
+    const newUserId = userList.length > 0 ? Math.max(...userList.map(u => u.id)) + 1 : 1;
+
     return (
         <div className="flex flex-col gap-4">
-            <input
-                type="number"
-                value={userId}
-                onChange={(e) => setUserId(Number(e.target.value))}
-                placeholder="User ID"
-                className="text-black p-2 rounded"
-            />
-            <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Name"
-                className="text-black p-2 rounded"
-            />
-            <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Username"
-                className="text-black p-2 rounded"
-            />
-            <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
-                className="text-black p-2 rounded"
-            />
+            <div className="flex flex-col gap-2">
+                <label htmlFor="userId" className="text-white">User ID:</label>
+                <select
+                    id="userId"
+                    value={userId ?? ""}
+                    onChange={(e) => setUserId(Number(e.target.value))}
+                    className="text-black p-2 rounded"
+                >
+                    <option value="">Select a user</option>
+                    {userList.map(user => (
+                        <option key={user.id} value={user.id}>{user.id} - {user.name}</option>
+                    ))}
+                    <option value={newUserId}>New User (ID: {newUserId})</option>
+                </select>
+            </div>
+            <div className="flex flex-col gap-2">
+                <label htmlFor="name" className="text-white">Name:</label>
+                <input
+                    id="name"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="text-black p-2 rounded"
+                />
+            </div>
+            <div className="flex flex-col gap-2">
+                <label htmlFor="username" className="text-white">Username:</label>
+                <input
+                    id="username"
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="text-black p-2 rounded"
+                />
+            </div>
+            <div className="flex flex-col gap-2">
+                <label htmlFor="email" className="text-white">Email:</label>
+                <input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="text-black p-2 rounded"
+                />
+            </div>
             <div className="flex gap-2">
                 <button
                     onClick={() => createUser.mutate({
@@ -99,25 +120,25 @@ export default function UserCRUD() {
                 <button
                     onClick={handleUpdate}
                     className="bg-yellow-500 p-2 rounded"
-                    disabled={updateUser.isPending || !user}
+                    disabled={updateUser.isPending || userId === null}
                 >
                     {updateUser.isPending ? "Updating..." : "Update"}
                 </button>
                 <button
-                    onClick={() => deleteUser.mutate({ id: userId })}
+                    onClick={() => userId !== null && deleteUser.mutate({ id: userId })}
                     className="bg-red-500 p-2 rounded"
-                    disabled={deleteUser.isPending}
+                    disabled={deleteUser.isPending || userId === null}
                 >
                     {deleteUser.isPending ? "Deleting..." : "Delete"}
                 </button>
             </div>
             {
-                user ? (
+                userId !== null && userList.some(u => u.id === userId) ? (
                     <div className="bg-white text-black p-4 rounded">
-                        <pre>{JSON.stringify(user, null, 2)}</pre>
+                        <pre>{JSON.stringify(userList.find(u => u.id === userId), null, 2)}</pre>
                     </div>
                 ) : (
-                    <p>Loading user...</p>
+                    <p>No user selected</p>
                 )
             }
         </div>
